@@ -1,0 +1,28 @@
+name: Deploy on Push
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_URL }}
+          port: ${{ secrets.SERVER_PORT }}
+          username: ${{ secrets.SERVER_ID }}
+          password: ${{ secrets.SERVER_PW }}
+          envs: GITHUB_SHA
+          script: |
+            rm -rf Backend/
+            git clone https://github.com/9in-team/Backend.git
+            cd Backend/
+            ./gradlew build -x test
+            docker build -t 9in-mono:${GITHUB_SHA::7} .
+            docker save 9in-mono:${GITHUB_SHA::7} | ctr -a /run/k3s/containerd/containerd.sock -n=k8s.io images import -
+            sh change_version.sh ${GITHUB_SHA::7}
+            kubectl apply -f 9in-mono.yml

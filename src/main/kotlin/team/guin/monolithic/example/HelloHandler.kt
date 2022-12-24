@@ -9,5 +9,5 @@ import reactor.core.publisher.Mono
 @Component
 class ExampleHandler {
 
-    fun hello(request: ServerRequest): Mono<ServerResponse> = ServerResponse.ok().body(BodyInserters.fromValue("hello"))
+    fun hello(request: ServerRequest): Mono<ServerResponse> = ServerResponse.ok().body(BodyInserters.fromValue("hello2"))
 }

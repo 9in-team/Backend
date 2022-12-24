@@ -36,3 +36,6 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+val jar: Jar by tasks
+jar.enabled = false
