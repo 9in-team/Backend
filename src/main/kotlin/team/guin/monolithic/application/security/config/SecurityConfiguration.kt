@@ -7,11 +7,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @Configuration
 @EnableConfigurationProperties(
-  SecurityProperties::class
+    SecurityProperties::class,
 )
 class SecurityConfiguration(
-  val securityProperties: SecurityProperties
+    val securityProperties: SecurityProperties,
 ) {
-  @Bean
-  fun bCryptPasswordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder(securityProperties.strength)
+    @Bean
+    fun bCryptPasswordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder(securityProperties.strength)
 }

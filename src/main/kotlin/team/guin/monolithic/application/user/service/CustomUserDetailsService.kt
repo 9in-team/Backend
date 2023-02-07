@@ -1,5 +1,7 @@
 package team.guin.monolithic.application.user.service
 
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -11,10 +13,13 @@ import team.guin.monolithic.application.user.repository.UserRepository
 class CustomUserDetailsService(private val userRepository: UserRepository) : UserDetailsService {
 
     @Throws(UsernameNotFoundException::class)
-    override fun loadUserByUsername(username: String): UserDetails {
-        val user = userRepository.findByUserNickname(username)
-            .orElseThrow { UsernameNotFoundException("The username $username doesn't exist") }
+    override fun loadUserByUsername(userEmail: String): UserDetails {
+        val user = userRepository.findByUserEmail(userEmail)
+            .orElseThrow { UsernameNotFoundException("The username $userEmail doesn't exist") }
 
-        return User(user.userNickname,null,null)
+        var authorities: MutableList<GrantedAuthority> = mutableListOf()
+        val roleList = user.getRoleList()
+        roleList.forEach { r -> authorities.add(SimpleGrantedAuthority(r.toString())) }
+        return User(user.userEmail, "", authorities)
     }
 }
