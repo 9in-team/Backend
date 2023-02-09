@@ -5,5 +5,5 @@ import team.guin.monolithic.domain.user.User
 import java.util.Optional
 
 interface UserRepository : JpaRepository<User, Long> {
-    fun findByUserEmail(userEmail: String): Optional<User>
+    fun findByEmail(userEmail: String): Optional<User>
 }

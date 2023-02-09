@@ -14,12 +14,12 @@ class CustomUserDetailsService(private val userRepository: UserRepository) : Use
 
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(userEmail: String): UserDetails {
-        val user = userRepository.findByUserEmail(userEmail)
+        val user = userRepository.findByEmail(userEmail)
             .orElseThrow { UsernameNotFoundException("The username $userEmail doesn't exist") }
 
         var authorities: MutableList<GrantedAuthority> = mutableListOf()
         val roleList = user.getRoleList()
         roleList.forEach { r -> authorities.add(SimpleGrantedAuthority(r.toString())) }
-        return User(user.userEmail, "", authorities)
+        return User(user.email, "", authorities)
     }
 }

@@ -1,5 +1,6 @@
 package team.guin.monolithic.domain.user
 
+import org.hibernate.annotations.ColumnDefault
 import java.util.*
 import javax.persistence.*
 
@@ -10,10 +11,12 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var userId: Long? = null,
     @Column
-    var userEmail: String,
+    var email: String,
     @Column
-    var imageId: Long,
+    var nickName: String,
     @Column
+    var imageId: String,
+    @ColumnDefault("USER")
     var userRole: String,
 ) {
     fun getRoleList(): MutableList<out Any?> {
@@ -21,6 +24,15 @@ class User(
             Arrays.asList(userRole.split(","))
         } else {
             ArrayList<String?>()
+        }
+    }
+
+    @PrePersist
+    fun prePersist() {
+        if (userRole == null) {
+            userRole = "USER"
+        } else {
+            userRole = userRole
         }
     }
 }
