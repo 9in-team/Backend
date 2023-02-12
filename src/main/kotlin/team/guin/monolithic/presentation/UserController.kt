@@ -10,6 +10,6 @@ import team.guin.monolithic.application.user.service.UserService
 class UserController(private val userService: UserService) {
     @PostMapping("/join")
     fun reqJoinUser(@RequestBody joinUserDTO: ReqJoinUserDTO) {
-        userService.joinUser(joinUserDTO)
+        userService.join(joinUserDTO)
     }
 }

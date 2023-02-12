@@ -11,7 +11,7 @@ class UserService(
     val modelMapper: ModelMapper,
     val userRepository: UserRepository,
 ) {
-    fun joinUser(userDTO: ReqJoinUserDTO) {
+    fun join(userDTO: ReqJoinUserDTO) {
         val user = modelMapper.map(userDTO, User::class.java)
         userRepository.save(user)
     }

@@ -19,7 +19,6 @@ class KakaoApiService {
     @field:NotBlank
     @field:Size(min = 64)
     var kakaoUrl = ""
-
     fun convertKakaoUserInfoDTO(jsonData: String): KakaoDetail {
         val mapper = jacksonObjectMapper()
         val kakaoDetail = mapper.readValue(jsonData, KakaoDetail::class.java)
@@ -28,7 +27,7 @@ class KakaoApiService {
 
     fun getUserInfoFromKakaoAccessToken(kakaoAccessToken: String): String {
         val url = URL(kakaoUrl + "v2/user/me")
-        val con: HttpURLConnection = url.openConnection() as HttpURLConnection
+        val con = url.openConnection() as HttpURLConnection
 
         con.setRequestProperty("Authorization", "Bearer $kakaoAccessToken")
 

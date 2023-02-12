@@ -9,7 +9,7 @@ import javax.persistence.*
 class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var userId: Long? = null,
+    var userId: Long,
     @Column
     var email: String,
     @Column
@@ -19,13 +19,7 @@ class User(
     @ColumnDefault("USER")
     var userRole: String,
 ) {
-    fun getRoleList(): MutableList<out Any?> {
-        return if (userRole.length > 0) {
-            Arrays.asList(userRole.split(","))
-        } else {
-            ArrayList<String?>()
-        }
-    }
+    fun getRoleList() = userRole.split(",")
 
     @PrePersist
     fun prePersist() {
