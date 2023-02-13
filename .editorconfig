@@ -12,7 +12,6 @@ max_line_length = 120
 tab_width = 4
 
 [*.{kt,kts}]
-disabled_rules = import-ordering
 max_line_length = 160
 
 [**/{test, integration-test}/**.{kt, kts}]
