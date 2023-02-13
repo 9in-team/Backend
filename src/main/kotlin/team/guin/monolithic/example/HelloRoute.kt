@@ -6,10 +6,8 @@ import org.springframework.web.reactive.function.server.router
 
 @Configuration
 class SimpleRoute(private val handler: ExampleHandler) {
-
     @Bean
     fun route() = router {
         GET("/hello", handler::hello)
     }
-
 }
