@@ -1,10 +1,8 @@
 package team.guin.monolithic.infrastructure.kakao.service
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
-import team.guin.monolithic.infrastructure.kakao.dto.KakaoDetail
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -15,15 +13,9 @@ import javax.validation.constraints.Size
 @Component
 @ConfigurationProperties(prefix = "kakao")
 class KakaoApiService {
-
     @field:NotBlank
     @field:Size(min = 64)
     var kakaoUrl = ""
-    fun convertKakaoUserInfoDTO(jsonData: String): KakaoDetail {
-        val mapper = jacksonObjectMapper()
-        val kakaoDetail = mapper.readValue(jsonData, KakaoDetail::class.java)
-        return kakaoDetail
-    }
 
     fun getUserInfoFromKakaoAccessToken(kakaoAccessToken: String): String {
         val url = URL(kakaoUrl + "v2/user/me")

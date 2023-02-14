@@ -13,6 +13,7 @@ import team.guin.monolithic.infrastructure.kakao.service.KakaoApiService
 import team.guin.monolithic.application.security.config.SecurityProperties
 import team.guin.monolithic.application.security.service.TokenProvider
 import team.guin.monolithic.application.user.dto.ReqLoginDTO
+import team.guin.monolithic.infrastructure.kakao.dto.KakaoDetail
 import java.io.IOException
 import javax.servlet.FilterChain
 import javax.servlet.ServletException
@@ -37,10 +38,10 @@ class JWTAuthenticationFilter(
             val creds = mapper.readValue<ReqLoginDTO>(req.inputStream)
 
             val jsonData = kakaoApiService.getUserInfoFromKakaoAccessToken(creds.kakaoAccessToken)
-            val (id, properties, kakao_account) = kakaoApiService.convertKakaoUserInfoDTO(jsonData)
+            val kakaoDetail = KakaoDetail.from(jsonData)
             authManager.authenticate(
                 UsernamePasswordAuthenticationToken(
-                    kakao_account["email"],
+                    kakaoDetail.kakao_account["email"],
                     "",
                     ArrayList(),
                 ),
