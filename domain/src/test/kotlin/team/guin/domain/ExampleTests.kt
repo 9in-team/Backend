@@ -1,3 +1,1 @@
-class ExampleTests {
-
-}
+class ExampleTests
