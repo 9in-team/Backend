@@ -1,1 +1,6 @@
-rootProject.name = "monolithic"
+rootProject.name = "Backend"
+
+include(
+    "api",
+    "domain"
+)
