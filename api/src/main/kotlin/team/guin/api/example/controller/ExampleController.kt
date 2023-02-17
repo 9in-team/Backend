@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import team.guin.api.example.controller.request.DeleteRequest
-import team.guin.api.example.controller.response.AddResponse
-import team.guin.api.example.controller.response.ListResponse
 import team.guin.api.example.service.ExampleService
 
 @RestController
