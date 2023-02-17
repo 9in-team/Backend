@@ -1,10 +1,11 @@
-package team.guin.api.example.repository
+package team.guin.example.repository
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.springframework.boot.test.context.SpringBootTest
-import team.guin.domain.example.ExampleEntity
+import team.guin.example.ExampleEntity
+import team.guin.example.repository.ExampleRepository
 
 @SpringBootTest
 class ExampleRepositoryTests(

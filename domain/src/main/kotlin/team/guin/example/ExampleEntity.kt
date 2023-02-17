@@ -1,4 +1,4 @@
-package team.guin.domain.example
+package team.guin.example
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue

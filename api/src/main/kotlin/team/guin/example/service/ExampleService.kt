@@ -1,10 +1,10 @@
-package team.guin.api.example.service
+package team.guin.example.service
 
 import org.springframework.stereotype.Service
-import team.guin.api.example.controller.response.AddResponse
-import team.guin.api.example.controller.response.ListResponse
-import team.guin.api.example.repository.ExampleRepository
-import team.guin.domain.example.ExampleEntity
+import team.guin.example.controller.response.AddResponse
+import team.guin.example.controller.response.ListResponse
+import team.guin.example.repository.ExampleRepository
+import team.guin.example.ExampleEntity
 
 @Service
 class ExampleService(val exampleRepo: ExampleRepository) {
