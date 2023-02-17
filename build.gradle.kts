@@ -8,7 +8,7 @@ plugins {
     kotlin("plugin.spring") version "1.7.22" apply false
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 allprojects {
     group = "team.guin"
@@ -43,7 +43,7 @@ subprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "17"
+            jvmTarget = "11"
         }
     }
 
