@@ -54,7 +54,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: ${{ always() }} # 테스트가 실패하여도 Report를 보기 위해 `always`로 설정
         with:
-          files: '/build/test-results/test/TEST-*.xml'
+          files: '**/test-results/test/TEST-*.xml'
 
       - name: Cleanup Gradle cache
         # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
