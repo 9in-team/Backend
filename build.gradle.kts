@@ -4,8 +4,8 @@ plugins {
     kotlin("jvm") version "1.7.22"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     kotlin("plugin.spring") version "1.7.22"
-    id("org.springframework.boot") version "2.7.8"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("org.springframework.boot") version "2.7.8" apply false
+    id("io.spring.dependency-management") version "1.1.0" apply false
     kotlin("plugin.jpa") version "1.4.10" // wrapped no-arg (kotlin("plugin.noarg") version "1.4.10" 을 포함)
 }
 
