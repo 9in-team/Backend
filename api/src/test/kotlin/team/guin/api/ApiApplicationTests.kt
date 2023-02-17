@@ -1,10 +1,11 @@
-package team.guin.monolithic
+package team.guin.api
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class MonolithicApplicationTests {
+class ApiApplicationTests {
+
     @Test
     fun contextLoads() {
     }
