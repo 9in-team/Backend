@@ -1,17 +1,16 @@
 package team.guin.domain
 
-import org.hibernate.annotations.ColumnDefault
+import team.guin.domain.enumeration.account.AccountRoles
+import team.guin.domain.enumeration.account.AccountRolesConverter
 import javax.persistence.Column
+import javax.persistence.Convert
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.PrePersist
-import javax.persistence.Table
 
 @Entity
-@Table(name = "users")
-class User(
+class Account(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var userId: Long,
@@ -21,10 +20,10 @@ class User(
     var nickname: String,
     @Column
     var imageId: String,
-    @ColumnDefault("USER")
-    var roles: String,
+    @Convert(
+        converter = AccountRolesConverter::class,
+    )
+    val accountRoles: AccountRoles,
 ) {
-    constructor() : this(0, "", "", "", "")
-
-    fun getRoleList() = roles.split(",")
+    constructor() : this(0, "", "", "", AccountRoles.USER)
 }
