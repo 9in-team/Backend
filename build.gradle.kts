@@ -86,5 +86,8 @@ project(":domain") {
         implementation("com.h2database:h2:2.1.214")
         implementation("org.modelmapper:modelmapper:3.1.1")
         implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+        testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
+        testImplementation("io.kotest:kotest-assertions-core:5.5.4")
+        testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
     }
 }
