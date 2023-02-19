@@ -1,4 +1,4 @@
-package team.guin.api.enueration.account
+package team.guin.domain.enumeration
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FreeSpec
@@ -23,11 +23,9 @@ class AccountRolesTest : FreeSpec({
     }
     "Exception" - {
         "AccountRoles를 조회를 실패한다." {
-            // given
-            // when
-            shouldThrowExactly<IllegalArgumentException> { AccountRoles.fromCode("TEST") }
 
-            // then
+            // given/when/then
+            shouldThrowExactly<IllegalArgumentException> { AccountRoles.fromCode("TEST") }
         }
     }
 })

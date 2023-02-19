@@ -1,4 +1,4 @@
-package team.guin.api.enueration.account
+package team.guin.domain.enumeration
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
