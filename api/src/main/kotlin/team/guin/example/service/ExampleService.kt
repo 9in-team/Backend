@@ -12,5 +12,7 @@ class ExampleService(val exampleRepo: ExampleRepository) {
 
     fun getList() = ListResponse(exampleRepo.findAll())
 
+    fun get(id: Long) = exampleRepo.findById(id)
+
     fun delete(id: Long) = exampleRepo.deleteById(id)
 }
