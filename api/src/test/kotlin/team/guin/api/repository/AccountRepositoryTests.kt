@@ -1,14 +1,15 @@
 package team.guin.api.repository
-
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
 import team.guin.domain.Account
 import team.guin.domain.enumeration.account.AccountRoles
 
 @SpringBootTest
-class UserRepositoryTests(
-    private val userRepo: UserRepository,
+class AccountRepositoryTests(
+    private val accountRepository: AccountRepository,
 ) : FreeSpec({
     "findByEmail" - {
         "이메일로 엔티티를 찾아올 수 있다" {
@@ -38,7 +39,7 @@ class UserRepositoryTests(
 
             // when/then
             withContext(Dispatchers.IO) {
-                userRepo.findByEmail(targetEmail)
+                accountRepository.findByEmail(targetEmail)
             } shouldBe null
         }
     }
