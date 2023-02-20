@@ -14,11 +14,12 @@ class AccountRolesConverterTest() : FreeSpec({
             val accountRolesConverter = AccountRolesConverter()
             val user = AccountRoles.USER
             val admin = AccountRoles.ADMIN
+
             // when
             val userDatabaseColumn = accountRolesConverter.convertToDatabaseColumn(user)
             val adminDatabaseCloumn = accountRolesConverter.convertToDatabaseColumn(admin)
-            // then
 
+            // then
             userDatabaseColumn shouldBe "USER"
             adminDatabaseCloumn shouldBe "ADMIN"
         }
@@ -28,19 +29,18 @@ class AccountRolesConverterTest() : FreeSpec({
         val accountRolesConverter = AccountRolesConverter()
         val user = "USER"
         val admin = "ADMIN"
+
         // when
         val userDatabaseColumn = accountRolesConverter.convertToEntityAttribute(user)
         val adminDatabaseCloumn = accountRolesConverter.convertToEntityAttribute(admin)
+
         // then
         userDatabaseColumn shouldBe instanceOf(AccountRoles::class)
         adminDatabaseCloumn shouldBe instanceOf(AccountRoles::class)
         userDatabaseColumn shouldNotBe null
         adminDatabaseCloumn shouldNotBe null
-        if (userDatabaseColumn != null) {
-            userDatabaseColumn.role shouldBe "USER"
-        }
-        if (adminDatabaseCloumn != null) {
-            adminDatabaseCloumn.role shouldBe "ADMIN"
-        }
+
+        userDatabaseColumn?.role shouldBe "USER"
+        adminDatabaseCloumn?.role shouldBe "ADMIN"
     }
 })

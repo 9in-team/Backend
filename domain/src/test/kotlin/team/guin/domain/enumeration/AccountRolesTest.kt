@@ -10,8 +10,7 @@ import java.lang.IllegalArgumentException
 class AccountRolesTest : FreeSpec({
     "AccountRoles" - {
         "AccountRoles를 조회를 성공한다." {
-            // given
-            // when
+            // given/when
             val userRole = AccountRoles.fromCode("USER")
             val adminRole = AccountRoles.fromCode("ADMIN")
             // then
@@ -23,7 +22,6 @@ class AccountRolesTest : FreeSpec({
     }
     "Exception" - {
         "AccountRoles를 조회를 실패한다." {
-
             // given/when/then
             shouldThrowExactly<IllegalArgumentException> { AccountRoles.fromCode("TEST") }
         }
