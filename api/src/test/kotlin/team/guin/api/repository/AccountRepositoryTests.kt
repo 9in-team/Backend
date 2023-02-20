@@ -8,7 +8,7 @@ import team.guin.domain.enumeration.account.AccountRoles
 
 @SpringBootTest
 class AccountRepositoryTests(
-    private val accountRepo: AccountRepository,
+    private val accountRepository: AccountRepository,
 ) : FreeSpec({
     "findByEmail" - {
         "이메일로 엔티티를 찾아올 수 있다" {
@@ -16,10 +16,10 @@ class AccountRepositoryTests(
             val targetEmail = "email@a.com"
             val fromCode = AccountRoles.fromCode("USER")
             val user = Account(0, targetEmail, "nickname", "imageId", fromCode)
-            accountRepo.save(user)
+            accountRepository.save(user)
 
             // when
-            val result = accountRepo.findByEmail(targetEmail)
+            val result = accountRepository.findByEmail(targetEmail)
 
             // then
             result?.nickname shouldBe "nickname"
