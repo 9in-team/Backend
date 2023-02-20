@@ -15,7 +15,7 @@ class AccountRepositoryTests(
             // given
             val targetEmail = "email@a.com"
             val fromCode = AccountRoles.fromCode("USER")
-            val user = Account(0, targetEmail, "nickname", "imageId", fromCode)
+            val user = Account.create(targetEmail, "nickname", "imageId", fromCode)
             accountRepository.save(user)
 
             // when

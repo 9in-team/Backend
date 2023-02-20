@@ -26,4 +26,10 @@ class Account(
     val accountRoles: AccountRoles,
 ) {
     constructor() : this(0, "", "", "", AccountRoles.USER)
+
+    companion object {
+        fun create(email: String, nickname: String, imageId: String, accountRoles: AccountRoles = AccountRoles.USER): Account {
+            return Account(0, email, nickname, imageId, accountRoles)
+        }
+    }
 }
