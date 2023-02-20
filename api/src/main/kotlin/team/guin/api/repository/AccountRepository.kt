@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository
 import team.guin.domain.Account
 
 @Repository
-interface UserRepository : JpaRepository<Account, Long> {
+interface AccountRepository : JpaRepository<Account, Long> {
     fun findByEmail(email: String): Account?
 }
