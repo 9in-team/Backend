@@ -20,7 +20,8 @@ abstract class BaseEntity {
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    protected val createdAt: LocalDateTime = LocalDateTime.now()
+    protected var createdAt: LocalDateTime = LocalDateTime.now()
+        private set
 
     @LastModifiedDate
     @Column(nullable = false)
