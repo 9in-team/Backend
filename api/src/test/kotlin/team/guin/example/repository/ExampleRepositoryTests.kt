@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.springframework.boot.test.context.SpringBootTest
-import team.guin.example.ExampleEntity
+import team.guin.example.Example
 
 @SpringBootTest
 class ExampleRepositoryTests(
@@ -13,7 +13,7 @@ class ExampleRepositoryTests(
     "save" - {
         "엔티티를 저장한다." {
             // given
-            val example = ExampleEntity()
+            val example = Example()
 
             // when
             exampleRepo.save(example)
@@ -28,7 +28,7 @@ class ExampleRepositoryTests(
     "delete" - {
         "id로 특정 엔티티를 삭제한다" {
             // given
-            val example = exampleRepo.save(ExampleEntity())
+            val example = exampleRepo.save(Example())
 
             // when
             exampleRepo.deleteById(example.id!!)
@@ -42,8 +42,8 @@ class ExampleRepositoryTests(
         "저장된 모든 엔티티를 가져온다" {
             // given
             exampleRepo.deleteAll()
-            val example1 = exampleRepo.save(ExampleEntity())
-            val example2 = exampleRepo.save(ExampleEntity())
+            val example1 = exampleRepo.save(Example())
+            val example2 = exampleRepo.save(Example())
 
             // when
             val list = exampleRepo.findAll()
