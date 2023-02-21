@@ -10,7 +10,7 @@ import team.guin.example.service.ExampleService
 @RestController
 class ExampleController(val exampleService: ExampleService) {
     @PostMapping("/example")
-    fun add() = exampleService.add()
+    fun add() = exampleService.create()
 
     @GetMapping("/example")
     fun showList() = exampleService.getList()
