@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RestController
 import team.guin.example.service.ExampleService
 
 @RestController
-class ExampleController(val exampleServ: ExampleService) {
+class ExampleController(val exampleService: ExampleService) {
     @PostMapping("/example")
-    fun add() = exampleServ.add()
+    fun add() = exampleService.add()
 
     @GetMapping("/example")
-    fun showList() = exampleServ.getList()
+    fun showList() = exampleService.getList()
 
     @GetMapping("/example/{id}")
-    fun showOne(@PathVariable id: Long) = exampleServ.get(id)
+    fun showOne(@PathVariable id: Long) = exampleService.get(id)
 
     @DeleteMapping("/example/{id}")
-    fun delete(@PathVariable id: Long) = exampleServ.delete(id)
+    fun delete(@PathVariable id: Long) = exampleService.delete(id)
 }
