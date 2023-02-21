@@ -15,36 +15,36 @@ class ExampleServiceTests(
             val addResponse = exampleService.create()
 
             // then
-            addResponse.added.id shouldNotBe null
+            addResponse.id shouldNotBe null
         }
     }
 
     "readAll" - {
         "목록을 ListResponse에 담아 반환해준다" {
             // given
-            val example1 = exampleService.create().added
-            val example2 = exampleService.create().added
+            val example1 = exampleService.create()
+            val example2 = exampleService.create()
 
             // when
-            val listResponse = exampleService.getList()
+            val listResponse = exampleService.findList()
 
             // then
-            listResponse.list.find { it.id == example1.id } shouldNotBe null
-            listResponse.list.find { it.id == example2.id } shouldNotBe null
+            listResponse.find { it.id == example1.id } shouldNotBe null
+            listResponse.find { it.id == example2.id } shouldNotBe null
         }
     }
 
     "delete" - {
         "id로 특정 엔티티를 삭제한다" {
             // given
-            val example = exampleService.create().added
+            val example = exampleService.create()
 
             // when
             exampleService.delete(example.id!!)
 
             // then
-            val listResponse = exampleService.getList()
-            listResponse.list.find { it.id == example.id!! } shouldBe null
+            val listResponse = exampleService.findList()
+            listResponse.find { it.id == example.id!! } shouldBe null
         }
     }
 })
