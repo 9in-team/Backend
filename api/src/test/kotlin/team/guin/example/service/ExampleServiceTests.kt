@@ -7,12 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class ExampleServiceTests(
-    private val exampleServ: ExampleService,
+    private val exampleService: ExampleService,
 ) : FreeSpec({
     "create" - {
         "Example을 저장한다" {
             // when
-            val addResponse = exampleServ.add()
+            val addResponse = exampleService.create()
 
             // then
             addResponse.added.id shouldNotBe null
@@ -22,11 +22,11 @@ class ExampleServiceTests(
     "readAll" - {
         "목록을 ListResponse에 담아 반환해준다" {
             // given
-            val example1 = exampleServ.add().added
-            val example2 = exampleServ.add().added
+            val example1 = exampleService.create().added
+            val example2 = exampleService.create().added
 
             // when
-            val listResponse = exampleServ.getList()
+            val listResponse = exampleService.getList()
 
             // then
             listResponse.list.find { it.id == example1.id } shouldNotBe null
@@ -37,13 +37,13 @@ class ExampleServiceTests(
     "delete" - {
         "id로 특정 엔티티를 삭제한다" {
             // given
-            val example = exampleServ.add().added
+            val example = exampleService.create().added
 
             // when
-            exampleServ.delete(example.id!!)
+            exampleService.delete(example.id!!)
 
             // then
-            val listResponse = exampleServ.getList()
+            val listResponse = exampleService.getList()
             listResponse.list.find { it.id == example.id!! } shouldBe null
         }
     }

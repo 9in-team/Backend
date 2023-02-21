@@ -8,7 +8,7 @@ import team.guin.example.Example
 
 @SpringBootTest
 class ExampleRepositoryTests(
-    private val exampleRepo: ExampleRepository,
+    private val exampleRepository: ExampleRepository,
 ) : FreeSpec({
     "save" - {
         "엔티티를 저장한다." {
@@ -16,10 +16,10 @@ class ExampleRepositoryTests(
             val example = Example()
 
             // when
-            exampleRepo.save(example)
-            val list = exampleRepo.findAll()
+            exampleRepository.save(example)
 
             // then
+            val list = exampleRepository.findAll()
             list.size shouldBe 1
             list[0].id shouldBe 1
         }
@@ -28,25 +28,25 @@ class ExampleRepositoryTests(
     "delete" - {
         "id로 특정 엔티티를 삭제한다" {
             // given
-            val example = exampleRepo.save(Example())
+            val example = exampleRepository.save(Example())
 
             // when
-            exampleRepo.deleteById(example.id!!)
+            exampleRepository.deleteById(example.id!!)
 
             // then
-            exampleRepo.findById(example.id!!).isEmpty shouldBe true
+            exampleRepository.findById(example.id!!).isEmpty shouldBe true
         }
     }
 
     "findAll" - {
         "저장된 모든 엔티티를 가져온다" {
             // given
-            exampleRepo.deleteAll()
-            val example1 = exampleRepo.save(Example())
-            val example2 = exampleRepo.save(Example())
+            exampleRepository.deleteAll()
+            val example1 = exampleRepository.save(Example())
+            val example2 = exampleRepository.save(Example())
 
             // when
-            val list = exampleRepo.findAll()
+            val list = exampleRepository.findAll()
 
             // then
             list.size shouldBe 2
