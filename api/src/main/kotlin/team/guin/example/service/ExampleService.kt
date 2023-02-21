@@ -8,7 +8,7 @@ import team.guin.example.repository.ExampleRepository
 
 @Service
 class ExampleService(val exampleRepo: ExampleRepository) {
-    fun add() = AddResponse(exampleRepo.save(Example()))
+    fun create() = AddResponse(exampleRepo.save(Example()))
 
     fun getList() = ListResponse(exampleRepo.findAll())
 
