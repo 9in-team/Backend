@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import team.guin.example.Example
-import team.guin.example.controller.response.CommonListResponse
 import team.guin.example.service.ExampleService
 
 @RequestMapping("/example")
@@ -18,8 +17,8 @@ class ExampleApiController(val exampleService: ExampleService) {
         exampleService.createExample()
 
     @GetMapping
-    fun findAllExample(): CommonListResponse<List<Example>> =
-        CommonListResponse(exampleService.findAllExample())
+    fun findAllExample(): List<Example> =
+        exampleService.findAllExample()
 
     @GetMapping("/{id}")
     fun findExample(@PathVariable id: Long): Example =
