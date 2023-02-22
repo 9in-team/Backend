@@ -5,7 +5,6 @@ import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
-import team.guin.api.controller.request.JoinRequest
 import team.guin.api.repository.AccountApiRepository
 
 @SpringBootTest
@@ -16,15 +15,23 @@ class AccountApiServiceTests(
     "join" - {
         "회원정보 입력이 들어오면 엔티티로 만들어 저장한다" {
             // given
-            val joinRequest = JoinRequest("id@a.com", "nickname", "https://imgur.com/abcde")
+            val email = "a@a.com"
+            val nickname = "nickname"
+            val imageId = "https://imugr.com/example"
 
             // when
-            val account = accountApiService.join(joinRequest.email, joinRequest.nickname, joinRequest.imageId)
+            val account = accountApiService.join(email, nickname, imageId)
 
             // then
             withContext(Dispatchers.IO) {
-                accountApiRepository.existsById(account.userId)
-            } shouldBe true
+                val optAccountEntity = accountApiRepository.findById(account.userId)
+                optAccountEntity.isEmpty shouldBe false
+
+                val accountEntity = optAccountEntity.get()
+                accountEntity.email shouldBe email
+                accountEntity.nickname shouldBe nickname
+                accountEntity.imageId shouldBe imageId
+            }
         }
     }
 })
