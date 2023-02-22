@@ -6,11 +6,11 @@ import team.guin.example.repository.ExampleRepository
 
 @Service
 class ExampleService(val exampleRepository: ExampleRepository) {
-    fun create() = exampleRepository.save(Example())
+    fun createExample() = exampleRepository.save(Example())
 
-    fun findList() = exampleRepository.findAll()
+    fun findAllExample() = exampleRepository.findAll()
 
-    fun get(id: Long) = exampleRepository.findById(id)
+    fun findExample(id: Long) = exampleRepository.findById(id)
 
-    fun delete(id: Long) = exampleRepository.deleteById(id)
+    fun deleteExample(id: Long) = exampleRepository.deleteById(id)
 }
