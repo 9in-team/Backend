@@ -14,7 +14,7 @@ class ExampleRepositoryTests(
     "save" - {
         "엔티티를 저장한다." {
             // given
-            val example = Example()
+            val example = Example(name = "jeong", age = 20)
 
             // when
             val savedExample = exampleRepository.save(example)
@@ -24,13 +24,15 @@ class ExampleRepositoryTests(
             result.id shouldNotBe null
             result.createdAt shouldNotBe null
             result.updatedAt shouldNotBe null
+            result.age shouldBe example.age
+            result.name shouldBe example.name
         }
     }
 
     "delete" - {
         "id로 특정 엔티티를 삭제한다" {
             // given
-            val example = exampleRepository.save(Example())
+            val example = exampleRepository.save(Example(name = "min", age = 12))
 
             // when
             exampleRepository.deleteById(example.id)
