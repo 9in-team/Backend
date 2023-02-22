@@ -2,21 +2,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.7.22"
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     kotlin("plugin.spring") version "1.7.22"
+    kotlin("plugin.jpa") version "1.6.21"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("org.springframework.boot") version "2.7.8" apply false
     id("io.spring.dependency-management") version "1.1.0" apply false
-    kotlin("plugin.jpa") version "1.4.10" // wrapped no-arg (kotlin("plugin.noarg") version "1.4.10" 을 포함)
 }
-
-allOpen {
-    annotation("javax.persistence.Entity") // @Entity가 붙은 클래스에 한해서만 all open 플러그인을 적용
-}
-
-noArg {
-    annotation("javax.persistence.Entity") // @Entity가 붙은 클래스에 한해서만 no arg 플러그인을 적용
-}
-
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 allprojects {
@@ -33,6 +24,8 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "kotlin-spring") // all-open
+    apply(plugin = "kotlin-jpa")
 
     dependencies {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -80,6 +73,19 @@ project(":api") {
 }
 
 project(":domain") {
+
+    allOpen {
+        annotation("javax.persistence.Entity")
+        annotation("javax.persistence.MappedSuperclass")
+        annotation("javax.persistence.Embeddable")
+    }
+
+    noArg {
+        annotation("javax.persistence.Entity")
+        annotation("javax.persistence.MappedSuperclass")
+        annotation("javax.persistence.Embeddable")
+    }
+
     dependencies {
         runtimeOnly("com.mysql:mysql-connector-j")
         api("org.springframework.boot:spring-boot-starter-data-jpa")
