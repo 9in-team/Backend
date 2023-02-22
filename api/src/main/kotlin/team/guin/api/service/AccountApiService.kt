@@ -1,7 +1,6 @@
 package team.guin.api.service
 
 import org.springframework.stereotype.Service
-import team.guin.api.controller.request.JoinRequest
 import team.guin.api.repository.AccountApiRepository
 import team.guin.domain.Account
 
@@ -9,8 +8,8 @@ import team.guin.domain.Account
 class AccountApiService(
     private val accountApiRepository: AccountApiRepository,
 ) {
-    fun join(joinRequest: JoinRequest): Account {
-        val account = Account.create(joinRequest.email, joinRequest.nickname, joinRequest.imageId)
+    fun join(email: String, nickname: String, imageId: String): Account {
+        val account = Account.create(email, nickname, imageId)
         return accountApiRepository.save(account)
     }
 }

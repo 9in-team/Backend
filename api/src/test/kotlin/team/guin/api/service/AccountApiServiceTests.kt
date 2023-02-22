@@ -19,7 +19,7 @@ class AccountApiServiceTests(
             val joinRequest = JoinRequest("id@a.com", "nickname", "https://imgur.com/abcde")
 
             // when
-            val account = accountApiService.join(joinRequest)
+            val account = accountApiService.join(joinRequest.email, joinRequest.nickname, joinRequest.imageId)
 
             // then
             withContext(Dispatchers.IO) {
