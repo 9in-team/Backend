@@ -6,8 +6,8 @@ import team.guin.example.repository.ExampleRepository
 
 @Service
 class ExampleService(val exampleRepository: ExampleRepository) {
-    fun createExample(): Example =
-        exampleRepository.save(Example())
+    fun createExample(name: String, age: Int): Example =
+        exampleRepository.save(Example(name, age))
 
     fun findAllExample(): List<Example> =
         exampleRepository.findAll()
