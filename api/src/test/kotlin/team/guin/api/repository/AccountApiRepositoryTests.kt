@@ -8,8 +8,8 @@ import team.guin.domain.Account
 import team.guin.domain.enumeration.account.AccountRoles
 
 @SpringBootTest
-class AccountRepositoryTests(
-    private val accountRepository: AccountRepository,
+class AccountApiRepositoryTests(
+    private val accountApiRepository: AccountApiRepository,
 ) : FreeSpec({
     "findByEmail" - {
         "이메일로 엔티티를 찾아올 수 있다" {
@@ -18,13 +18,13 @@ class AccountRepositoryTests(
             val fromCode = AccountRoles.fromCode("USER")
             val user = Account.create(targetEmail, "nickname", "imageId", fromCode)
             withContext(Dispatchers.IO) {
-                accountRepository.save(user)
+                accountApiRepository.save(user)
             }
 
             // when
             val result =
                 withContext(Dispatchers.IO) {
-                    accountRepository.findByEmail(targetEmail)
+                    accountApiRepository.findByEmail(targetEmail)
                 }
 
             // then
@@ -39,7 +39,7 @@ class AccountRepositoryTests(
 
             // when/then
             withContext(Dispatchers.IO) {
-                accountRepository.findByEmail(targetEmail)
+                accountApiRepository.findByEmail(targetEmail)
             } shouldBe null
         }
     }
