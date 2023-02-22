@@ -1,4 +1,4 @@
-package team.guin.api
+package team.guin
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
