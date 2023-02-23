@@ -44,7 +44,7 @@ class ExampleRepositoryTests(
             exception.message shouldBe "No value present"
         }
     }
-    "deletedExampleNotFound" - {
+    "deleteById" - {
         "특정 엔티티를 삭제하면 해당 엔티티는 조회되지 않는다" {
             // given
             val example1 = Example(name = "jeong", age = 25)

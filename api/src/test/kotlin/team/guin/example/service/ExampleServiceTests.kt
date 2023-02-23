@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 class ExampleServiceTests(
     private val exampleService: ExampleService,
 ) : FreeSpec({
-    "create" - {
+    "createExample" - {
         "Example을 저장한다" {
             // given
             val name = "jeong"
@@ -27,7 +27,7 @@ class ExampleServiceTests(
         }
     }
 
-    "readAll" - {
+    "findAllExample" - {
         "목록을 ListResponse에 담아 반환해준다" {
             // given
             val example1 = exampleService.createExample(name = "jeong", age = 123)
@@ -50,7 +50,7 @@ class ExampleServiceTests(
         }
     }
 
-    "delete" - {
+    "deleteExample" - {
         "id로 특정 엔티티를 삭제한다" {
             // given
             val example = exampleService.createExample(name = "jeong", age = 22)
