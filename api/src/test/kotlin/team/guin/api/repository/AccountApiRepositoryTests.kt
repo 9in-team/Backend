@@ -8,39 +8,39 @@ import team.guin.domain.Account
 import team.guin.domain.enumeration.account.AccountRoles
 
 @SpringBootTest
-class AccountApiRepositoryTests(
-    private val accountApiRepository: AccountApiRepository,
+class AccountRepositoryTests(
+    private val accountRepository: AccountRepository,
 ) : FreeSpec({
     "findByEmail" - {
-        "이메일로 엔티티를 찾아올 수 있다" {
+        "일치하는 이메일이 존재할 때 일치하는 Account를 반환한다" {
             // given
             val targetEmail = "email@a.com"
-            val fromCode = AccountRoles.fromCode("USER")
-            val user = Account.create(targetEmail, "nickname", "imageId", fromCode)
+            val user = Account.create(targetEmail, "nickname", "imageId")
             withContext(Dispatchers.IO) {
-                accountApiRepository.save(user)
+                accountRepository.save(user)
             }
 
             // when
             val result =
                 withContext(Dispatchers.IO) {
-                    accountApiRepository.findByEmail(targetEmail)
+                    accountRepository.findByEmail(targetEmail)
                 }
 
             // then
             result?.nickname shouldBe "nickname"
             result?.imageId shouldBe "imageId"
         }
-    }
-    "findByEmail Null" - {
-        "이메일로 엔티티를 찾아올 수 없어 널값이 반환된다 " {
+        "일치하는 이메일이 없을 때 null을 반환한다" {
             // given
             val targetEmail = "test@naver.com"
 
-            // when/then
-            withContext(Dispatchers.IO) {
-                accountApiRepository.findByEmail(targetEmail)
-            } shouldBe null
+            // when
+            val result = withContext(Dispatchers.IO) {
+                accountRepository.findByEmail(targetEmail)
+            }
+
+            // then
+            result shouldBe null
         }
     }
 })
