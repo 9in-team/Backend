@@ -28,5 +28,6 @@ abstract class BaseEntity {
     @Column(nullable = false)
     var updatedAt: LocalDateTime = LocalDateTime.now()
 
+    @Column(nullable = true)
     var deletedAt: LocalDateTime? = null
 }
