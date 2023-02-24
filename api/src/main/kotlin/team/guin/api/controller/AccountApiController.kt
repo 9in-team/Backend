@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController
 import team.guin.api.controller.request.JoinRequest
 import team.guin.api.controller.response.CommonResponse
 import team.guin.api.controller.response.detail.AccountDetail
-import team.guin.api.controller.response.enum.ResponseResult
 import team.guin.api.service.AccountApiService
 
 @RestController
@@ -16,6 +15,7 @@ class AccountApiController(
     @PostMapping("/account")
     fun join(@RequestBody joinRequest: JoinRequest): CommonResponse<AccountDetail> {
         val account = accountApiService.join(joinRequest.email, joinRequest.nickname, joinRequest.imageId)
-        return CommonResponse(result = ResponseResult.SUCCESS, detail = AccountDetail(account.email, account.nickname, account.imageId))
+        val detail = AccountDetail(account.email, account.nickname, account.imageId)
+        return CommonResponse.okWithDetail(detail)
     }
 }

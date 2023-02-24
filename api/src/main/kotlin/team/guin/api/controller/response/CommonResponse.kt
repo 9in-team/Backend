@@ -1,9 +1,12 @@
 package team.guin.api.controller.response
 
-import team.guin.api.controller.response.enum.ResponseResult
-
-data class CommonResponse<T>(
-    val result: ResponseResult,
+data class CommonResponse<T> private constructor(
     val detail: T? = null,
-    val description: String = "",
-)
+    val errorMessage: String = "",
+) {
+    companion object {
+        fun ok() = CommonResponse<Unit>()
+        fun<T> okWithDetail(detail: T) = CommonResponse(detail)
+        fun error(errorMessage: String) = CommonResponse<Unit>(errorMessage = errorMessage)
+    }
+}
