@@ -2,7 +2,7 @@ package team.guin.api.controller.response
 
 data class CommonResponse<T> private constructor(
     val detail: T? = null,
-    val errorMessage: String = "",
+    val errorMessage: String? = null,
 ) {
     companion object {
         fun ok() = CommonResponse<Unit>()
