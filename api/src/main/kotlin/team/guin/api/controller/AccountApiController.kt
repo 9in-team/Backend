@@ -16,6 +16,6 @@ class AccountApiController(
     @PostMapping("/account")
     fun join(@RequestBody joinRequest: JoinRequest): CommonResponse<AccountData> {
         val account = accountApiService.join(joinRequest.email, joinRequest.nickname, joinRequest.imageId)
-        return CommonResponse(result = ResponseResult.SUCCESS, data = AccountData.fromEntity(account))
+        return CommonResponse(result = ResponseResult.SUCCESS, data = AccountData(account.email, account.nickname, account.imageId))
     }
 }
