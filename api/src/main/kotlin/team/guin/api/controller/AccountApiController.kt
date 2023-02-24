@@ -13,7 +13,7 @@ import team.guin.api.service.AccountApiService
 class AccountApiController(
     private val accountApiService: AccountApiService,
 ) {
-    @PostMapping("/join")
+    @PostMapping("/account")
     fun join(@RequestBody joinRequest: JoinRequest): CommonResponse<AccountData> {
         val account = accountApiService.join(joinRequest.email, joinRequest.nickname, joinRequest.imageId)
         return CommonResponse(result = ResponseResult.SUCCESS, data = AccountData.fromEntity(account))
