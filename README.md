@@ -17,7 +17,5 @@ docker-compose start # 백그라운드에서 실행
 
 1. Settings -> Tools -> ktlint 클릭후 아래 사진과 같이 설정
    ![img.png](img.png)
-
-Tip!\
-Mac - Settings 단축키\
-```command + ,```
+2. Settings -> Tools -> Actions on save 클릭후 아래 사진과 같이 설정
+   ![img_1.png](img_1.png)
