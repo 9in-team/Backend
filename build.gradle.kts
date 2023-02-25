@@ -104,6 +104,7 @@ project(":domain") {
         api("org.springframework.boot:spring-boot-starter-data-jpa")
         implementation("org.modelmapper:modelmapper:3.1.1")
         implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+        implementation("org.springframework.boot:spring-boot-starter-web")
         testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
         testImplementation("io.kotest:kotest-assertions-core:5.5.4")
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
