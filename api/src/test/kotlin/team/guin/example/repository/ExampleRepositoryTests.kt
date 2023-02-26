@@ -1,57 +1,68 @@
 package team.guin.example.repository
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.springframework.boot.test.context.SpringBootTest
-import team.guin.example.ExampleEntity
+import team.guin.example.Example
 
 @SpringBootTest
 class ExampleRepositoryTests(
-    private val exampleRepo: ExampleRepository,
+    private val exampleRepository: ExampleRepository,
 ) : FreeSpec({
     "save" - {
         "엔티티를 저장한다." {
             // given
-            val example = ExampleEntity()
+            val example = Example(name = "jeong", age = 20)
 
             // when
-            exampleRepo.save(example)
-            val list = exampleRepo.findAll()
+            val savedExample = exampleRepository.save(example)
 
             // then
-            list.size shouldBe 1
-            list[0].id shouldBe 1
+            val result = exampleRepository.findById(savedExample.id).get()
+            result.id shouldNotBe null
+            result.createdAt shouldNotBe null
+            result.updatedAt shouldNotBe null
+            result.age shouldBe example.age
+            result.name shouldBe example.name
         }
     }
 
     "delete" - {
         "id로 특정 엔티티를 삭제한다" {
             // given
-            val example = exampleRepo.save(ExampleEntity())
+            val example = exampleRepository.save(Example(name = "min", age = 12))
 
             // when
-            exampleRepo.deleteById(example.id!!)
+            exampleRepository.deleteById(example.id)
 
             // then
-            exampleRepo.findById(example.id!!).isEmpty shouldBe true
+            val exception = shouldThrow<NoSuchElementException> {
+                exampleRepository.findById(example.id).get()
+            }
+            exception.message shouldBe "No value present"
         }
     }
-
-    "findAll" - {
-        "저장된 모든 엔티티를 가져온다" {
+    "deleteById" - {
+        "특정 엔티티를 삭제하면 해당 엔티티는 조회되지 않는다" {
             // given
-            exampleRepo.deleteAll()
-            val example1 = exampleRepo.save(ExampleEntity())
-            val example2 = exampleRepo.save(ExampleEntity())
+            val example1 = Example(name = "jeong", age = 25)
+            val example2 = Example(name = "hoe", age = 12)
+            val savedExample1 = exampleRepository.save(example1)
+            val savedExample2 = exampleRepository.save(example2)
 
             // when
-            val list = exampleRepo.findAll()
+            exampleRepository.deleteById(savedExample1.id)
 
             // then
-            list.size shouldBe 2
-            list.find { it.id == example1.id } shouldNotBe null
-            list.find { it.id == example2.id } shouldNotBe null
+            val examples = exampleRepository.findAll()
+            examples.find { it.id == example1.id } shouldBe null
+            examples.find { it.id == example2.id } shouldNotBe null
+            savedExample2.deletedAt shouldBe null
+            savedExample2.age shouldBe 12
+            savedExample2.name shouldBe "hoe"
+            savedExample2.id shouldBe example2.id
         }
     }
 })

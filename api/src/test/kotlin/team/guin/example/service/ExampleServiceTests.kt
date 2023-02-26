@@ -7,44 +7,60 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class ExampleServiceTests(
-    private val exampleServ: ExampleService,
+    private val exampleService: ExampleService,
 ) : FreeSpec({
-    "create" - {
+    "createExample" - {
         "Example을 저장한다" {
+            // given
+            val name = "jeong"
+            val age = 26
+
             // when
-            val addResponse = exampleServ.add()
+            val example = exampleService.createExample(name, age)
 
             // then
-            addResponse.added.id shouldNotBe null
+            example.id shouldNotBe null
+            example.createdAt shouldNotBe null
+            example.updatedAt shouldNotBe null
+            example.name shouldBe name
+            example.age shouldBe age
         }
     }
 
-    "readAll" - {
+    "findAllExample" - {
         "목록을 ListResponse에 담아 반환해준다" {
             // given
-            val example1 = exampleServ.add().added
-            val example2 = exampleServ.add().added
+            val example1 = exampleService.createExample(name = "jeong", age = 123)
+            val example2 = exampleService.createExample(name = "god", age = 29)
 
             // when
-            val listResponse = exampleServ.getList()
+            val examples = exampleService.findAllExample()
 
             // then
-            listResponse.list.find { it.id == example1.id } shouldNotBe null
-            listResponse.list.find { it.id == example2.id } shouldNotBe null
+            val findExample1 = examples.first { it.id == example1.id }
+            findExample1.name shouldBe example1.name
+            findExample1.age shouldBe example1.age
+            findExample1.createdAt shouldBe example1.createdAt
+            findExample1.updatedAt shouldBe example1.updatedAt
+            val findExample2 = examples.first { it.id == example2.id }
+            findExample2.name shouldBe example2.name
+            findExample2.age shouldBe example2.age
+            findExample2.createdAt shouldBe example2.createdAt
+            findExample2.updatedAt shouldBe example2.updatedAt
         }
     }
 
-    "delete" - {
+    "deleteExample" - {
         "id로 특정 엔티티를 삭제한다" {
             // given
-            val example = exampleServ.add().added
+            val example = exampleService.createExample(name = "jeong", age = 22)
 
             // when
-            exampleServ.delete(example.id!!)
+            exampleService.deleteExample(example.id)
 
             // then
-            val listResponse = exampleServ.getList()
-            listResponse.list.find { it.id == example.id!! } shouldBe null
+            val examples = exampleService.findAllExample()
+            examples.find { it.id == example.id } shouldBe null
         }
     }
 })

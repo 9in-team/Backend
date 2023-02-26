@@ -1,16 +1,20 @@
 package team.guin.example.service
 
 import org.springframework.stereotype.Service
-import team.guin.example.ExampleEntity
-import team.guin.example.controller.response.AddResponse
-import team.guin.example.controller.response.ListResponse
+import team.guin.example.Example
 import team.guin.example.repository.ExampleRepository
 
 @Service
-class ExampleService(val exampleRepo: ExampleRepository) {
-    fun add() = AddResponse(exampleRepo.save(ExampleEntity()))
+class ExampleService(val exampleRepository: ExampleRepository) {
+    fun createExample(name: String, age: Int): Example =
+        exampleRepository.save(Example(name, age))
 
-    fun getList() = ListResponse(exampleRepo.findAll())
+    fun findAllExample(): List<Example> =
+        exampleRepository.findAll()
 
-    fun delete(id: Long) = exampleRepo.deleteById(id)
+    fun findExample(id: Long): Example =
+        exampleRepository.findById(id).get()
+
+    fun deleteExample(id: Long): Unit =
+        exampleRepository.deleteById(id)
 }
