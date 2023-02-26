@@ -8,6 +8,7 @@ import team.guin.example.repository.ExampleRepository
 class ExampleService(val exampleRepository: ExampleRepository) {
     fun createExample(name: String, age: Int): Example {
         println(name)
+        println(age)
         return exampleRepository.save(Example(name, age))
     }
 
