@@ -20,4 +20,7 @@ class ExampleService(val exampleRepository: ExampleRepository) {
 
     fun deleteExample(id: Long): Unit =
         exampleRepository.deleteById(id)
+
+    fun deleteExample2(id: Long): Unit =
+        exampleRepository.deleteById(id)
 }
