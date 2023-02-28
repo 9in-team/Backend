@@ -24,8 +24,8 @@ class AccountApiController(
     }
 
     @PutMapping("{id}")
-    fun update(@PathVariable id: Long, @RequestBody accountDetail: AccountUpdateRequest): CommonResponse<AccountDetail> {
-        val account = accountApiService.updateInfo(id, accountDetail.email, accountDetail.nickname, accountDetail.imageId)
+    fun update(@PathVariable id: Long, @RequestBody accountUpdateRequest: AccountUpdateRequest): CommonResponse<AccountDetail> {
+        val account = accountApiService.updateInfo(id, accountUpdateRequest.nickname, accountUpdateRequest.imageId)
         return CommonResponse.okWithDetail(AccountDetail(account.email, account.nickname, account.imageId))
     }
 }

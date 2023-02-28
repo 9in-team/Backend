@@ -21,8 +21,7 @@ class Account(
     val accountRoles: AccountRoles,
 ) : BaseEntity() {
 
-    fun updateInfo(email: String, nickname: String, imageId: String) {
-        this.email = email
+    fun updateInfo(nickname: String, imageId: String) {
         this.nickname = nickname
         this.imageId = imageId
     }

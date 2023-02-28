@@ -17,9 +17,9 @@ class AccountApiService(
     }
 
     @Transactional
-    fun updateInfo(id: Long, email: String, nickname: String, imageId: String): Account {
+    fun updateInfo(id: Long, nickname: String, imageId: String): Account {
         val account = this.findByAccountId(id)
-        account.updateInfo(email, nickname, imageId)
+        account.updateInfo(nickname, imageId)
         return account
     }
 
