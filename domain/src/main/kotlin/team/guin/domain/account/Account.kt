@@ -2,18 +2,13 @@ package team.guin.domain.account
 
 import team.guin.domain.account.enumeration.AccountRoles
 import team.guin.domain.account.enumeration.AccountRolesConverter
+import team.guin.domain.baseentity.BaseEntity
 import javax.persistence.Column
 import javax.persistence.Convert
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
 
 @Entity
 class Account(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var userId: Long,
     @Column
     var email: String,
     @Column
@@ -24,12 +19,16 @@ class Account(
         converter = AccountRolesConverter::class,
     )
     val accountRoles: AccountRoles,
-) {
-    constructor() : this(0, "", "", "", AccountRoles.USER)
+) : BaseEntity() {
+
+    fun updateInfo(nickname: String, imageId: String) {
+        this.nickname = nickname
+        this.imageId = imageId
+    }
 
     companion object {
         fun create(email: String, nickname: String, imageId: String, accountRoles: AccountRoles = AccountRoles.USER): Account {
-            return Account(0, email, nickname, imageId, accountRoles)
+            return Account(email, nickname, imageId, accountRoles)
         }
     }
 }

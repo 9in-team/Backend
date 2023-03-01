@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.repository.findByIdOrNull
 import team.guin.domain.account.Account
 import team.guin.domain.account.enumeration.AccountRoles
 
@@ -42,6 +43,37 @@ class AccountApiRepositoryTests(
             withContext(Dispatchers.IO) {
                 accountApiRepository.findByEmail(targetEmail)
             } shouldBe null
+        }
+    }
+    "findByIdOrNull" - {
+        "해당하는 id가 없을 경우 널값을 반환한다." - {
+            // given
+            val id: Long = -1
+
+            // when
+            val result = withContext(Dispatchers.IO) {
+                accountApiRepository.findByIdOrNull(id)
+            }
+
+            // then
+            result shouldBe null
+        }
+        "해당하는 id가 있을경우 account 반환한다." - {
+            // given
+            val fromCode = AccountRoles.fromCode("USER")
+            val account = Account.create("a@a.com", "nickname", "imageId", fromCode)
+            accountApiRepository.save(account)
+
+            // when
+            val result =
+                withContext(Dispatchers.IO) {
+                    accountApiRepository.findByIdOrNull(account.id)
+                }
+
+            // then
+            result?.nickname shouldBe account.nickname
+            result?.imageId shouldBe account.imageId
+            result?.email shouldBe account.email
         }
     }
 })
