@@ -43,24 +43,26 @@ class AccountApiServiceTests(
             val nickname = "nickname"
             val imageId = "https://imugr.com/example"
             val savedAccount = accountApiRepository.save(Account(email, nickname, imageId, AccountRoles.USER))
-
-            // when
             val changeNickname = "changeNickname"
             val changeImageId = "https://imugr.com/change"
+
+            // when
             val updatedAccount =
                 accountApiService.updateInfo(savedAccount.id, changeNickname, changeImageId)
 
             // then
-            updatedAccount.email shouldBe email
-            updatedAccount.imageId shouldBe changeImageId
-            updatedAccount.nickname shouldBe changeNickname
+            val findUpdateAccount = accountApiRepository.findById(updatedAccount.id).get()
+            findUpdateAccount.email shouldBe email
+            findUpdateAccount.imageId shouldBe changeImageId
+            findUpdateAccount.nickname shouldBe changeNickname
         }
 
-        "해당하는 AccountId 존재하지 않을경우 예외가 발생한다." - {
+        "해당하는 Id 존재하지 않을경우 예외가 발생한다." - {
             // given
             val nickname = "nickname"
             val imageId = "https://imugr.com/example"
-            // && when
+
+            // when
             val exception =
                 shouldThrow<IllegalArgumentException> {
                     accountApiService.updateInfo(
