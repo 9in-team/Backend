@@ -52,7 +52,7 @@ class AccountApiRepositoryTests(
 
             // when
             val result = withContext(Dispatchers.IO) {
-                accountApiRepository.findByIdOrNull(id) ?: null
+                accountApiRepository.findByIdOrNull(id)
             }
 
             // then
@@ -67,7 +67,7 @@ class AccountApiRepositoryTests(
             // when
             val result =
                 withContext(Dispatchers.IO) {
-                    accountApiRepository.findByIdOrNull(account.id) ?: null
+                    accountApiRepository.findByIdOrNull(account.id)
                 }
 
             // then
