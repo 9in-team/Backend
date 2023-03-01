@@ -2,6 +2,7 @@ package team.guin.account
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.core.test.TestCase
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -76,4 +77,10 @@ class AccountApiServiceTests(
             exception.message shouldBe "유저가 존재하지 않습니다."
         }
     }
-})
+}) {
+    override suspend fun beforeAny(testCase: TestCase) {
+        withContext(Dispatchers.IO) {
+            accountApiRepository.deleteAll()
+        }
+    }
+}

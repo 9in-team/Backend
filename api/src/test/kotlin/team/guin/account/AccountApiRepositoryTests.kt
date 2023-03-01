@@ -1,6 +1,7 @@
 package team.guin.account
 
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.core.test.TestCase
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -78,4 +79,10 @@ class AccountApiRepositoryTests(
             result?.email shouldBe account.email
         }
     }
-})
+}) {
+    override suspend fun beforeAny(testCase: TestCase) {
+        withContext(Dispatchers.IO) {
+            accountApiRepository.deleteAll()
+        }
+    }
+}
