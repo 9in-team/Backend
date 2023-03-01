@@ -8,7 +8,7 @@ services:
     environment:
       MYSQL_ROOT_HOST: '%'
       MYSQL_ROOT_PASSWORD: 'test'
-      MYSQL_DATABASE: 'test'
+      MYSQL_DATABASE: 'testdb'
       MYSQL_USER: 'test'
       MYSQL_PASSWORD: 'test'
     command: # 명령어 실행
