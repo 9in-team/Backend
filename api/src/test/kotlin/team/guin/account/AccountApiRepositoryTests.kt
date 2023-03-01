@@ -46,22 +46,23 @@ class AccountApiRepositoryTests(
         }
     }
     "findByIdOrNull" - {
-        "해당하는 id가 없을 경우 널값을 반환합니다" - {
+        "해당하는 id가 없을 경우 널값을 반환한다." - {
             // given
             val id: Long = -1
 
-            // when/then
-            withContext(Dispatchers.IO) {
+            // when
+            val result = withContext(Dispatchers.IO) {
                 accountApiRepository.findByIdOrNull(id) ?: null
-            } shouldBe null
+            }
+
+            // then
+            result shouldBe null
         }
-        "해당하는 id가 있을경우 account 반환합니다." - {
+        "해당하는 id가 있을경우 account 반환한다." - {
             // given
             val fromCode = AccountRoles.fromCode("USER")
             val account = Account.create("a@a.com", "nickname", "imageId", fromCode)
-            withContext(Dispatchers.IO) {
-                accountApiRepository.save(account)
-            }
+            accountApiRepository.save(account)
 
             // when
             val result =
