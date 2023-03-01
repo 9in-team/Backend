@@ -29,8 +29,10 @@ class AccountApiRepositoryTests(
                 }
 
             // then
-            result?.nickname shouldBe "nickname"
-            result?.imageId shouldBe "imageId"
+            val nickName = "nickname"
+            val imageId = "imageId"
+            result?.nickname shouldBe nickName
+            result?.imageId shouldBe imageId
             result?.accountRole shouldBe AccountRole.USER
         }
         "이메일로 엔티티를 찾아올 수 없어 널값이 반환된다 " {
