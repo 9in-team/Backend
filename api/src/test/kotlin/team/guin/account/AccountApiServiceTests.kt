@@ -59,6 +59,7 @@ class AccountApiServiceTests(
 
         "해당하는 Id 존재하지 않을경우 예외가 발생한다." - {
             // given
+            val id: Long = -1
             val nickname = "nickname"
             val imageId = "https://imugr.com/example"
 
@@ -66,9 +67,9 @@ class AccountApiServiceTests(
             val exception =
                 shouldThrow<IllegalArgumentException> {
                     accountApiService.updateInfo(
-                        -1,
-                        nickname,
-                        imageId,
+                        id,
+                        "nickname",
+                        "https://imugr.com/example",
                     )
                 }
 
