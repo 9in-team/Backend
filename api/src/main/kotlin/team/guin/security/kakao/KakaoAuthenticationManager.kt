@@ -1,7 +1,6 @@
 package team.guin.security.kakao
 
 import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -17,7 +16,7 @@ class KakaoAuthenticationManager(
         val kakaoUserInfo = authentication.details as KakaoUserInfo
         print(kakaoUserInfo.nickname)
         val account = accountApiRepository.findByEmail(authentication.name)
-            ?: accountApiRepository.save(Account.create(kakaoUserInfo.email, kakaoUserInfo.nickname, kakaoUserInfo.profileImageUrl))
+            ?: accountApiRepository.save(Account.create(kakaoUserInfo.email, kakaoUserInfo.nickname, kakaoUserInfo.imageUrl))
 
         (authentication.authorities as MutableList<GrantedAuthority>).add(SimpleGrantedAuthority(account.accountRole.toString()))
         return authentication
