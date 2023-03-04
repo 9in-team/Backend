@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse
 class KakaoAuthenticationFilter(
     private val kakaoApiService: KakaoApiService,
     kakaoAuthenticationManager: KakaoAuthenticationManager,
-): UsernamePasswordAuthenticationFilter() {
+) : UsernamePasswordAuthenticationFilter() {
     init {
         this.authenticationManager = kakaoAuthenticationManager
     }
@@ -69,8 +69,8 @@ class KakaoAuthenticationFilter(
 }
 
 class KakaoAuthenticationToken(
-    private val kakaoUserInfo: KakaoUserInfo
-): Authentication {
+    private val kakaoUserInfo: KakaoUserInfo,
+) : Authentication {
     private val authorities = mutableListOf<GrantedAuthority>()
     private var authenticated = false
 
