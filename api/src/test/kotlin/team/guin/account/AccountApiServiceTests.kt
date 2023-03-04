@@ -2,12 +2,12 @@ package team.guin.account
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.core.test.TestCase
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
 import team.guin.domain.account.Account
-import team.guin.domain.account.enumeration.AccountRoles
 
 @SpringBootTest
 class AccountApiServiceTests(
@@ -42,7 +42,7 @@ class AccountApiServiceTests(
             val email = "a@a.com"
             val nickname = "nickname"
             val imageId = "https://imugr.com/example"
-            val savedAccount = accountApiRepository.save(Account(email, nickname, imageId, AccountRoles.USER))
+            val savedAccount = accountApiRepository.save(Account.create(email, nickname, imageId))
             val changeNickname = "changeNickname"
             val changeImageId = "https://imugr.com/change"
 
@@ -68,8 +68,8 @@ class AccountApiServiceTests(
                 shouldThrow<IllegalArgumentException> {
                     accountApiService.updateInfo(
                         id,
-                        "nickname",
-                        "https://imugr.com/example",
+                        nickname,
+                        imageId,
                     )
                 }
 
@@ -77,4 +77,10 @@ class AccountApiServiceTests(
             exception.message shouldBe "유저가 존재하지 않습니다."
         }
     }
-})
+}) {
+    override suspend fun beforeAny(testCase: TestCase) {
+        withContext(Dispatchers.IO) {
+            accountApiRepository.deleteAll()
+        }
+    }
+}
