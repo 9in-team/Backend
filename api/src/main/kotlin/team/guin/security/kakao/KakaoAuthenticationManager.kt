@@ -18,7 +18,9 @@ class KakaoAuthenticationManager(
         val account = accountApiRepository.findByEmail(authentication.name)
             ?: accountApiRepository.save(Account.create(kakaoUserInfo.email, kakaoUserInfo.nickname, kakaoUserInfo.imageUrl))
 
-        (authentication.authorities as MutableList<GrantedAuthority>).add(SimpleGrantedAuthority(account.accountRole.toString()))
-        return authentication
+        val kakaoAuthenticationToken = KakaoAuthenticationToken(KakaoUserInfo(account.email, account.nickname, account.imageId))
+        kakaoAuthenticationToken.authorities.add(SimpleGrantedAuthority(account.accountRole.toString()))
+
+        return kakaoAuthenticationToken
     }
 }
