@@ -18,8 +18,8 @@ class AccountApiServiceTests(
     "join" - {
         "회원정보 입력이 들어오면 엔티티로 만들어 저장한다" {
             // given
-            val email = "a@a.com"
-            val nickname = "nickname"
+            val email = "aa@a.com"
+            val nickname = "nick"
             val imageId = "https://imugr.com/example"
 
             // when
@@ -40,8 +40,8 @@ class AccountApiServiceTests(
     "updateInfo" - {
         "회원이 정보를 변경하면 정보를 업데이트 한다." - {
             // given
-            val email = "a@a.com"
-            val nickname = "nickname"
+            val email = "a1@a.com"
+            val nickname = "nickname1"
             val imageId = "https://imugr.com/example"
             val savedAccount = accountApiRepository.save(Account.create(email, nickname, imageId))
             val changeNickname = "changeNickname"
