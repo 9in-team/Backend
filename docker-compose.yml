@@ -13,6 +13,3 @@ services:
       MYSQL_PASSWORD: 'test'
     command:
       - --character-set-client-handshake=utf8mb4
-      - --default-authentication-plugin=mysql_native_password
-      - --skip-character-set-client-handshake
-    restart: always
