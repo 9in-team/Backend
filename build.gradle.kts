@@ -71,11 +71,11 @@ project(":api") {
         testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
         testImplementation("io.kotest:kotest-assertions-core:5.5.4")
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
+        implementation("org.springframework.boot:spring-boot-starter-security")
     }
 }
 
 project(":domain") {
-
     allOpen {
         annotation("javax.persistence.Entity")
         annotation("javax.persistence.MappedSuperclass")
