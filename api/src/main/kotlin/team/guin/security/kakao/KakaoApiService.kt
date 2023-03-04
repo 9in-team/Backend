@@ -33,4 +33,3 @@ class KakaoApiService {
         return KakaoUserInfo(email, nickname, profileImageUrl)
     }
 }
-
