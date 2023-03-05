@@ -23,7 +23,6 @@ class KakaoApiService {
         val br = BufferedReader(InputStreamReader(con.inputStream))
 
         val json = br.readText()
-        println(json)
         val jsonTree = jacksonObjectMapper().readTree(json)
 
         val email = jsonTree.get("kakao_account")?.get("email")?.asText() ?: return null

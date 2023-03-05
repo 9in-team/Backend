@@ -32,11 +32,10 @@ class KakaoAuthenticationFilter(
 
         val mapper = jacksonObjectMapper()
         val accessToken = mapper.readTree(json).get("accessToken")?.asText()
-        accessToken ?: throw AuthenticationServiceException("Invalid AccessToken")
+            ?: throw AuthenticationServiceException("Invalid AccessToken")
 
         val kakaoUserInfo = kakaoApiService.fetchKakaoUserInfo(accessToken)
-        kakaoUserInfo ?: throw AuthenticationServiceException("Invalid KakaoUserInfo")
-        println(kakaoUserInfo)
+            ?: throw AuthenticationServiceException("Invalid KakaoUserInfo")
 
         val authenticationToken = KakaoAuthenticationToken(kakaoUserInfo)
         return authenticationManager.authenticate(authenticationToken)
