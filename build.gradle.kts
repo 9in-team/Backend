@@ -100,14 +100,6 @@ project(":domain") {
 }
 
 project(":web-common") {
-    tasks.getByName("bootJar") {
-        enabled = true
-    }
-
-    tasks.getByName("jar") {
-        enabled = false
-    }
-
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter-web")
         testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
