@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.web.SecurityFilterChain
+import team.guin.domain.account.enumeration.AccountRole
 import team.guin.security.kakao.KakaoAuthenticationFilter
 
 @Configuration
@@ -19,8 +20,8 @@ class SecurityConfig(
             .csrf().disable()
             .authorizeHttpRequests()
             .antMatchers("/login").permitAll()
-            .antMatchers("/api/**").hasRole("USER")
-            .antMatchers("/api/admin").hasRole("ADMIN")
+            .antMatchers("/api/**").hasRole(AccountRole.USER.toString())
+            .antMatchers("/api/admin").hasRole(AccountRole.ADMIN.toString())
             .anyRequest().authenticated()
             .and()
             .addFilter(kakaoAuthenticationFilter)
