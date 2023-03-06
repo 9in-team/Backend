@@ -1,6 +1,6 @@
 package team.guin.security.kakao
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import java.io.BufferedReader
@@ -9,7 +9,9 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 @Service
-class KakaoApiService {
+class KakaoApiService(
+    private val objectMapper: ObjectMapper,
+) {
     fun fetchKakaoUserInfo(accessToken: String): KakaoUserInfo? {
         val url = URL("https://kapi.kakao.com/v2/user/me")
         val con = url.openConnection() as HttpURLConnection
@@ -23,7 +25,7 @@ class KakaoApiService {
         val br = BufferedReader(InputStreamReader(con.inputStream))
 
         val json = br.readText()
-        val jsonTree = jacksonObjectMapper().readTree(json)
+        val jsonTree = objectMapper.readTree(json)
 
         val email = jsonTree.get("kakao_account")?.get("email")?.asText() ?: return null
         val nickname = jsonTree.get("kakao_account")?.get("profile")?.get("nickname")?.asText() ?: return null
