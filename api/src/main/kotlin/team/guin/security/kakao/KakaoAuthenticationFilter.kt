@@ -1,6 +1,6 @@
 package team.guin.security.kakao
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.security.core.Authentication
@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse
 @Component
 class KakaoAuthenticationFilter(
     private val kakaoApiService: KakaoApiService,
+    private val objectMapper: ObjectMapper,
     kakaoAuthenticationManager: KakaoAuthenticationManager,
 ) : UsernamePasswordAuthenticationFilter() {
     init {
@@ -30,8 +31,7 @@ class KakaoAuthenticationFilter(
     ): Authentication {
         val json = getRequestBody(req)
 
-        val mapper = jacksonObjectMapper()
-        val accessToken = mapper.readTree(json).get("accessToken")?.asText()
+        val accessToken = objectMapper.readTree(json).get("accessToken")?.asText()
             ?: throw AuthenticationServiceException("Invalid AccessToken")
 
         val kakaoUserInfo = kakaoApiService.fetchKakaoUserInfo(accessToken)
@@ -57,13 +57,13 @@ class KakaoAuthenticationFilter(
     override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain, authentication: Authentication) {
         response.status = HttpStatus.OK.value()
         response.contentType = "application/json; charset=UTF-8"
-        response.writer.write(jacksonObjectMapper().writeValueAsString(CommonResponse.okWithDetail(authentication.details)))
+        response.writer.write(objectMapper.writeValueAsString(CommonResponse.okWithDetail(authentication.details)))
     }
 
     override fun unsuccessfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, failed: AuthenticationException) {
         response.status = HttpStatus.UNAUTHORIZED.value()
         response.contentType = "application/json; charset=UTF-8"
-        response.writer.write(jacksonObjectMapper().writeValueAsString(CommonResponse.error("accessToken이 유효하지 않습니다.")))
+        response.writer.write(objectMapper.writeValueAsString(CommonResponse.error("accessToken이 유효하지 않습니다.")))
     }
 }
 
