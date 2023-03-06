@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
 
 class GlobalExceptionHandlerTest() : FreeSpec({
     "handleCommonException" - {
-        "CommonException 발생하면 GlobalException 변경한다. " {
+        "중복된 이메일 CommonException 발생하면 GlobalException 포맷으로 변경한다. " {
             // given
             val globalExceptionHandler = GlobalExceptionHandler()
             val commonException = CommonException(CommonExceptionCode.DUPLICATE_EMAIL)
