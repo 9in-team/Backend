@@ -57,7 +57,7 @@ class KakaoAuthenticationFilter(
     override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain, authentication: Authentication) {
         response.status = HttpStatus.OK.value()
         response.contentType = "application/json; charset=UTF-8"
-        response.writer.write(jacksonObjectMapper().writeValueAsString(authentication.details as KakaoUserInfo))
+        response.writer.write(jacksonObjectMapper().writeValueAsString(CommonResponse.okWithDetail(authentication.details)))
     }
 
     override fun unsuccessfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, failed: AuthenticationException) {
