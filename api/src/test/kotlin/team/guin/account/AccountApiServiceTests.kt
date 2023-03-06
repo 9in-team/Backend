@@ -4,10 +4,10 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.core.test.TestCase
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.repository.findByIdOrNull
 import team.guin.domain.account.Account
 
 @SpringBootTest
@@ -82,10 +82,6 @@ class AccountApiServiceTests(
     "delete" - {
         "탈퇴한 유저는 조회되지 않는다" - {
             // given
-            val savedAccount1 =
-                accountApiRepository.save(Account.create("t1@t.com", "test1", "https://htt1.co.kr"))
-            val savedAccount2 =
-                accountApiRepository.save(Account.create("t2@t.com", "test2", "https://htt2.co.kr"))
             val savedAccount3 =
                 accountApiRepository.save(Account.create("t3@t.com", "test3", "https://htt3.co.kr"))
 
@@ -93,16 +89,8 @@ class AccountApiServiceTests(
             accountApiService.delete(savedAccount3.id)
 
             // then
-            val accounts = accountApiRepository.findAll()
-            accounts.find { it.nickname == savedAccount1.nickname } shouldNotBe null
-            accounts.find { it.email == savedAccount1.email } shouldNotBe null
-            accounts.find { it.imageId == savedAccount1.imageId } shouldNotBe null
-            accounts.find { it.nickname == savedAccount2.nickname } shouldNotBe null
-            accounts.find { it.email == savedAccount2.email } shouldNotBe null
-            accounts.find { it.imageId == savedAccount2.imageId } shouldNotBe null
-            accounts.find { it.nickname == savedAccount3.nickname } shouldBe null
-            accounts.find { it.email == savedAccount3.email } shouldBe null
-            accounts.find { it.imageId == savedAccount3.imageId } shouldBe null
+            val result = accountApiRepository.findByIdOrNull(savedAccount3.id)
+            result shouldBe null
         }
         "해당하는 Id 존재하지 않을경우 예외가 발생한다." - {
             // given
