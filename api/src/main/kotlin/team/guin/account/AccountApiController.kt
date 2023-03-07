@@ -1,5 +1,6 @@
 package team.guin.account
 
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -27,5 +28,11 @@ class AccountApiController(
     fun update(@PathVariable id: Long, @RequestBody accountUpdateRequest: AccountUpdateRequest): CommonResponse<AccountDetail> {
         val account = accountApiService.updateInfo(id, accountUpdateRequest.nickname, accountUpdateRequest.imageId)
         return CommonResponse.okWithDetail(AccountDetail(account.email, account.nickname, account.imageId))
+    }
+
+    @DeleteMapping("{id}")
+    fun delete(@PathVariable id: Long): CommonResponse<Unit> {
+        accountApiService.delete(id)
+        return CommonResponse.ok()
     }
 }

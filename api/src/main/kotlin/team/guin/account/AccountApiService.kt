@@ -21,6 +21,11 @@ class AccountApiService(
         return account
     }
 
+    fun delete(id: Long) {
+        val account = this.findById(id)
+        accountApiRepository.deleteById(account.id)
+    }
+
     private fun findById(id: Long): Account {
         return accountApiRepository.findByIdOrNull(id) ?: throw IllegalArgumentException("유저가 존재하지 않습니다.")
     }
