@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.stereotype.Component
 import team.guin.common.CommonResponse
@@ -64,27 +63,5 @@ class KakaoAuthenticationFilter(
         response.status = HttpStatus.UNAUTHORIZED.value()
         response.contentType = "application/json; charset=UTF-8"
         response.writer.write(objectMapper.writeValueAsString(CommonResponse.error("accessToken이 유효하지 않습니다.")))
-    }
-}
-
-class KakaoAuthenticationToken(
-    private val kakaoProfile: KakaoProfile,
-) : Authentication {
-    private val authorities = mutableListOf<GrantedAuthority>()
-    private var authenticated = false
-
-    override fun getName(): String = kakaoProfile.email
-
-    override fun getAuthorities() = authorities
-
-    override fun getCredentials(): Any = Unit
-
-    override fun getDetails() = kakaoProfile
-
-    override fun getPrincipal(): String = kakaoProfile.email
-    override fun isAuthenticated() = authenticated
-
-    override fun setAuthenticated(isAuthenticated: Boolean) {
-        authenticated = isAuthenticated
     }
 }
