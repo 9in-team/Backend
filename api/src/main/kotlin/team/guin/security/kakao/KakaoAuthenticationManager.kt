@@ -12,12 +12,12 @@ class KakaoAuthenticationManager(
     private val accountApiRepository: AccountApiRepository,
 ) : AuthenticationManager {
     override fun authenticate(authentication: Authentication): Authentication {
-        val kakaoUserInfo = authentication.details as KakaoUserInfo
-        print(kakaoUserInfo.nickname)
+        val kakaoProfile = authentication.details as KakaoProfile
+        print(kakaoProfile.nickname)
         val account = accountApiRepository.findByEmail(authentication.name)
-            ?: accountApiRepository.save(Account.create(kakaoUserInfo.email, kakaoUserInfo.nickname, kakaoUserInfo.imageUrl))
+            ?: accountApiRepository.save(Account.create(kakaoProfile.email, kakaoProfile.nickname, kakaoProfile.imageUrl))
 
-        val kakaoAuthenticationToken = KakaoAuthenticationToken(KakaoUserInfo(account.email, account.nickname, account.imageId))
+        val kakaoAuthenticationToken = KakaoAuthenticationToken(KakaoProfile(account.email, account.nickname, account.imageId))
         kakaoAuthenticationToken.authorities.add(SimpleGrantedAuthority(account.accountRole.toString()))
 
         return kakaoAuthenticationToken
