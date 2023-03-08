@@ -26,16 +26,23 @@ class KakaoAuthenticationFilter(
         req: HttpServletRequest,
         res: HttpServletResponse,
     ): Authentication {
-        val request = req.getLoginRequest()
-
-        val accessToken = request.accessToken
-            ?: throw AuthenticationServiceException("Invalid AccessToken")
-
-        val kakaoDetailProfile = kakaoApiService.fetchKakaoDetailProfile(accessToken)
-            ?: throw AuthenticationServiceException("Invalid KakaoUserInfo")
+        val accessToken = getAccessToken(req)
+        val kakaoDetailProfile = getKakaoDetailProfile(accessToken)
 
         val authenticationToken = KakaoAuthenticationToken(AccountProfile.from(kakaoDetailProfile))
         return authenticationManager.authenticate(authenticationToken)
+    }
+
+    private fun getAccessToken(req: HttpServletRequest): String {
+        val mapper = ObjectMapper()
+        val body = req.reader.readText()
+        return mapper.readValue(body, LoginRequest::class.java)?.accessToken
+            ?: throw AuthenticationServiceException("Invalid AccessToken")
+    }
+
+    private fun getKakaoDetailProfile(accessToken: String): KakaoDetailProfile {
+        return kakaoApiService.fetchKakaoDetailProfile(accessToken)
+            ?: throw AuthenticationServiceException("Invalid KakaoUserInfo")
     }
 
     override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain, authentication: Authentication) {
@@ -49,12 +56,6 @@ class KakaoAuthenticationFilter(
         response.contentType = "application/json; charset=UTF-8"
         response.writer.write(objectMapper.writeValueAsString(CommonResponse.error("accessToken이 유효하지 않습니다.")))
     }
-}
-
-fun HttpServletRequest.getLoginRequest(): LoginRequest {
-    val mapper = ObjectMapper()
-    val body = this.reader.readText()
-    return mapper.readValue(body, LoginRequest::class.java)
 }
 
 data class LoginRequest(val accessToken: String?)
