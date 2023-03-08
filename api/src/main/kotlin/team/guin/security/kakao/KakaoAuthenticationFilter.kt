@@ -68,20 +68,20 @@ class KakaoAuthenticationFilter(
 }
 
 class KakaoAuthenticationToken(
-    private val kakaoUserInfo: KakaoUserInfo,
+    private val kakaoProfile: KakaoProfile,
 ) : Authentication {
     private val authorities = mutableListOf<GrantedAuthority>()
     private var authenticated = false
 
-    override fun getName(): String = kakaoUserInfo.email
+    override fun getName(): String = kakaoProfile.email
 
     override fun getAuthorities() = authorities
 
     override fun getCredentials(): Any = Unit
 
-    override fun getDetails() = kakaoUserInfo
+    override fun getDetails() = kakaoProfile
 
-    override fun getPrincipal(): String = kakaoUserInfo.email
+    override fun getPrincipal(): String = kakaoProfile.email
     override fun isAuthenticated() = authenticated
 
     override fun setAuthenticated(isAuthenticated: Boolean) {
