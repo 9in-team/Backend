@@ -4,20 +4,20 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 
 class KakaoAuthenticationToken(
-    private val kakaoProfile: KakaoProfile,
+    private val accountProfile: AccountProfile,
 ) : Authentication {
     private val authorities = mutableListOf<GrantedAuthority>()
     private var authenticated = false
 
-    override fun getName(): String = kakaoProfile.email
+    override fun getName(): String = accountProfile.email
 
     override fun getAuthorities() = authorities
 
     override fun getCredentials(): Any = Unit
 
-    override fun getDetails() = kakaoProfile
+    override fun getDetails() = accountProfile
 
-    override fun getPrincipal(): String = kakaoProfile.email
+    override fun getPrincipal(): String = accountProfile.email
     override fun isAuthenticated() = authenticated
 
     override fun setAuthenticated(isAuthenticated: Boolean) {
