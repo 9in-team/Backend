@@ -8,8 +8,6 @@ import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.stereotype.Component
 import team.guin.common.CommonResponse
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -28,9 +26,9 @@ class KakaoAuthenticationFilter(
         req: HttpServletRequest,
         res: HttpServletResponse,
     ): Authentication {
-        val json = getRequestBody(req)
+        val request = req.getLoginRequest()
 
-        val accessToken = objectMapper.readTree(json).get("accessToken")?.asText()
+        val accessToken = request.accessToken
             ?: throw AuthenticationServiceException("Invalid AccessToken")
 
         val kakaoDetailProfile = kakaoApiService.fetchKakaoDetailProfile(accessToken)
@@ -38,19 +36,6 @@ class KakaoAuthenticationFilter(
 
         val authenticationToken = KakaoAuthenticationToken(AccountProfile.from(kakaoDetailProfile))
         return authenticationManager.authenticate(authenticationToken)
-    }
-
-    private fun getRequestBody(request: HttpServletRequest): String {
-        val inputStream = request.inputStream
-        val reader = BufferedReader(InputStreamReader(inputStream))
-        val stringBuilder = StringBuilder()
-
-        var line: String?
-        while (reader.readLine().also { line = it } != null) {
-            stringBuilder.append(line)
-        }
-
-        return stringBuilder.toString()
     }
 
     override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain, authentication: Authentication) {
@@ -65,3 +50,11 @@ class KakaoAuthenticationFilter(
         response.writer.write(objectMapper.writeValueAsString(CommonResponse.error("accessToken이 유효하지 않습니다.")))
     }
 }
+
+fun HttpServletRequest.getLoginRequest(): LoginRequest {
+    val mapper = ObjectMapper()
+    val body = this.reader.readText()
+    return mapper.readValue(body, LoginRequest::class.java)
+}
+
+data class LoginRequest(val accessToken: String?)
