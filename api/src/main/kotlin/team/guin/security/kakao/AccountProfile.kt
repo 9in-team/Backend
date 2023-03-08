@@ -1,23 +1,33 @@
 package team.guin.security.kakao
 
 import team.guin.domain.account.Account
+import kotlin.properties.Delegates
 
 data class AccountProfile(
-    val id: Long,
     val email: String,
     val nickname: String,
     val imageUrl: String,
 ) {
-    constructor() : this(0L, "", "", "")
+    var id by Delegates.notNull<Long>()
 
     companion object {
-        fun from(account: Account): AccountProfile {
+        fun from(kakaoDetailProfile: KakaoDetailProfile): AccountProfile {
             return AccountProfile(
-                id = account.id,
-                email = account.email,
-                nickname = account.nickname,
-                imageUrl = account.imageUrl,
+                kakaoDetailProfile.email,
+                kakaoDetailProfile.nickname,
+                kakaoDetailProfile.imageUrl,
             )
+        }
+
+        fun from(account: Account): AccountProfile {
+            val accountProfile = AccountProfile(
+                account.email,
+                account.nickname,
+                account.imageId,
+            )
+            accountProfile.id = account.id
+
+            return accountProfile
         }
     }
 }

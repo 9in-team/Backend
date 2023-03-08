@@ -5,7 +5,7 @@ import org.springframework.web.reactive.function.client.WebClient
 
 @Service
 class KakaoApiService {
-    fun fetchKakaoDetailProfile(accessToken: String): KakaoDetailProfile {
+    fun fetchKakaoDetailProfile(accessToken: String): KakaoDetailProfile? {
         val client = WebClient.create()
 
         return client.get()
@@ -13,7 +13,6 @@ class KakaoApiService {
             .header("Authorization", "Bearer $accessToken")
             .retrieve()
             .bodyToMono(KakaoDetailProfile::class.java)
-            .blockOptional()
-            .get()
+            .block()
     }
 }
