@@ -33,10 +33,10 @@ class KakaoAuthenticationFilter(
         val accessToken = objectMapper.readTree(json).get("accessToken")?.asText()
             ?: throw AuthenticationServiceException("Invalid AccessToken")
 
-        val kakaoUserInfo = kakaoApiService.fetchKakaoUserInfo(accessToken)
+        val kakaoDetailProfile = kakaoApiService.fetchKakaoDetailProfile(accessToken)
             ?: throw AuthenticationServiceException("Invalid KakaoUserInfo")
 
-        val authenticationToken = KakaoAuthenticationToken(kakaoUserInfo)
+        val authenticationToken = KakaoAuthenticationToken(AccountProfile.from(kakaoDetailProfile))
         return authenticationManager.authenticate(authenticationToken)
     }
 
