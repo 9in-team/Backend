@@ -1,16 +1,13 @@
 package team.guin.security.kakao
 
-data class KakaoProfile(
+data class KakaoDetailProfile(
     private val id: Int,
     private val kakaoAccount: KakaoAccount,
     private val properties: Properties,
 ) {
-    val email: String
-        get() = kakaoAccount.email
-    val imageUrl: String
-        get() = kakaoAccount.profile.profileImageUrl
-    val nickname: String
-        get() = kakaoAccount.profile.nickname
+    val email = kakaoAccount.email
+    val imageUrl = kakaoAccount.profile.profileImageUrl
+    val nickname = kakaoAccount.profile.nickname
 }
 
 data class KakaoAccount(
