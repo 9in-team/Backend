@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.core.GrantedAuthority
@@ -22,15 +23,9 @@ class KakaoAuthenticationManagerTests(
     "authenticate" - {
         "Account.AccountRole이 Authentication.authorities에 제대로 추가된다" {
             // given
-            withContext(Dispatchers.IO) {
-                accountApiRepository.deleteAll()
-            }
-
-            val account = Account.create("email@a.com", "nickname", "imageUrl")
+            val account = Account.create("email@email.com", "nick", "imageUrl")
             account.accountRole = AccountRole.ADMIN
-            val savedAccount = withContext(Dispatchers.IO) {
-                accountApiRepository.save(account)
-            }
+            val savedAccount = runBlocking { accountApiRepository.save(account) }
 
             val accountProfile = AccountProfile(savedAccount.email, savedAccount.nickname, savedAccount.imageId)
             val beforeAuth = KakaoAuthenticationToken(accountProfile)
@@ -46,12 +41,8 @@ class KakaoAuthenticationManagerTests(
 
         "첫 로그인 시 엔티티를 저장하고 저장한 정보를 불러온다" {
             // given
-            withContext(Dispatchers.IO) {
-                accountApiRepository.deleteAll()
-            }
-
-            val email = "email@a.com"
-            val nickname = "nickname"
+            val email = "email@email.com"
+            val nickname = "nick"
             val imageUrl = "imageUrl"
 
             val accountProfile = AccountProfile(email, nickname, imageUrl)
@@ -62,7 +53,7 @@ class KakaoAuthenticationManagerTests(
 
             // then
             val account = withContext(Dispatchers.IO) {
-                accountApiRepository.findByEmail("email@a.com")
+                accountApiRepository.findByEmail("email@email.com")
             }
             account shouldNotBe null
             account?.nickname shouldBe nickname
@@ -77,14 +68,10 @@ class KakaoAuthenticationManagerTests(
 
         "첫 로그인이 아니라면 엔티티 기존 정보를 불러온다" {
             // given
-            withContext(Dispatchers.IO) {
-                accountApiRepository.deleteAll()
-            }
-
-            val firstProfile = AccountProfile("email@a.com", "nickname", "imageUrl")
+            val firstProfile = AccountProfile("email@email.com", "nick", "imageUrl")
             val firstAuth = KakaoAuthenticationToken(firstProfile)
 
-            val secondProfile = AccountProfile("email@a.com", "bad", "bad")
+            val secondProfile = AccountProfile("email@email.com", "bad", "bad")
             val secondAuth = KakaoAuthenticationToken(secondProfile)
 
             // when
