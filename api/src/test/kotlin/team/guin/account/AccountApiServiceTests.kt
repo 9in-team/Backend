@@ -7,6 +7,7 @@ import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.repository.findByIdOrNull
 import team.guin.domain.account.Account
 
 @SpringBootTest
@@ -17,8 +18,8 @@ class AccountApiServiceTests(
     "join" - {
         "회원정보 입력이 들어오면 엔티티로 만들어 저장한다" {
             // given
-            val email = "a@a.com"
-            val nickname = "nickname"
+            val email = "aa@a.com"
+            val nickname = "nick"
             val imageId = "https://imugr.com/example"
 
             // when
@@ -39,8 +40,8 @@ class AccountApiServiceTests(
     "updateInfo" - {
         "회원이 정보를 변경하면 정보를 업데이트 한다." - {
             // given
-            val email = "a@a.com"
-            val nickname = "nickname"
+            val email = "a1@a.com"
+            val nickname = "nickname1"
             val imageId = "https://imugr.com/example"
             val savedAccount = accountApiRepository.save(Account.create(email, nickname, imageId))
             val changeNickname = "changeNickname"
@@ -70,6 +71,36 @@ class AccountApiServiceTests(
                         id,
                         nickname,
                         imageId,
+                    )
+                }
+
+            // then
+            exception.message shouldBe "유저가 존재하지 않습니다."
+        }
+    }
+
+    "delete" - {
+        "탈퇴한 유저는 조회되지 않는다" - {
+            // given
+            val savedAccount3 =
+                accountApiRepository.save(Account.create("t3@t.com", "test3", "https://htt3.co.kr"))
+
+            // when
+            accountApiService.delete(savedAccount3.id)
+
+            // then
+            val result = accountApiRepository.findByIdOrNull(savedAccount3.id)
+            result shouldBe null
+        }
+        "해당하는 Id 존재하지 않을경우 예외가 발생한다." - {
+            // given
+            val id: Long = -1
+
+            // when
+            val exception =
+                shouldThrow<IllegalArgumentException> {
+                    accountApiService.delete(
+                        id,
                     )
                 }
 

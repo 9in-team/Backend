@@ -79,6 +79,19 @@ class AccountApiRepositoryTests(
             result?.email shouldBe account.email
         }
     }
+    "deleteById" - {
+        "해당하는 Id는 조회를 하게되면 Null을 반환한다." - {
+            // given
+            val account = accountApiRepository.save(Account.create("a@a.com", "nickname", "imageId"))
+
+            // when
+            accountApiRepository.deleteById(account.id)
+
+            // then
+            val findAccount = accountApiRepository.findByIdOrNull(account.id)
+            findAccount shouldBe null
+        }
+    }
 }) {
     override suspend fun beforeAny(testCase: TestCase) {
         withContext(Dispatchers.IO) {
