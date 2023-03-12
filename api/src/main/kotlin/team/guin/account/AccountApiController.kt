@@ -11,6 +11,7 @@ import team.guin.account.dto.AccountDetail
 import team.guin.account.dto.AccountJoinRequest
 import team.guin.account.dto.AccountUpdateRequest
 import team.guin.common.CommonResponse
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/account")
@@ -18,7 +19,10 @@ class AccountApiController(
     private val accountApiService: AccountApiService,
 ) {
     @PostMapping
-    fun join(@RequestBody accountJoinRequest: AccountJoinRequest): CommonResponse<AccountDetail> {
+    fun join(
+        @RequestBody @Valid
+        accountJoinRequest: AccountJoinRequest,
+    ): CommonResponse<AccountDetail> {
         val account = accountApiService.join(accountJoinRequest.email, accountJoinRequest.nickname, accountJoinRequest.imageId)
         val detail = AccountDetail(account.email, account.nickname, account.imageId)
         return CommonResponse.okWithDetail(detail)
