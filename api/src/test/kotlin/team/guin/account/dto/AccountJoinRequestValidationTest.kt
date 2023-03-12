@@ -10,50 +10,60 @@ class AccountJoinRequestValidationTest : FreeSpec({
     lateinit var validator: LocalValidatorFactoryBean
 
     beforeSpec {
-        validator = LocalValidatorFactoryBean()
-        validator.afterPropertiesSet()
+        validator = LocalValidatorFactoryBean().apply {
+            setValidationMessageSource(
+                org.springframework.context.support.ResourceBundleMessageSource().apply {
+                    setBasename("classpath:ValidationMessages_ko")
+                    setDefaultEncoding("UTF-8")
+                },
+            )
+            afterPropertiesSet()
+        }
     }
 
     "email" - {
-        "이메일 형식이 아니면 \"올바른 형식의 이메일 주소여야 합니다\" 을 반환한다" {
-            // given
-            val accounJoinRequest = AccountJoinRequest("test", "testName", "imgId")
-            // when
-            val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accounJoinRequest)
-            // then
-            violations.isNotEmpty() shouldBe true
-            violations.any { it.message == "올바른 형식의 이메일 주소여야 합니다" } shouldBe true
+        val invalidEmail = listOf("test", "@test.com", "test@.com", "test@test.", "test@.test.")
+        invalidEmail.forEach {
+            "이메일 형식이 잘못되면 '올바른 형식의 이메일 주소여야 합니다' 메시지를 반환한다 - $it" {
+                // given
+                val accounJoinRequest = AccountJoinRequest(it, "testName", "imgId")
+                // when
+                val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accounJoinRequest)
+                // then
+                violations.size shouldBe 1
+                violations.first().message shouldBe "올바른 형식의 이메일 주소여야 합니다"
+            }
         }
-        "이메일이 공백이면  \"올바른 형식의 이메일 주소여야 합니다\" 을 반환한다" {
+        "이메일이 공백이면 '공백일 수 없습니다' 메시지를 반환한다" {
             // given
             val accounJoinRequest = AccountJoinRequest("", "testName", "imgId")
             // when
             val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accounJoinRequest)
             // then
-            violations.isNotEmpty() shouldBe true
-            violations.any { it.message == "공백일 수 없습니다" } shouldBe true
+            violations.size shouldBe 1
+            violations.first().message shouldBe "공백일 수 없습니다"
         }
     }
     "nickname" - {
-        "닉네임이 공백이면  \"공백일 수 없습니다\" 을 반환한다" {
+        "닉네임이 공백이면 '공백일 수 없습니다' 메시지를 반환한다" {
             // given
-            val accounJoinRequest = AccountJoinRequest("", "testName", "imgId")
+            val accounJoinRequest = AccountJoinRequest("test@test.com", "", "imgId")
             // when
             val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accounJoinRequest)
             // then
-            violations.isNotEmpty() shouldBe true
-            violations.any { it.message == "공백일 수 없습니다" } shouldBe true
+            violations.size shouldBe 1
+            violations.first().message shouldBe "공백일 수 없습니다"
         }
     }
     "imageId" - {
-        "이미지 URL이 공백이면  \"공백일 수 없습니다\" 을 반환한다" {
+        "이미지 URL이 공백이면 '공백일 수 없습니다' 메시지를 반환한다" {
             // given
-            val accounJoinRequest = AccountJoinRequest("", "testName", "imgId")
+            val accounJoinRequest = AccountJoinRequest("test@test.com", "testName", "")
             // when
             val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accounJoinRequest)
             // then
-            violations.isNotEmpty() shouldBe true
-            violations.any { it.message == "공백일 수 없습니다" } shouldBe true
+            violations.size shouldBe 1
+            violations.first().message shouldBe "공백일 수 없습니다"
         }
     }
 })
