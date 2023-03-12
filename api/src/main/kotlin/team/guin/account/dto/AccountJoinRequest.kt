@@ -1,3 +1,14 @@
 package team.guin.account.dto
 
-data class AccountJoinRequest(val email: String, val nickname: String, val imageId: String)
+import javax.validation.constraints.Email
+import javax.validation.constraints.NotBlank
+
+data class AccountJoinRequest(
+    @field:NotBlank
+    @field:Email
+    val email: String,
+    @field:NotBlank
+    val nickname: String,
+    @field:NotBlank
+    val imageId: String,
+)

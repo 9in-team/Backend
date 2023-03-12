@@ -68,6 +68,7 @@ project(":api") {
         implementation(project(":domain"))
         implementation(project(":web-common"))
         implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation("org.springframework.boot:spring-boot-starter-validation:2.7.5")
         testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
         testImplementation("io.kotest:kotest-assertions-core:5.5.4")
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
