@@ -17,12 +17,12 @@ class AccountJoinRequestValidationTest : FreeSpec({
     "accessToken" - {
         "accessToken이 공백이면  \"공백일수 없습니다.\" 을 반환한다" {
             // given
-            val accounJoinRequest = AccountJoinRequest("")
+            val accounJoinRequest = AccountJoinRequest("test@test.com", "testName", "")
             // when
             val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accounJoinRequest)
             // then
-            violations.isNotEmpty() shouldBe true
-            violations.any { it.message == "공백일 수 없습니다" } shouldBe true
+            violations.size shouldBe 1
+            violations.first().message shouldBe "공백일 수 없습니다"
         }
     }
 })
