@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne
 class TeamRole(
     @ManyToOne(fetch = FetchType.LAZY)
     var team: Team,
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     var roleName: String,
     @Column(nullable = false)
     var roleRequired: Int,

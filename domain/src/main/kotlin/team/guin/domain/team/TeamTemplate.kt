@@ -14,8 +14,8 @@ class TeamTemplate(
     @ManyToOne(fetch = FetchType.LAZY)
     var team: Team,
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     var templateType: TemplateType,
-    @Column(nullable = false)
+    @Column(nullable = false, length = 900)
     var templateQuestion: String,
 ) : BaseEntity()

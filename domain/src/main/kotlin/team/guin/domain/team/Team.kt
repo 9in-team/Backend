@@ -15,6 +15,6 @@ class Team(
     var teamSubject: String,
     @Column(nullable = false)
     var teamContent: String,
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     var teamOpenChatUrl: String,
 ) : BaseEntity()
