@@ -31,7 +31,7 @@ class AccountJoinRequestValidationTest : FreeSpec({
                 val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accounJoinRequest)
                 // then
                 violations.size shouldBe 1
-                violations.first().message shouldBe "올바른 형식의 이메일 주소여야 합니다"
+                violations.first().messageTemplate shouldBe "{javax.validation.constraints.Email.message}"
             }
         }
         "이메일이 공백이면 '공백일 수 없습니다' 메시지를 반환한다" {
@@ -41,7 +41,7 @@ class AccountJoinRequestValidationTest : FreeSpec({
             val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accounJoinRequest)
             // then
             violations.size shouldBe 1
-            violations.first().message shouldBe "공백일 수 없습니다"
+            violations.first().messageTemplate shouldBe "{javax.validation.constraints.NotBlank.message}"
         }
     }
     "nickname" - {
@@ -52,7 +52,7 @@ class AccountJoinRequestValidationTest : FreeSpec({
             val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accounJoinRequest)
             // then
             violations.size shouldBe 1
-            violations.first().message shouldBe "공백일 수 없습니다"
+            violations.first().messageTemplate shouldBe "{javax.validation.constraints.NotBlank.message}"
         }
     }
     "imageId" - {
@@ -63,7 +63,7 @@ class AccountJoinRequestValidationTest : FreeSpec({
             val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accounJoinRequest)
             // then
             violations.size shouldBe 1
-            violations.first().message shouldBe "공백일 수 없습니다"
+            violations.first().messageTemplate shouldBe "{javax.validation.constraints.NotBlank.message}"
         }
     }
 })
