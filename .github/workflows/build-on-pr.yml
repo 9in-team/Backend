@@ -55,6 +55,7 @@ jobs:
         if: ${{ always() }} # 테스트가 실패하여도 Report를 보기 위해 `always`로 설정
         with:
           files: '**/test-results/test/TEST-*.xml'
+          display-details: true
 
       - name: Cleanup Gradle cache
         # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
