@@ -5,4 +5,4 @@ import team.guin.domain.baseentity.BaseRepository
 import team.guin.domain.team.TemplateOption
 
 @Repository
-interface TemplateOptionRepository : BaseRepository<TemplateOption, Long>
+interface TemplateOptionApiRepository : BaseRepository<TemplateOption, Long>
