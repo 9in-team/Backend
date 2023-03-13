@@ -4,4 +4,5 @@ include(
     "api",
     "domain",
     "web-common",
+    "test",
 )

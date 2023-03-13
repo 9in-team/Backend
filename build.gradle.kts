@@ -107,3 +107,22 @@ project(":web-common") {
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
     }
 }
+
+project(":test") {
+    tasks.getByName("bootJar") {
+        enabled = true
+    }
+
+    tasks.getByName("jar") {
+        enabled = false
+    }
+
+    dependencies {
+        implementation(project(":domain"))
+        implementation(project(":web-common"))
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
+        testImplementation("io.kotest:kotest-assertions-core:5.5.4")
+        testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
+    }
+}
