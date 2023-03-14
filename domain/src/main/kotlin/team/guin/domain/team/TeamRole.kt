@@ -15,5 +15,5 @@ class TeamRole(
     @Column(nullable = false)
     var roleRequired: Int,
     @Column(nullable = false)
-    var roleHired: Int,
+    var roleHired: Int = 0,
 ) : BaseEntity()
