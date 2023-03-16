@@ -5,10 +5,9 @@ import java.time.LocalDateTime.now
 
 data class ErrorResponse(
     val timestamp: LocalDateTime,
-    val status: Int,
     val error: String,
     val message: Map<String, String>?,
 ) {
-    constructor(status: Int, error: String) : this(now(), status, error, emptyMap())
-    constructor(status: Int, error: String, message: Map<String, String>?) : this(now(), status, error, message)
+    constructor(error: String) : this(now(), error, emptyMap())
+    constructor(error: String, message: Map<String, String>?) : this(now(), error, message)
 }

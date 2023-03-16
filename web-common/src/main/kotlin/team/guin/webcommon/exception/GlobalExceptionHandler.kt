@@ -3,7 +3,6 @@ package team.guin.webcommon.exception
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.FieldError
@@ -28,7 +27,6 @@ class GlobalExceptionHandler {
             else -> "JSON 파일 중 알 수 없는 오류가 발생하였습니다."
         }
         val errorResponse = ErrorResponse(
-            HttpStatus.BAD_REQUEST.value(),
             error,
         )
         return ResponseEntity.badRequest().body(errorResponse)
@@ -44,7 +42,6 @@ class GlobalExceptionHandler {
         }.toMap()
 
         val errorResponse = ErrorResponse(
-            HttpStatus.BAD_REQUEST.value(),
             "Validation Failed",
             errors,
         )
@@ -54,7 +51,6 @@ class GlobalExceptionHandler {
     @ExceptionHandler(CommonException::class)
     fun handleCommonException(e: CommonException): ResponseEntity<ErrorResponse> {
         val errorResponse = ErrorResponse(
-            e.exceptionCode.status.value(),
             e.exceptionCode.message,
         )
         return ResponseEntity(errorResponse, e.exceptionCode.status)
