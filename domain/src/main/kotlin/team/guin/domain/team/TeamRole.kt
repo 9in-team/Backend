@@ -16,4 +16,14 @@ class TeamRole(
     var roleRequired: Int,
     @Column(nullable = false)
     var roleHired: Int = 0,
-) : BaseEntity()
+) : BaseEntity() {
+    companion object {
+        fun create(team: Team, roleName: String, roleRequired: Int): TeamRole {
+            return TeamRole(
+                team = team,
+                roleName = roleName,
+                roleRequired = roleRequired,
+            )
+        }
+    }
+}

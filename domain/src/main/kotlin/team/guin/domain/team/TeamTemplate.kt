@@ -18,4 +18,14 @@ class TeamTemplate(
     var templateType: TemplateType,
     @Column(nullable = false, length = 900)
     var templateQuestion: String,
-) : BaseEntity()
+) : BaseEntity() {
+    companion object {
+        fun create(team: Team, templateType: TemplateType, templateQuestion: String): TeamTemplate {
+            return TeamTemplate(
+                team = team,
+                templateType = templateType,
+                templateQuestion = templateQuestion,
+            )
+        }
+    }
+}

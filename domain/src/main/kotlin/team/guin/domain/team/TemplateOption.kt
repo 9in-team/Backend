@@ -11,5 +11,5 @@ class TemplateOption(
     @ManyToOne(fetch = FetchType.LAZY)
     var teamTemplate: TeamTemplate,
     @Column(nullable = false, length = 150)
-    var optionName: String,
+    var optionName: String, // ENUM
 ) : BaseEntity()

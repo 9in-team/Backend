@@ -13,5 +13,11 @@ class HashTag(
     var hashTagName: String,
     @Column(nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
-    var studyHashTag: HashTagType,
-) : BaseEntity()
+    var hashtagType: HashTagType,
+) : BaseEntity() {
+    companion object {
+        fun create(hashTagName: String, hashTagType: HashTagType): HashTag {
+            return HashTag(hashTagName, hashTagType)
+        }
+    }
+}
