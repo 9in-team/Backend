@@ -25,8 +25,8 @@ class TeamApiServiceTest(
     private val templateOptionApiRepository: TemplateOptionApiRepository,
 
 ) : FreeSpec({
-    "팀장이 모집글을 작성을 하면 팀이 생성된다." - {
-        "createTeam" - {
+    "createTeam" - {
+        "팀장이 모집글을 작성을 하면 팀이 생성된다." - {
             // given
             val account = Account.create("test@email.com", "nickname", "http://www.wwwwww")
             accountApiRepository.save(account)
@@ -56,9 +56,7 @@ class TeamApiServiceTest(
             findTemplateOption.find { it.optionName == "예" } shouldNotBe null
             findTemplateOption.find { it.optionName == "아니오" } shouldNotBe null
         }
-    }
-    "팀을 만들려는 유저ID가 존재하지 않으면 예외가 발생한다" - {
-        "createTeam" - {
+        "팀을 만들려는 유저ID가 존재하지 않으면 예외가 발생한다" - {
             // given
             val teamCreate = createTeamRequest()
 
