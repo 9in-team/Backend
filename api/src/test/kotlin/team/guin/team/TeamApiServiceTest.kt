@@ -28,7 +28,7 @@ class TeamApiServiceTest(
     "createTeam" - {
         "팀장이 모집글을 작성을 하면 팀이 생성된다." - {
             // given
-            val account = Account.create("test@email.com", "nickname", "http://www.wwwwww")
+            val account = Account.create("test12@email.com", "nickname12", "http://www.wwwwww")
             accountApiRepository.save(account)
             val teamCreate = createTeamRequest()
 
