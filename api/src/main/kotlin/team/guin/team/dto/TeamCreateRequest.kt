@@ -4,21 +4,23 @@ import team.guin.domain.team.dto.TeamCreate
 import team.guin.domain.team.enumeration.HashTagType
 
 data class TeamCreateRequest(
-    val type: HashTagType,
     val subject: String,
-    val hashTags: MutableList<String>,
-    val teamCreateRoles: MutableList<TeamCreateRoleRequest>,
     val content: String,
-    val teamTemplate: MutableList<TeamCreateTemplateRequest>,
     val messengerLink: String,
+    val teamTemplates: List<TeamCreateTemplateRequest>,
+    val hashTags: List<String>,
+    val type: HashTagType,
+    val teamRoles: List<TeamCreateRoleRequest>,
 ) {
     fun toDomain(): TeamCreate {
         return TeamCreate(
-            type = this.type,
-            subject = this.subject,
-            hashTags = this.hashTags,
-            content = this.content,
-            messengerLink = this.messengerLink,
+            teamSubject = subject,
+            teamContent = content,
+            teamTemplates = teamTemplates.map { it.toDomain() },
+            teamOpenChatUrl = messengerLink,
+            hashTags = hashTags,
+            hashtagType = type,
+            teamRoles = teamRoles.map { it.toDomain() },
         )
     }
 }
