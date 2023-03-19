@@ -76,7 +76,7 @@ class TeamApiServiceTest(
     }
 })
 
-fun createTeamRequest(): TeamCreate {
+private fun createTeamRequest(): TeamCreate {
     val hashTagType = HashTagType.PROJECT
     val subject = "스프링 프로젝트"
     val hashTags = mutableListOf("스프링", "코틀린")
