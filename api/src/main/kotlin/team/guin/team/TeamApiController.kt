@@ -18,10 +18,8 @@ class TeamApiController(
     @PostMapping("{id}")
     fun createTeam(@PathVariable id: Long, @RequestBody teamCreateRequest: TeamCreateRequest): CommonResponse<TeamCreateDetail> {
         val createTeam = teamApiService.createTeam(
-            id,
+            accountId = id,
             teamCreate = teamCreateRequest.toDomain(),
-            teamCreateTemplateRequests = teamCreateRequest.teamTemplate,
-            teamCreateRoles = teamCreateRequest.teamCreateRoles,
         )
         return CommonResponse.okWithDetail(TeamCreateDetail(createTeam.id))
     }
