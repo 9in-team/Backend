@@ -1,5 +1,6 @@
 package team.guin.team
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -8,10 +9,10 @@ import org.springframework.data.repository.findByIdOrNull
 import team.guin.account.AccountApiRepository
 import team.guin.domain.account.Account
 import team.guin.domain.team.dto.TeamCreate
+import team.guin.domain.team.dto.TeamRoleCreate
+import team.guin.domain.team.dto.TeamTemplateCreate
 import team.guin.domain.team.enumeration.HashTagType
 import team.guin.domain.team.enumeration.TemplateType
-import team.guin.team.dto.TeamCreateRoleRequest
-import team.guin.team.dto.TeamCreateTemplateRequest
 
 @SpringBootTest
 class TeamApiServiceTest(
@@ -29,31 +30,12 @@ class TeamApiServiceTest(
             // given
             val account = Account.create("test@email.com", "nickname", "http://www.wwwwww")
             accountApiRepository.save(account)
-            val hashTagType = HashTagType.PROJECT
-            val subject = "스프링 프로젝트"
-            val hashTags = mutableListOf("스프링", "코틀린")
-            val content = "test"
-            val openChattingLink = "http://9in-open-chat"
-            val teamCreate = TeamCreate(
-                type = hashTagType,
-                subject = subject,
-                hashTags = hashTags,
-                content = content,
-                messengerLink = openChattingLink,
-            )
-            var teamCreateRoles: MutableList<TeamCreateRoleRequest> =
-                mutableListOf(TeamCreateRoleRequest("백엔드", 3), TeamCreateRoleRequest("프론트", 2))
-            var teamCreateTemplate: MutableList<TeamCreateTemplateRequest> = mutableListOf(
-                TeamCreateTemplateRequest(TemplateType.TEXT, "테스트"),
-                TeamCreateTemplateRequest(TemplateType.RADIOBOX, "라디오테스트", mutableListOf("예", "아니오")),
-            )
+            val teamCreate = createTeamRequest()
 
             // when
             val createTeam = teamApiService.createTeam(
                 accountId = account.id,
                 teamCreate = teamCreate,
-                teamCreateRoles = teamCreateRoles,
-                teamCreateTemplateRequests = teamCreateTemplate,
             )
 
             // then
@@ -75,4 +57,45 @@ class TeamApiServiceTest(
             findTemplateOption.find { it.optionName == "아니오" } shouldNotBe null
         }
     }
+    "팀을 만들려는 유저ID가 존재하지 않으면 예외가 발생한다" - {
+        "createTeam" - {
+            // given
+            val teamCreate = createTeamRequest()
+
+            // when
+            val exception = shouldThrow<IllegalArgumentException> {
+                teamApiService.createTeam(
+                    -1,
+                    teamCreate,
+                )
+            }
+
+            // then
+            exception.message shouldBe "유저 없음"
+        }
+    }
 })
+
+fun createTeamRequest(): TeamCreate {
+    val hashTagType = HashTagType.PROJECT
+    val subject = "스프링 프로젝트"
+    val hashTags = mutableListOf("스프링", "코틀린")
+    val content = "test"
+    val openChattingLink = "http://9in-open-chat"
+    var teamCreateRoles: List<TeamRoleCreate> =
+        listOf(TeamRoleCreate("백엔드", 3), TeamRoleCreate("프론트", 2))
+    var teamCreateTemplate: List<TeamTemplateCreate> = listOf(
+        TeamTemplateCreate(TemplateType.TEXT, "테스트"),
+        TeamTemplateCreate(TemplateType.RADIOBOX, "라디오테스트", mutableListOf("예", "아니오")),
+    )
+
+    return TeamCreate(
+        hashtagType = hashTagType,
+        teamSubject = subject,
+        hashTags = hashTags,
+        teamContent = content,
+        teamOpenChatUrl = openChattingLink,
+        teamTemplates = teamCreateTemplate,
+        teamRoles = teamCreateRoles,
+    )
+}
