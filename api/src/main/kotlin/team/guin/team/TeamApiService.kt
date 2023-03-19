@@ -10,15 +10,12 @@ import team.guin.domain.team.TeamRole
 import team.guin.domain.team.TeamTemplate
 import team.guin.domain.team.TemplateOption
 import team.guin.domain.team.dto.TeamCreate
-import team.guin.team.dto.TeamCreateRoleRequest
-import team.guin.team.dto.TeamCreateTemplateRequest
 
 @Service
 class TeamApiService(
     private val teamApiRepository: TeamApiRepository,
     private val accountApiRepository: AccountApiRepository,
     private val teamRoleApiRepository: TeamRoleApiRepository,
-    private val teamTemplateApiRepository: TeamTemplateApiRepository,
     private val hashTagApiRepository: HashTagApiRepository,
     private val templateOptionApiRepository: TemplateOptionApiRepository,
     private val teamHashTagApiRepository: TeamHashTagApiRepository,
@@ -28,29 +25,52 @@ class TeamApiService(
     fun createTeam(
         accountId: Long,
         teamCreate: TeamCreate,
-        teamCreateRoles: MutableList<TeamCreateRoleRequest>,
-        teamCreateTemplateRequests: MutableList<TeamCreateTemplateRequest>,
     ): Team {
         val account = accountApiRepository.findByIdOrNull(accountId) ?: throw IllegalArgumentException("유저 없음")
+        val team = Team.create(
+            account = account,
+            teamSubject = teamCreate.teamSubject,
+            teamContent = teamCreate.teamContent,
+            teamOpenChatUrl = teamCreate.teamOpenChatUrl,
+        )
 
-        val savedTeam = teamApiRepository.save(Team(account, teamCreate.subject, teamCreate.content, teamCreate.messengerLink))
-        val teamRoles = teamCreateRoles.map { TeamRole(team = savedTeam, roleName = it.roleName, roleRequired = it.roleRequired) }.toList()
-        teamRoleApiRepository.saveAll(teamRoles)
-        var templateOptionList: MutableList<TemplateOption> = mutableListOf()
-        var teamTemplateList: MutableList<TeamTemplate> = mutableListOf()
-        for (teamCreateTemplateRequest in teamCreateTemplateRequests) {
-            val teamTemplate = TeamTemplate(savedTeam, teamCreateTemplateRequest.type, teamCreateTemplateRequest.question)
-            teamTemplateList.add(teamTemplate)
-            if (teamCreateTemplateRequest.options != null) {
-                teamCreateTemplateRequest.options.forEach { templateOptionList.add(TemplateOption(teamTemplate, it)) }
-            }
+        val roles = teamCreate.teamRoles.map {
+            TeamRole.create(
+                team = team,
+                roleName = it.roleName,
+                roleRequired = it.roleRequired,
+            )
         }
-        teamTemplateApiRepository.saveAll(teamTemplateList)
-        templateOptionApiRepository.saveAll(templateOptionList)
-        val hashTags = teamCreate.hashTags.map { HashTag(it, teamCreate.type) }.toList()
+        val teamHashTag: MutableList<TeamHashTag> = mutableListOf()
+
+        val hashTags = teamCreate.hashTags.map {
+            val hashTag = HashTag.create(
+                hashTagName = it,
+                hashTagType = teamCreate.hashtagType,
+            )
+            teamHashTag.add(TeamHashTag(hashTag, team))
+            hashTag
+        }
+        var options: MutableList<TemplateOption> = mutableListOf()
+        val templates = teamCreate.teamTemplates.map {
+            val template = TeamTemplate.create(
+                team = team,
+                templateType = it.templateType,
+                templateQuestion = it.templateQuestion,
+            )
+            if (it.options != null) {
+                options = it.options!!.map { TemplateOption(template, it) }.toMutableList()
+            }
+            template
+        }
+
+        team.teamTemplates?.addAll(templates)
+
+        val savedTeam = teamApiRepository.save(team) // 팀 생성
+        teamRoleApiRepository.saveAll(roles)
         hashTagApiRepository.saveAll(hashTags)
-        val teamHashTagList = hashTags.map { TeamHashTag(it, savedTeam) }.toList()
-        teamHashTagApiRepository.saveAll(teamHashTagList)
+        teamHashTagApiRepository.saveAll(teamHashTag)
+        templateOptionApiRepository.saveAll(options)
         return savedTeam
     }
 }
