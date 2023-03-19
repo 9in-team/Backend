@@ -3,9 +3,12 @@ package team.guin.domain.team.dto
 import team.guin.domain.team.enumeration.HashTagType
 
 data class TeamCreate(
-    val type: HashTagType,
-    val subject: String,
-    val hashTags: MutableList<String>,
-    val content: String,
-    var messengerLink: String,
+    val teamSubject: String,
+    val teamContent: String,
+    val teamOpenChatUrl: String,
+    val teamTemplates: List<TeamTemplateCreate>,
+    val hashTags: List<String>,
+    val hashtagType: HashTagType,
+    val teamRoles: List<TeamRoleCreate>,
+    // val teamRole: List<TeamRole>,
 )
