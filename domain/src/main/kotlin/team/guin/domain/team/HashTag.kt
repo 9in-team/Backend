@@ -10,10 +10,10 @@ import javax.persistence.Enumerated
 @Entity
 class HashTag(
     @Column(nullable = false, length = 20)
-    var hashTagName: String,
+    var name: String,
     @Column(nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
-    var hashtagType: HashTagType,
+    var type: HashTagType,
 ) : BaseEntity() {
     companion object {
         fun create(hashTagName: String, hashTagType: HashTagType): HashTag {

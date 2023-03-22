@@ -14,21 +14,36 @@ class Team(
     @ManyToOne(fetch = FetchType.LAZY)
     var account: Account,
     @Column(nullable = false)
-    var teamSubject: String,
+    var subject: String,
     @Column(nullable = false)
-    var teamContent: String,
+    var content: String,
     @Column(nullable = false, length = 500)
-    var teamOpenChatUrl: String,
-    @OneToMany(mappedBy = "team", cascade = [CascadeType.ALL], orphanRemoval = true)
-    var teamTemplates: MutableList<TeamTemplate>? = mutableListOf(),
+    var openChatUrl: String,
+    @OneToMany(mappedBy = "team", orphanRemoval = true, cascade = [CascadeType.ALL])
+    var templates: MutableList<TeamTemplate>,
+    @OneToMany(mappedBy = "team", orphanRemoval = true, cascade = [CascadeType.ALL])
+    var roles: MutableList<TeamRole>,
+    // @OneToMany(mappedBy = "team")
+    // var hashTags: MutableList<TeamHashTag>,
 ) : BaseEntity() {
     companion object {
-        fun create(account: Account, teamSubject: String, teamContent: String, teamOpenChatUrl: String): Team {
+        fun create(
+            account: Account,
+            teamSubject: String,
+            teamContent: String,
+            teamOpenChatUrl: String,
+            teamTemplates: List<TeamTemplate>,
+            roles: List<TeamRole>,
+            //  teamHashTag: List<TeamHashTag>,
+        ): Team {
             return Team(
                 account = account,
-                teamSubject = teamSubject,
-                teamContent = teamContent,
-                teamOpenChatUrl = teamOpenChatUrl,
+                subject = teamSubject,
+                content = teamContent,
+                openChatUrl = teamOpenChatUrl,
+                templates = teamTemplates.toMutableList(),
+                roles = roles.toMutableList(),
+                // hashTags = teamHashTag.toMutableList(),
             )
         }
     }

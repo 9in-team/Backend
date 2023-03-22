@@ -9,21 +9,11 @@ import javax.persistence.ManyToOne
 @Entity
 class TeamRole(
     @ManyToOne(fetch = FetchType.LAZY)
-    var team: Team,
+    var team: Team? = null,
     @Column(nullable = false, length = 30)
-    var roleName: String,
+    var name: String,
     @Column(nullable = false)
-    var roleRequired: Int,
+    var required: Int,
     @Column(nullable = false)
-    var roleHired: Int = 0,
-) : BaseEntity() {
-    companion object {
-        fun create(team: Team, roleName: String, roleRequired: Int): TeamRole {
-            return TeamRole(
-                team = team,
-                roleName = roleName,
-                roleRequired = roleRequired,
-            )
-        }
-    }
-}
+    var hired: Int = 0,
+) : BaseEntity()

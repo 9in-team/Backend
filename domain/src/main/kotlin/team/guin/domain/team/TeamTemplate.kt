@@ -12,20 +12,10 @@ import javax.persistence.ManyToOne
 @Entity
 class TeamTemplate(
     @ManyToOne(fetch = FetchType.LAZY)
-    var team: Team,
+    var team: Team? = null,
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    var templateType: TemplateType,
+    var type: TemplateType,
     @Column(nullable = false, length = 900)
-    var templateQuestion: String,
-) : BaseEntity() {
-    companion object {
-        fun create(team: Team, templateType: TemplateType, templateQuestion: String): TeamTemplate {
-            return TeamTemplate(
-                team = team,
-                templateType = templateType,
-                templateQuestion = templateQuestion,
-            )
-        }
-    }
-}
+    var question: String,
+) : BaseEntity()
