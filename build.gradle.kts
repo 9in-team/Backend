@@ -69,6 +69,7 @@ project(":api") {
         implementation(project(":web-common"))
         implementation("org.springframework.boot:spring-boot-starter-web")
         implementation("io.springfox:springfox-swagger-ui:3.0.0")
+        implementation("org.springdoc:springdoc-openapi-kotlin:1.6.9")
         implementation("io.springfox:springfox-boot-starter:3.0.0")
         testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
         testImplementation("io.kotest:kotest-assertions-core:5.5.4")
@@ -105,6 +106,7 @@ project(":web-common") {
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter-web")
         implementation("io.springfox:springfox-swagger-ui:3.0.0")
+        implementation("org.springdoc:springdoc-openapi-kotlin:1.6.9")
         implementation("io.springfox:springfox-boot-starter:3.0.0")
         testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
         testImplementation("io.kotest:kotest-assertions-core:5.5.4")
