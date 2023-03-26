@@ -1,5 +1,6 @@
 package team.guin.example
 
+import ExampleCreateRequest
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import team.guin.domain.example.Example
-import team.guin.example.dto.ExampleCreateRequest
 
 @RequestMapping("/example")
 @RestController
