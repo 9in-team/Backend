@@ -7,8 +7,8 @@ import team.guin.webcommon.exception.CommonException
 import team.guin.webcommon.exception.CommonExceptionCode
 
 @RestController
-@RequestMapping("/common/example")
+@RequestMapping("/common/example/exception/")
 class ExampleExceptionController {
-    @GetMapping("/exception/duplicate")
-    fun returnDuplicateException(): CommonException = throw CommonException(CommonExceptionCode.DUPLICATE_EMAIL)
+    @GetMapping("duplicate")
+    fun returnDuplicateException(): CommonException = throw CommonException(CommonExceptionCode.DUPLICATE_ACCOUNT_EMAIL)
 }
