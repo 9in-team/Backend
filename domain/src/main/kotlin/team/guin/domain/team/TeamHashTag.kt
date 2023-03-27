@@ -8,7 +8,18 @@ import javax.persistence.ManyToOne
 @Entity
 class TeamHashTag(
     @ManyToOne(fetch = FetchType.LAZY)
-    var hashTag: HashTag,
-    @ManyToOne(fetch = FetchType.LAZY)
     var team: Team,
-) : BaseEntity()
+    @ManyToOne(fetch = FetchType.LAZY)
+    var hashTag: HashTag,
+
+) : BaseEntity() {
+
+    companion object {
+        fun create(team: Team, hashTag: HashTag): TeamHashTag {
+            return TeamHashTag(
+                team = team,
+                hashTag = hashTag,
+            )
+        }
+    }
+}
