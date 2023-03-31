@@ -7,18 +7,25 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
-import javax.persistence.JoinColumn
-import javax.persistence.OneToMany
+import javax.persistence.Index
+import javax.persistence.Table
 
 @Entity
+@Table(indexes = [Index(name = "hash_tag_idx", columnList = "type")])
 class HashTag(
     @Column(nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     var subjectType: SubjectType,
     @Column(nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
-    var type: TagType,
-    @OneToMany
-    @JoinColumn(name = "hash_tag_id")
-    var teamHashTag: MutableList<TeamHashTag>? = null,
-) : BaseEntity()
+    var type: TagType, // index
+) : BaseEntity() {
+    companion object {
+        fun create(subjectType: SubjectType, type: TagType): HashTag {
+            return HashTag(
+                subjectType = subjectType,
+                type = type,
+            )
+        }
+    }
+}
