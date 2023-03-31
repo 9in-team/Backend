@@ -6,6 +6,7 @@ import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType
+import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
 
@@ -19,31 +20,34 @@ class Team(
     var content: String,
     @Column(nullable = false, length = 500)
     var openChatUrl: String,
-    @OneToMany(mappedBy = "team", orphanRemoval = true, cascade = [CascadeType.ALL])
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "team_id")
     var templates: MutableList<TeamTemplate>,
-    @OneToMany(mappedBy = "team", orphanRemoval = true, cascade = [CascadeType.ALL])
+    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JoinColumn(name = "team_id")
     var roles: MutableList<TeamRole>,
-    // @OneToMany(mappedBy = "team")
-    // var hashTags: MutableList<TeamHashTag>,
+    @OneToMany(cascade = [CascadeType.ALL])
+    @JoinColumn(name = "team_id")
+    var hashTags: MutableList<HashTag>,
 ) : BaseEntity() {
     companion object {
         fun create(
             account: Account,
-            teamSubject: String,
-            teamContent: String,
-            teamOpenChatUrl: String,
-            teamTemplates: List<TeamTemplate>,
+            subject: String,
+            content: String,
+            openChatUrl: String,
+            templates: List<TeamTemplate>,
             roles: List<TeamRole>,
-            //  teamHashTag: List<TeamHashTag>,
+            hashTags: MutableList<HashTag>,
         ): Team {
             return Team(
                 account = account,
-                subject = teamSubject,
-                content = teamContent,
-                openChatUrl = teamOpenChatUrl,
-                templates = teamTemplates.toMutableList(),
+                subject = subject,
+                content = content,
+                openChatUrl = openChatUrl,
+                templates = templates.toMutableList(),
                 roles = roles.toMutableList(),
-                // hashTags = teamHashTag.toMutableList(),
+                hashTags = hashTags,
             )
         }
     }
