@@ -6,14 +6,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
-import team.guin.domain.account.enumeration.AccountRole
-import team.guin.security.kakao.KakaoAuthenticationFilter
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig(
-    private val kakaoAuthenticationFilter: KakaoAuthenticationFilter,
-) {
+class SecurityConfig {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         return http
@@ -26,12 +22,11 @@ class SecurityConfig(
             .csrf().disable()
             .authorizeHttpRequests()
             .antMatchers("/login").permitAll()
-            .antMatchers("/example/**").permitAll()
-            .antMatchers("/api/**").hasRole(AccountRole.USER.toString())
-            .antMatchers("/api/admin").hasRole(AccountRole.ADMIN.toString())
+            .antMatchers("/**").permitAll()
+//            .antMatchers("/api/**").hasRole(AccountRole.USER.toString())
+//            .antMatchers("/api/admin").hasRole(AccountRole.ADMIN.toString())
             .anyRequest().authenticated()
             .and()
-            .addFilter(kakaoAuthenticationFilter)
             .build()
     }
 }
