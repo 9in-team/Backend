@@ -1,10 +1,16 @@
 package team.guin.security.kakao
 
+import team.guin.domain.account.Account
+
 data class KakaoDetailProfile(
     private val id: Long,
     private val properties: Properties?,
     private val kakao_account: KakaoAccount,
 ) {
+    fun toEntity(): Account {
+        return Account.create(email = this.email, nickname = this.nickname, imageId = this.imageUrl)
+    }
+
     val email = kakao_account.email
     val imageUrl = kakao_account.profile.profile_image_url
     val nickname = kakao_account.profile.nickname
