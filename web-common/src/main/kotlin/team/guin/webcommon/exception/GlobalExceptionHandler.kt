@@ -26,7 +26,7 @@ class GlobalExceptionHandler {
 
             else -> "JSON 파일 중 알 수 없는 오류가 발생하였습니다."
         }
-        val errorResponse = ErrorResponse(
+        val errorResponse = ErrorResponse.create(
             error,
         )
         return ResponseEntity.badRequest().body(errorResponse)
@@ -41,7 +41,7 @@ class GlobalExceptionHandler {
             }
         }.toMap()
 
-        val errorResponse = ErrorResponse(
+        val errorResponse = ErrorResponse.createWithMessage(
             "Validation Failed",
             errors,
         )
@@ -50,7 +50,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(CommonException::class)
     fun handleCommonException(e: CommonException): ResponseEntity<ErrorResponse> {
-        val errorResponse = ErrorResponse(
+        val errorResponse = ErrorResponse.create(
             e.exceptionCode.message,
         )
         return ResponseEntity(errorResponse, e.exceptionCode.status)

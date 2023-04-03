@@ -6,8 +6,15 @@ import java.time.LocalDateTime.now
 data class ErrorResponse(
     val timestamp: LocalDateTime,
     val error: String,
-    val message: Map<String, String>?,
+    val message: Map<String, String>,
 ) {
-    constructor(error: String) : this(now(), error, emptyMap())
-    constructor(error: String, message: Map<String, String>?) : this(now(), error, message)
+    companion object {
+        fun createWithMessage(error: String, message: Map<String, String>): ErrorResponse {
+            return ErrorResponse(now(), error, message)
+        }
+
+        fun create(error: String): ErrorResponse {
+            return createWithMessage(error, emptyMap())
+        }
+    }
 }
