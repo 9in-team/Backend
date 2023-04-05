@@ -7,7 +7,7 @@ import javax.persistence.Entity
 @Entity
 class TemplateOption(
     @Column(nullable = false, length = 150)
-    var name: String, // ENUM
+    var name: String,
 ) : BaseEntity() {
     companion object {
         fun create(

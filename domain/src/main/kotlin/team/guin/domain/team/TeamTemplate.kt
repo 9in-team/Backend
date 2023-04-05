@@ -17,7 +17,7 @@ class TeamTemplate(
     var type: TemplateType,
     @Column(nullable = false, length = 900)
     var question: String,
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(cascade = [CascadeType.ALL])
     @JoinColumn(name = "team_template_id")
-    var options: MutableList<TemplateOption>,
+    var options: MutableList<TemplateOption> = mutableListOf(),
 ) : BaseEntity()
