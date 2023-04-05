@@ -13,41 +13,41 @@ import javax.persistence.OneToMany
 @Entity
 class Team(
     @ManyToOne(fetch = FetchType.LAZY)
-    var account: Account,
+    var leader: Account,
     @Column(nullable = false)
     var subject: String,
     @Column(nullable = false)
     var content: String,
     @Column(nullable = false, length = 500)
     var openChatUrl: String,
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(cascade = [CascadeType.PERSIST, CascadeType.REMOVE])
     @JoinColumn(name = "team_id")
     var templates: MutableList<TeamTemplate>,
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(cascade = [CascadeType.PERSIST, CascadeType.REMOVE])
     @JoinColumn(name = "team_id")
-    var roles: MutableList<TeamRole>,
-    @OneToMany(cascade = [CascadeType.ALL])
+    var parts: MutableList<TeamPart>,
+    @OneToMany(cascade = [CascadeType.PERSIST, CascadeType.REMOVE])
     @JoinColumn(name = "team_id")
     var hashTags: MutableList<HashTag>,
 ) : BaseEntity() {
     companion object {
         fun create(
-            account: Account,
+            leader: Account,
             subject: String,
             content: String,
             openChatUrl: String,
             templates: List<TeamTemplate>,
-            roles: List<TeamRole>,
-            hashTags: MutableList<HashTag>,
+            parts: List<TeamPart>,
+            hashTags: List<HashTag>,
         ): Team {
             return Team(
-                account = account,
+                leader = leader,
                 subject = subject,
                 content = content,
                 openChatUrl = openChatUrl,
                 templates = templates.toMutableList(),
-                roles = roles.toMutableList(),
-                hashTags = hashTags,
+                parts = parts.toMutableList(),
+                hashTags = hashTags.toMutableList(),
             )
         }
     }
