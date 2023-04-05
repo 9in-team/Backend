@@ -18,7 +18,6 @@ import team.guin.util.createAccount
 class TeamApiServiceTest(
     private val accountApiRepository: AccountApiRepository,
     private val teamApiService: TeamApiService,
-    private val teamApiRepository: TeamApiRepository,
 ) : FreeSpec({
     "create" - {
         "템플릿, 해시태그, 역할, 주제, 오픈채팅 주소를 작성하면 팀이 생성된다." - {
