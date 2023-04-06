@@ -8,7 +8,6 @@ import team.guin.account.AccountApiRepository
 import team.guin.domain.team.HashTag
 import team.guin.domain.team.TeamPart
 import team.guin.domain.team.TeamTemplate
-import team.guin.domain.team.TemplateOption
 import team.guin.domain.team.dto.TeamCreate
 import team.guin.domain.team.enumeration.SubjectType
 import team.guin.domain.team.enumeration.TagType
@@ -26,11 +25,11 @@ class TeamApiServiceTest(
             // given
             val account = accountApiRepository.createAccount()
             val templates: List<TeamTemplate> = listOf(
-                TeamTemplate(TemplateType.TEXT, "test", mutableListOf()),
+                TeamTemplate(TemplateType.TEXT, "test", null),
                 TeamTemplate(
                     TemplateType.RADIOBOX,
                     "test2",
-                    mutableListOf(TemplateOption.create("Yes"), TemplateOption.create("No")),
+                    "네,아니오",
                 ),
             )
             val subject = "9in"
@@ -64,13 +63,13 @@ class TeamApiServiceTest(
         }
         "모집글이 삭제되면 템플릿, 역할, 해시태그가 같이 삭제된다." - {
             // given
-            val account = accountApiRepository.createAccount()
+            val account = accountApiRepository.createAccount(nickname = "nickname2", email = "asd@aaa.com")
             val templates: List<TeamTemplate> = listOf(
-                TeamTemplate(TemplateType.TEXT, "test", mutableListOf()),
+                TeamTemplate(TemplateType.TEXT, "test", null),
                 TeamTemplate(
                     TemplateType.RADIOBOX,
                     "test2",
-                    mutableListOf(TemplateOption.create("Yes"), TemplateOption.create("No")),
+                    "네,아니오",
                 ),
             )
             val subject = "9in"
