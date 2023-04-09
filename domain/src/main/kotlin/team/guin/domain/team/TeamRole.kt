@@ -6,7 +6,7 @@ import javax.persistence.Column
 import javax.persistence.Entity
 
 @Entity
-class TeamPart(
+class TeamRole(
     @Comment("역할 이름")
     @Column(nullable = false, length = 30)
     var name: String,
@@ -18,8 +18,8 @@ class TeamPart(
     var hiredCount: Int,
 ) : BaseEntity() {
     companion object {
-        fun create(name: String, roleRequired: Int): TeamPart {
-            return TeamPart(name = name, requiredCount = roleRequired, hiredCount = 0)
+        fun create(name: String, requiredCount: Int): TeamRole {
+            return TeamRole(name = name, requiredCount = requiredCount, hiredCount = 0)
         }
     }
 }
