@@ -14,9 +14,9 @@ import team.guin.team.dto.TeamCreateRequest
 class TeamApiController(
     private val teamApiService: TeamApiService,
 ) {
-    @PostMapping("/{account-id}")
-    fun create(@PathVariable("account-id") accountId: Long, @RequestBody teamCreateRequest: TeamCreateRequest): CommonResponse<TeamCreateDetail> {
+    @PostMapping("/{accountId}")
+    fun create(@PathVariable("accountId") accountId: Long, @RequestBody teamCreateRequest: TeamCreateRequest): CommonResponse<TeamCreateDetail> {
         val team = teamApiService.createTeam(accountId, teamCreateRequest.toDomain())
-        return CommonResponse.okWithDetail(TeamCreateDetail.toResponse(team))
+        return CommonResponse.okWithDetail(TeamCreateDetail.create(team))
     }
 }
