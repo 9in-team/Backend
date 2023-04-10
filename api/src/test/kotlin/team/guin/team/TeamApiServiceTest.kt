@@ -27,7 +27,7 @@ class TeamApiServiceTest(
             val templates: List<TeamTemplate> = listOf(
                 TeamTemplate(TemplateType.TEXT, "test", null),
                 TeamTemplate(
-                    TemplateType.RADIOBOX,
+                    TemplateType.CHECKBOX,
                     "test2",
                     "네,아니오",
                 ),
@@ -67,7 +67,7 @@ class TeamApiServiceTest(
             val templates: List<TeamTemplate> = listOf(
                 TeamTemplate(TemplateType.TEXT, "test", null),
                 TeamTemplate(
-                    TemplateType.RADIOBOX,
+                    TemplateType.CHECKBOX,
                     "test2",
                     "네,아니오",
                 ),
