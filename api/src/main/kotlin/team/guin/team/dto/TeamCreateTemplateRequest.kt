@@ -6,7 +6,7 @@ import team.guin.domain.team.enumeration.TemplateType
 data class TeamCreateTemplateRequest(
     val type: TemplateType,
     val question: String,
-    val options: String,
+    val options: String?,
 ) {
     fun toDomain(): TeamTemplate {
         return TeamTemplate(
