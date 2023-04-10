@@ -3,7 +3,7 @@ package team.guin.team.dto
 import team.guin.domain.team.TeamTemplate
 import team.guin.domain.team.enumeration.TemplateType
 
-data class TeamTemplateResponse(
+data class TeamTemplateDetail(
     val type: TemplateType,
     val question: String,
     val options: String?,
@@ -11,8 +11,8 @@ data class TeamTemplateResponse(
     companion object {
         fun create(
             template: TeamTemplate,
-        ): TeamTemplateResponse {
-            return TeamTemplateResponse(
+        ): TeamTemplateDetail {
+            return TeamTemplateDetail(
                 type = template.type,
                 question = template.question,
                 options = template.options,

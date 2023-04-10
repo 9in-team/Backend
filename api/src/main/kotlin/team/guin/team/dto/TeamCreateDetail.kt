@@ -9,10 +9,10 @@ data class TeamCreateDetail(
     val openChatUrl: String,
     val content: String,
     val subject: String,
-    val teamTemplates: List<TeamTemplateResponse>,
+    val teamTemplates: List<TeamTemplateDetail>,
     val types: List<TagType>,
     val subjectType: SubjectType,
-    val roles: List<TeamRoleResponse>,
+    val roles: List<TeamRoleDetail>,
 ) {
     companion object {
 
@@ -27,9 +27,9 @@ data class TeamCreateDetail(
                 subjectType = team.hashTags[0].let {
                     it.subjectType
                 },
-                teamTemplates = team.templates.map { TeamTemplateResponse.create(it) },
+                teamTemplates = team.templates.map { TeamTemplateDetail.create(it) },
                 types = team.hashTags.map { it.type },
-                roles = team.roles.map { TeamRoleResponse.create(it) },
+                roles = team.roles.map { TeamRoleDetail.create(it) },
             )
         }
     }
