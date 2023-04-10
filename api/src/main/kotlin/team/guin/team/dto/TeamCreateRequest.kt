@@ -10,9 +10,9 @@ data class TeamCreateRequest(
     val content: String,
     val openChatUrl: String,
     val teamTemplates: List<TeamCreateTemplateRequest>,
-    val hashTags: List<TagType>,
+    val types: List<TagType>,
     val subjectType: SubjectType,
-    val parts: List<TeamCreatePartsRequest>,
+    val roles: List<TeamCreateRoleRequest>,
 ) {
     fun toDomain(): TeamCreate {
         return TeamCreate(
@@ -20,8 +20,8 @@ data class TeamCreateRequest(
             content = content,
             templates = teamTemplates.map { it.toDomain() },
             openChatUrl = openChatUrl,
-            hashTags = hashTags.map { HashTag.create(subjectType = subjectType, it) },
-            parts = parts.map { it.toDomain() },
+            hashTags = types.map { HashTag.create(subjectType = subjectType, it) },
+            roles = roles.map { it.toDomain() },
         )
     }
 }

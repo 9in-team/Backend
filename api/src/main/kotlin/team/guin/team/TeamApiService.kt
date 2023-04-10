@@ -11,14 +11,14 @@ class TeamApiService(
     private val accountApiService: AccountApiService,
 ) {
     fun createTeam(accountId: Long, teamCreate: TeamCreate): Team {
-        val account = accountApiService.findById(accountId)
+        val leader = accountApiService.findById(accountId)
         val team = Team.create(
-            leader = account,
+            leader = leader,
             subject = teamCreate.subject,
             content = teamCreate.content,
             openChatUrl = teamCreate.openChatUrl,
             templates = teamCreate.templates,
-            parts = teamCreate.parts,
+            roles = teamCreate.roles,
             hashTags = teamCreate.hashTags.toMutableList(),
         )
         return teamApiRepository.save(team)

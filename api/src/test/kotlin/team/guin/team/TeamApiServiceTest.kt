@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
 import team.guin.account.AccountApiRepository
 import team.guin.domain.team.HashTag
-import team.guin.domain.team.TeamPart
+import team.guin.domain.team.TeamRole
 import team.guin.domain.team.TeamTemplate
 import team.guin.domain.team.dto.TeamCreate
 import team.guin.domain.team.enumeration.SubjectType
@@ -36,7 +36,7 @@ class TeamApiServiceTest(
             val subjectType = SubjectType.PROJECT
             val content = "9in 프로젝트 구해요"
             val openChatUrl = "http://9in-proejct.chat"
-            val parts = listOf(TeamPart.create("백엔드", 2))
+            val roles = listOf(TeamRole.create("백엔드", 2))
             val hashTags =
                 listOf(
                     HashTag(subjectType, TagType.JAVA),
@@ -48,7 +48,7 @@ class TeamApiServiceTest(
                 openChatUrl = openChatUrl,
                 templates = templates,
                 hashTags = hashTags,
-                parts = parts,
+                roles = roles,
             )
 
             // when
@@ -59,7 +59,7 @@ class TeamApiServiceTest(
             team.openChatUrl shouldBe openChatUrl
             team.hashTags.size shouldBe teamCreate.hashTags.size
             team.templates.size shouldBe teamCreate.templates.size
-            team.parts.size shouldBe teamCreate.parts.size
+            team.roles.size shouldBe teamCreate.roles.size
         }
         "모집글이 삭제되면 템플릿, 역할, 해시태그가 같이 삭제된다." - {
             // given
@@ -76,7 +76,7 @@ class TeamApiServiceTest(
             val subjectType = SubjectType.PROJECT
             val content = "9in 프로젝트 구해요"
             val openChatUrl = "http://9in-proejct.chat"
-            val parts = listOf(TeamPart.create("백엔드", 2))
+            val roles = listOf(TeamRole.create("백엔드", 2))
             val hashTags =
                 listOf(
                     HashTag(subjectType, TagType.JAVA),
@@ -88,7 +88,7 @@ class TeamApiServiceTest(
                 openChatUrl = openChatUrl,
                 templates = templates,
                 hashTags = hashTags,
-                parts = parts,
+                roles = roles,
             )
 
             val team = teamApiService.createTeam(account.id, teamCreate)

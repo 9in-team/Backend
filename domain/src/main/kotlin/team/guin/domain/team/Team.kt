@@ -1,5 +1,6 @@
 package team.guin.domain.team
 
+import org.hibernate.annotations.Comment
 import team.guin.domain.account.Account
 import team.guin.domain.baseentity.BaseEntity
 import javax.persistence.CascadeType
@@ -12,20 +13,27 @@ import javax.persistence.OneToMany
 
 @Entity
 class Team(
+    @Comment("팀장")
     @ManyToOne(fetch = FetchType.LAZY)
     var leader: Account,
+    @Comment("주제")
     @Column(nullable = false)
     var subject: String,
+    @Comment("팀 설명")
     @Column(nullable = false)
     var content: String,
+    @Comment("오픈챗 URL")
     @Column(nullable = false, length = 500)
     var openChatUrl: String,
+    @Comment("템플릿")
     @OneToMany(cascade = [CascadeType.PERSIST, CascadeType.REMOVE])
     @JoinColumn(name = "team_id")
     var templates: MutableList<TeamTemplate>,
+    @Comment("모집 역할")
     @OneToMany(cascade = [CascadeType.PERSIST, CascadeType.REMOVE])
     @JoinColumn(name = "team_id")
-    var parts: MutableList<TeamPart>,
+    var roles: MutableList<TeamRole>,
+    @Comment("해시태그")
     @OneToMany(cascade = [CascadeType.PERSIST, CascadeType.REMOVE])
     @JoinColumn(name = "team_id")
     var hashTags: MutableList<HashTag>,
@@ -37,7 +45,7 @@ class Team(
             content: String,
             openChatUrl: String,
             templates: List<TeamTemplate>,
-            parts: List<TeamPart>,
+            roles: List<TeamRole>,
             hashTags: List<HashTag>,
         ): Team {
             return Team(
@@ -46,7 +54,7 @@ class Team(
                 content = content,
                 openChatUrl = openChatUrl,
                 templates = templates.toMutableList(),
-                parts = parts.toMutableList(),
+                roles = roles.toMutableList(),
                 hashTags = hashTags.toMutableList(),
             )
         }

@@ -10,13 +10,13 @@ data class TeamCreateDetail(
     val content: String,
     val subject: String,
     val teamTemplates: List<TeamTemplateResponse>,
-    val hashTags: List<TagType>,
+    val types: List<TagType>,
     val subjectType: SubjectType,
-    val parts: List<TeamPartResponse>,
+    val roles: List<TeamRoleResponse>,
 ) {
     companion object {
 
-        fun toResponse(
+        fun create(
             team: Team,
         ): TeamCreateDetail {
             return TeamCreateDetail(
@@ -27,9 +27,9 @@ data class TeamCreateDetail(
                 subjectType = team.hashTags[0].let {
                     it.subjectType
                 },
-                teamTemplates = team.templates.map { TeamTemplateResponse.entityToResponse(it.type, it.question, it.options) },
-                hashTags = team.hashTags.map { it.type },
-                parts = team.parts.map { TeamPartResponse.entityToResponse(it.name, it.requiredCount, it.hiredCount) },
+                teamTemplates = team.templates.map { TeamTemplateResponse.create(it) },
+                types = team.hashTags.map { it.type },
+                roles = team.roles.map { TeamRoleResponse.create(it) },
             )
         }
     }
