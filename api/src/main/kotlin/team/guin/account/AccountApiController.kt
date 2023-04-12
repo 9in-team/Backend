@@ -1,6 +1,5 @@
 package team.guin.account
 
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,11 +20,11 @@ class AccountApiController(
     private val accountApiService: AccountApiService,
     private val kakaoApiService: KakaoApiService,
     private val accountApiRepository: AccountApiRepository,
-    private val springSessionDefaultRedisSerializer: GenericJackson2JsonRedisSerializer,
 ) {
     @PostMapping
     fun join(
         @RequestBody accountJoinRequest: AccountJoinRequest,
+        response: HttpServletResponse,
         httpSession: HttpSession,
     ): CommonResponse<AccountProfile> {
         val accessToken = accountJoinRequest.accessToken

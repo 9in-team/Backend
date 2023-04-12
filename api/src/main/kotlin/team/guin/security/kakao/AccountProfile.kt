@@ -8,6 +8,8 @@ data class AccountProfile(
     val nickname: String,
     val imageUrl: String,
 ) {
+    constructor() : this(0L, "", "", "")
+
     companion object {
         fun from(account: Account): AccountProfile {
             val accountProfile = AccountProfile(
