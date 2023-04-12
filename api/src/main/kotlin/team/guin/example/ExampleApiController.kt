@@ -1,6 +1,5 @@
 package team.guin.example
 
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -10,14 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import team.guin.domain.example.Example
 import team.guin.example.dto.ExampleCreateRequest
+import team.guin.security.kakao.AccountProfile
 import javax.servlet.http.HttpSession
 
 @RequestMapping("/example")
 @RestController
 class ExampleApiController(val exampleService: ExampleService) {
     @GetMapping("/myInfo")
-    fun getMyInfo(session: HttpSession): Any {
-        return SecurityContextHolder.getContext().authentication.name
+    fun getMyInfo(httpSession: HttpSession): AccountProfile {
+        return httpSession.getAttribute("USER") as AccountProfile
     }
 
     @PostMapping

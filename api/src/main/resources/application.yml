@@ -4,7 +4,16 @@ spring:
     username: test
     password: test
     driver-class-name: com.mysql.cj.jdbc.Driver
+  session:
+    store-type: redis
   redis:
+    flush-mode: on_save
+    namespace: spring:session
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        min-idle: 2
     host: localhost
     port: 6379
     password: test
