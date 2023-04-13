@@ -7,10 +7,6 @@ data class KakaoDetailProfile(
     private val properties: Properties?,
     private val kakao_account: KakaoAccount,
 ) {
-    fun toEntity(): Account {
-        return Account.create(email = this.email, nickname = this.nickname, imageId = this.imageUrl)
-    }
-
     val email = kakao_account.email
 
     fun toEntity(): Account {
