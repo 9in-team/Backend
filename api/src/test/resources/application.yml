@@ -4,7 +4,6 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
-
   jpa:
     hibernate:
       ddl-auto: create
@@ -12,3 +11,11 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+  session:
+    store-type: redis
+  redis:
+    host: localhost
+    port: 6380
+    password:
+  profiles:
+    active: local
