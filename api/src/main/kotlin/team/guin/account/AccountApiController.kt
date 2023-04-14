@@ -13,7 +13,6 @@ import team.guin.account.dto.AccountUpdateRequest
 import team.guin.common.CommonResponse
 import team.guin.security.kakao.AccountProfile
 import team.guin.security.kakao.KakaoApiService
-import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpSession
 
 @RestController
@@ -26,7 +25,6 @@ class AccountApiController(
     @PostMapping
     fun join(
         @RequestBody accountJoinRequest: AccountJoinRequest,
-        response: HttpServletResponse,
         httpSession: HttpSession,
     ): CommonResponse<AccountProfile> {
         val accessToken = accountJoinRequest.accessToken
