@@ -27,11 +27,11 @@ class Account(
     }
 
     companion object {
-        fun create(email: String, nickname: String, imageId: String): Account {
+        fun create(email: String, nickname: String, imageUrl: String): Account {
             return Account(
                 email = email,
                 nickname = nickname,
-                imageUrl = imageId,
+                imageUrl = imageUrl,
                 accountRole = AccountRole.USER,
             )
         }
