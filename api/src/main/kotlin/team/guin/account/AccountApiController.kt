@@ -24,7 +24,6 @@ class AccountApiController(
     @PostMapping
     fun join(
         @RequestBody accountJoinRequest: AccountJoinRequest,
-        response: HttpServletResponse,
         httpSession: HttpSession,
     ): CommonResponse<AccountProfile> {
         val accessToken = accountJoinRequest.accessToken
