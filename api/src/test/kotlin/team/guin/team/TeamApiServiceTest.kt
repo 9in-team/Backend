@@ -39,8 +39,8 @@ class TeamApiServiceTest(
             val roles = listOf(TeamRole.create("백엔드", 2))
             val hashTags =
                 listOf(
-                    HashTag(subjectType, TagType.JAVA),
-                    HashTag(subjectType, TagType.MYSQL),
+                    HashTag(TagType.JAVA),
+                    HashTag(TagType.MYSQL),
                 )
             val teamCreate = TeamCreate(
                 subject = subject,
@@ -48,6 +48,7 @@ class TeamApiServiceTest(
                 openChatUrl = openChatUrl,
                 templates = templates,
                 hashTags = hashTags,
+                subjectType = subjectType,
                 roles = roles,
             )
 
@@ -79,8 +80,8 @@ class TeamApiServiceTest(
             val roles = listOf(TeamRole.create("백엔드", 2))
             val hashTags =
                 listOf(
-                    HashTag(subjectType, TagType.JAVA),
-                    HashTag(subjectType, TagType.MYSQL),
+                    HashTag(TagType.JAVA),
+                    HashTag(TagType.MYSQL),
                 )
             val teamCreate = TeamCreate(
                 subject = subject,
@@ -88,6 +89,7 @@ class TeamApiServiceTest(
                 openChatUrl = openChatUrl,
                 templates = templates,
                 hashTags = hashTags,
+                subjectType = subjectType,
                 roles = roles,
             )
 

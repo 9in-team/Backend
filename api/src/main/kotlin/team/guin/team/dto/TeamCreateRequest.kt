@@ -20,7 +20,8 @@ data class TeamCreateRequest(
             content = content,
             templates = teamTemplates.map { it.toDomain() },
             openChatUrl = openChatUrl,
-            hashTags = types.map { HashTag.create(subjectType = subjectType, it) },
+            subjectType = subjectType,
+            hashTags = types.map { HashTag.create(it) },
             roles = roles.map { it.toDomain() },
         )
     }

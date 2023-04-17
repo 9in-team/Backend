@@ -24,9 +24,7 @@ data class TeamCreateDetail(
                 openChatUrl = team.openChatUrl,
                 content = team.content,
                 subject = team.subject,
-                subjectType = team.hashTags[0].let {
-                    it.subjectType
-                },
+                subjectType = team.subjectType,
                 teamTemplates = team.templates.map { TeamTemplateDetail.create(it) },
                 types = team.hashTags.map { it.type },
                 roles = team.roles.map { TeamRoleDetail.create(it) },

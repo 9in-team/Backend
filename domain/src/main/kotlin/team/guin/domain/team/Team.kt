@@ -3,9 +3,12 @@ package team.guin.domain.team
 import org.hibernate.annotations.Comment
 import team.guin.domain.account.Account
 import team.guin.domain.baseentity.BaseEntity
+import team.guin.domain.team.enumeration.SubjectType
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.FetchType
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
@@ -37,6 +40,10 @@ class Team(
     @OneToMany(cascade = [CascadeType.PERSIST, CascadeType.REMOVE])
     @JoinColumn(name = "team_id")
     var hashTags: MutableList<HashTag>,
+    @Comment("팀 주제 타입")
+    @Column(nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+    var subjectType: SubjectType,
 ) : BaseEntity() {
     companion object {
         fun create(
@@ -46,6 +53,7 @@ class Team(
             openChatUrl: String,
             templates: List<TeamTemplate>,
             roles: List<TeamRole>,
+            subjectType: SubjectType,
             hashTags: List<HashTag>,
         ): Team {
             return Team(
@@ -55,6 +63,7 @@ class Team(
                 openChatUrl = openChatUrl,
                 templates = templates.toMutableList(),
                 roles = roles.toMutableList(),
+                subjectType = subjectType,
                 hashTags = hashTags.toMutableList(),
             )
         }

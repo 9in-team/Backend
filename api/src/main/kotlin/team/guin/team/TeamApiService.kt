@@ -19,6 +19,7 @@ class TeamApiService(
             openChatUrl = teamCreate.openChatUrl,
             templates = teamCreate.templates,
             roles = teamCreate.roles,
+            subjectType = teamCreate.subjectType,
             hashTags = teamCreate.hashTags.toMutableList(),
         )
         return teamApiRepository.save(team)
