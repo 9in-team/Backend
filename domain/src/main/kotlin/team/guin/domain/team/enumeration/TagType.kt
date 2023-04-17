@@ -1,6 +1,8 @@
 package team.guin.domain.team.enumeration
 
-enum class TagType(name: String, subjectType: List<SubjectType>) {
+import team.guin.domain.team.dto.AttributeDetail
+
+enum class TagType(val value: String, val subjectType: List<SubjectType>) {
     PYTHON("Python", listOf(SubjectType.PROJECT, SubjectType.STUDY)),
     SPRING_FRAMEWORK("Spring Framework", listOf(SubjectType.PROJECT, SubjectType.STUDY)),
     AWS("AWS", listOf(SubjectType.PROJECT, SubjectType.STUDY)),
@@ -18,4 +20,19 @@ enum class TagType(name: String, subjectType: List<SubjectType>) {
     ANDROID("Android", listOf(SubjectType.PROJECT, SubjectType.STUDY)),
     SQL("SQL", listOf(SubjectType.PROJECT, SubjectType.STUDY)),
     ALGORITHM("알고리즘", listOf(SubjectType.STUDY)),
+    ;
+
+    companion object {
+        fun studyTag(): List<AttributeDetail> {
+            return values()
+                .filter { it.subjectType.contains(SubjectType.STUDY) }
+                .map { AttributeDetail(it.name, it.value) }
+        }
+
+        fun projectTag(): List<AttributeDetail> {
+            return values()
+                .filter { it.subjectType.contains(SubjectType.PROJECT) }
+                .map { AttributeDetail(it.name, it.value) }
+        }
+    }
 }
