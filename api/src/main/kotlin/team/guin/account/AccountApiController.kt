@@ -15,6 +15,7 @@ import team.guin.account.dto.AccountDetail
 import team.guin.account.dto.AccountJoinRequest
 import team.guin.account.dto.AccountUpdateRequest
 import team.guin.common.CommonResponse
+import team.guin.security.AuthenticationToken
 import team.guin.security.kakao.AccountProfile
 import javax.servlet.http.HttpSession
 
