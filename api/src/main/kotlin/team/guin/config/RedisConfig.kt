@@ -36,7 +36,7 @@ class RedisConfig(
         val stringRedisTemplate = StringRedisTemplate()
         stringRedisTemplate.setConnectionFactory(redisConnectionFactory())
         stringRedisTemplate.keySerializer = StringRedisSerializer()
-        stringRedisTemplate.valueSerializer = GenericJackson2JsonRedisSerializer(objectMapper)
+        stringRedisTemplate.valueSerializer = StringRedisSerializer()
         stringRedisTemplate.setDefaultSerializer(StringRedisSerializer())
         stringRedisTemplate.afterPropertiesSet()
         return stringRedisTemplate
