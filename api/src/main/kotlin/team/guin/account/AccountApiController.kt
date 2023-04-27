@@ -18,8 +18,6 @@ import javax.servlet.http.HttpSession
 @RequestMapping("/account")
 class AccountApiController(
     private val accountApiService: AccountApiService,
-    private val kakaoApiService: KakaoApiService,
-    private val accountApiRepository: AccountApiRepository,
 ) {
     @PostMapping
     fun join(
