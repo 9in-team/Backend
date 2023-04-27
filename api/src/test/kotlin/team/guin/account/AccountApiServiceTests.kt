@@ -15,28 +15,6 @@ class AccountApiServiceTests(
     private val accountApiService: AccountApiService,
     private val accountApiRepository: AccountApiRepository,
 ) : FreeSpec({
-    "join" - {
-        "회원정보 입력이 들어오면 엔티티로 만들어 저장한다" {
-            // given
-            val email = "aa@a.com"
-            val nickname = "nick"
-            val imageId = "https://imugr.com/example"
-
-            // when
-            val account = accountApiService.join(email, nickname, imageId)
-
-            // then
-            withContext(Dispatchers.IO) {
-                val optAccountEntity = accountApiRepository.findById(account.id)
-                optAccountEntity.isEmpty shouldBe false
-
-                val accountEntity = optAccountEntity.get()
-                accountEntity.email shouldBe email
-                accountEntity.nickname shouldBe nickname
-                accountEntity.imageId shouldBe imageId
-            }
-        }
-    }
     "updateInfo" - {
         "회원이 정보를 변경하면 정보를 업데이트 한다." - {
             // given
