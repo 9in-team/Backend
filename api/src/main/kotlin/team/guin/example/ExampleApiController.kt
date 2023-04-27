@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import team.guin.config.annotation.AccountSession
 import team.guin.domain.example.Example
 import team.guin.example.dto.ExampleCreateRequest
 import team.guin.security.kakao.AccountProfile
-import javax.servlet.http.HttpSession
 
 @RequestMapping("/example")
 @RestController
 class ExampleApiController(val exampleService: ExampleService) {
     @GetMapping("/myInfo")
-    fun getMyInfo(httpSession: HttpSession): AccountProfile {
-        return httpSession.getAttribute("USER") as AccountProfile
+    fun getMyInfo(@AccountSession accountProfile: AccountProfile): AccountProfile {
+        return accountProfile
     }
 
     @PostMapping
