@@ -11,6 +11,7 @@ services:
       MYSQL_DATABASE: 'testdb'
       MYSQL_USER: 'test'
       MYSQL_PASSWORD: 'test'
+      TZ: "Asia/Seoul"
     command:
       - --character-set-client-handshake=utf8mb4
 
