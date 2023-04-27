@@ -10,7 +10,7 @@ data class KakaoDetailProfile(
     val email = kakao_account.email
 
     fun toEntity(): Account {
-        return Account.create(email = this.email, nickname = kakao_account.profile.profile_image_url, imageId = kakao_account.profile.nickname)
+        return Account.create(email = this.email, nickname = kakao_account.profile.nickname, imageId = kakao_account.profile.profile_image_url)
     }
 }
 
