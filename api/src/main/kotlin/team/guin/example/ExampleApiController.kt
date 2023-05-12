@@ -15,8 +15,13 @@ import team.guin.security.kakao.AccountProfile
 @RequestMapping("/example")
 @RestController
 class ExampleApiController(val exampleService: ExampleService) {
-    @GetMapping("/myInfo")
-    fun getMyInfo(@AccountSession accountProfile: AccountProfile): AccountProfile {
+    @GetMapping("/required-login")
+    fun requiredLogin(@AccountSession accountProfile: AccountProfile): AccountProfile {
+        return accountProfile
+    }
+
+    @GetMapping("/optional-login")
+    fun optionalLogin(@AccountSession(loginRequired = false) accountProfile: AccountProfile?): AccountProfile? {
         return accountProfile
     }
 

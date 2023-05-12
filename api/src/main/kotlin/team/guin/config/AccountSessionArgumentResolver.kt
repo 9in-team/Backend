@@ -24,7 +24,14 @@ class AccountSessionArgumentResolver : HandlerMethodArgumentResolver {
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?,
     ): Any? {
-        return webRequest.getAttribute("USER", RequestAttributes.SCOPE_SESSION) as? AccountProfile
-            ?: throw BadCredentialsException("로그인을 먼저 해주세요.")
+        val accountSessionAnnotation = parameter.getParameterAnnotation(AccountSession::class.java)
+        val loginRequired = accountSessionAnnotation?.loginRequired ?: true
+
+        val accountProfile = webRequest.getAttribute("USER", RequestAttributes.SCOPE_SESSION) as? AccountProfile
+        if (accountProfile == null && loginRequired) {
+            throw BadCredentialsException("로그인을 먼저 해주세요.")
+        }
+
+        return accountProfile
     }
 }
