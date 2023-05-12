@@ -12,14 +12,12 @@ data class AccountProfile(
 
     companion object {
         fun from(account: Account): AccountProfile {
-            val accountProfile = AccountProfile(
+            return AccountProfile(
                 id = account.id,
                 email = account.email,
                 nickname = account.nickname,
                 imageUrl = account.imageId,
             )
-
-            return accountProfile
         }
     }
 }
