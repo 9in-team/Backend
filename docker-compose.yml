@@ -12,8 +12,9 @@ services:
       MYSQL_USER: 'test'
       MYSQL_PASSWORD: 'test'
       TZ: "Asia/Seoul"
-    command:
-      - --character-set-client-handshake=utf8mb4
+    command: # 명령어 실행
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci # 한글안깨지게 character set utf-8 설정
 
   redis:
     image: redis
