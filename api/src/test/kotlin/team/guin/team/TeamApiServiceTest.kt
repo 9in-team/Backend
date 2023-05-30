@@ -1,8 +1,11 @@
 package team.guin.team
 
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.core.test.TestCase
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
 import team.guin.account.AccountApiRepository
@@ -152,4 +155,11 @@ class TeamApiServiceTest(
             teams.find { it.subjectType == SubjectType.PROJECT } shouldNotBe null
         }
     }
-})
+}) {
+    override suspend fun beforeAny(testCase: TestCase) {
+        withContext(Dispatchers.IO) {
+            teamApiRepository.deleteAll()
+            accountApiRepository.deleteAll()
+        }
+    }
+}
