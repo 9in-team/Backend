@@ -2,10 +2,13 @@ package team.guin.team
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
 import team.guin.account.AccountApiRepository
+import team.guin.domain.account.Account
 import team.guin.domain.team.HashTag
+import team.guin.domain.team.Team
 import team.guin.domain.team.TeamRole
 import team.guin.domain.team.TeamTemplate
 import team.guin.domain.team.dto.TeamCreate
@@ -13,6 +16,7 @@ import team.guin.domain.team.enumeration.SubjectType
 import team.guin.domain.team.enumeration.TagType
 import team.guin.domain.team.enumeration.TemplateType
 import team.guin.util.createAccount
+import team.guin.util.createTeam
 
 @SpringBootTest
 class TeamApiServiceTest(
@@ -102,6 +106,50 @@ class TeamApiServiceTest(
             // then
             val findTeam = teamApiRepository.findByIdOrNull(saveTeamId)
             findTeam shouldBe null
+        }
+    }
+    "findAllBySubjectType" - {
+        "subjectType이 null이면 전체 팀을 조회한다." - {
+            // given
+            val subjectType: SubjectType? = null
+            val leader: Account = accountApiRepository.createAccount()
+            teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.PROJECT)
+            teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.STUDY)
+
+            // when
+            val teams: List<Team> = teamApiService.findAllBySubjectType(subjectType)
+
+            // then
+            teams.find { it.subjectType == SubjectType.STUDY } shouldNotBe null
+            teams.find { it.subjectType == SubjectType.PROJECT } shouldNotBe null
+        }
+        "subjectType이 STUDY이면 STUDY인 팀만 조회한다." - {
+            // given
+            val subjectType: SubjectType = SubjectType.STUDY
+            val leader: Account = accountApiRepository.createAccount()
+            teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.PROJECT)
+            teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.STUDY)
+
+            // when
+            val teams: List<Team> = teamApiService.findAllBySubjectType(subjectType = subjectType)
+
+            // then
+            teams.find { it.subjectType == SubjectType.STUDY } shouldNotBe null
+            teams.find { it.subjectType == SubjectType.PROJECT } shouldBe null
+        }
+        "subjectType이 PROJECT이면 PROJECT인 팀만 조회한다." - {
+            // given
+            val subjectType: SubjectType = SubjectType.PROJECT
+            val leader: Account = accountApiRepository.createAccount()
+            teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.PROJECT)
+            teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.STUDY)
+
+            // when
+            val teams: List<Team> = teamApiService.findAllBySubjectType(subjectType = subjectType)
+
+            // then
+            teams.find { it.subjectType == SubjectType.STUDY } shouldBe null
+            teams.find { it.subjectType == SubjectType.PROJECT } shouldNotBe null
         }
     }
 })
