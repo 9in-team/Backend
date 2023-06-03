@@ -1,6 +1,5 @@
 package team.guin.account
 
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -12,7 +11,6 @@ import team.guin.account.dto.AccountDetail
 import team.guin.account.dto.AccountJoinRequest
 import team.guin.account.dto.AccountUpdateRequest
 import team.guin.common.CommonResponse
-import team.guin.security.AuthenticationToken
 import team.guin.security.kakao.AccountProfile
 import javax.servlet.http.HttpSession
 
