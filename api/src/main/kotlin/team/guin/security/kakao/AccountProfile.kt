@@ -16,7 +16,7 @@ data class AccountProfile(
                 id = account.id,
                 email = account.email,
                 nickname = account.nickname,
-                imageUrl = account.imageId,
+                imageUrl = account.imageUrl,
             )
         }
     }
