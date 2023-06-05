@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.SpringSecurityCoreVersion
-import team.guin.domain.account.enumeration.AccountRole
 
 class AuthenticationToken(
     private val name: String,
