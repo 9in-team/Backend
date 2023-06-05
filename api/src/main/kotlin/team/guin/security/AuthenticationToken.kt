@@ -12,11 +12,6 @@ class AuthenticationToken(
     private var authorities = emptyList<GrantedAuthority>()
     private var authenticated: Boolean = true
 
-    constructor() : this("")
-    constructor(username: String, role: AccountRole) : this(username) {
-        authorities = listOf(CustomGrantedAuthority(role.toString()))
-    }
-
     @JsonIgnore override fun getCredentials(): Any? = null
 
     @JsonIgnore override fun getDetails(): Any? = null
