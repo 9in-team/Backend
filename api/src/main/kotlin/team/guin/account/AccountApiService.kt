@@ -33,7 +33,7 @@ class AccountApiService(
         accountApiRepository.deleteById(account.id)
     }
 
-    private fun findById(id: Long): Account {
+    fun findById(id: Long): Account {
         return accountApiRepository.findByIdOrNull(id) ?: throw IllegalArgumentException("유저가 존재하지 않습니다.")
     }
 }
