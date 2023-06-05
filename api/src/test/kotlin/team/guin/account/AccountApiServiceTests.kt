@@ -32,7 +32,7 @@ class AccountApiServiceTests(
             // then
             val findUpdateAccount = accountApiRepository.findById(updatedAccount.id).get()
             findUpdateAccount.email shouldBe email
-            findUpdateAccount.imageId shouldBe changeImageId
+            findUpdateAccount.imageUrl shouldBe changeImageId
             findUpdateAccount.nickname shouldBe changeNickname
         }
 

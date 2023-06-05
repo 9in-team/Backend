@@ -33,7 +33,7 @@ class AccountApiRepositoryTests(
             val nickName = "nickname"
             val imageId = "imageId"
             result?.nickname shouldBe nickName
-            result?.imageId shouldBe imageId
+            result?.imageUrl shouldBe imageId
             result?.accountRole shouldBe AccountRole.USER
         }
         "이메일로 엔티티를 찾아올 수 없어 널값이 반환된다 " {
@@ -75,7 +75,7 @@ class AccountApiRepositoryTests(
 
             // then
             result?.nickname shouldBe account.nickname
-            result?.imageId shouldBe account.imageId
+            result?.imageUrl shouldBe account.imageUrl
             result?.email shouldBe account.email
         }
     }
