@@ -1,11 +1,8 @@
 package team.guin.team
 
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.core.test.TestCase
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
 import team.guin.account.AccountApiRepository
@@ -27,8 +24,12 @@ class TeamApiServiceTest(
     private val teamApiService: TeamApiService,
     private val teamApiRepository: TeamApiRepository,
 ) : FreeSpec({
+    beforeEach {
+        teamApiRepository.deleteAll()
+        accountApiRepository.deleteAll()
+    }
     "create" - {
-        "템플릿, 해시태그, 역할, 주제, 오픈채팅 주소를 작성하면 팀이 생성된다." - {
+        "템플릿, 해시태그, 역할, 주제, 오픈채팅 주소를 작성하면 팀이 생성된다." {
             // given
             val account = accountApiRepository.createAccount()
             val templates: List<TeamTemplate> = listOf(
@@ -69,7 +70,7 @@ class TeamApiServiceTest(
             team.templates.size shouldBe teamCreate.templates.size
             team.roles.size shouldBe teamCreate.roles.size
         }
-        "모집글이 삭제되면 템플릿, 역할, 해시태그가 같이 삭제된다." - {
+        "모집글이 삭제되면 템플릿, 역할, 해시태그가 같이 삭제된다." {
             // given
             val account = accountApiRepository.createAccount(nickname = "nickname2", email = "asd@aaa.com")
             val templates: List<TeamTemplate> = listOf(
@@ -112,54 +113,53 @@ class TeamApiServiceTest(
         }
     }
     "findAllBySubjectType" - {
-        "subjectType이 null이면 전체 팀을 조회한다." - {
+        "subjectType이 null이면 전체 팀을 조회한다." {
             // given
             val subjectType: SubjectType? = null
             val leader: Account = accountApiRepository.createAccount()
-            teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.PROJECT)
-            teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.STUDY)
+            val projectTeam = teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.PROJECT)
+            val studyTeam = teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.STUDY)
 
             // when
             val teams: List<Team> = teamApiService.findAllBySubjectType(subjectType)
 
             // then
-            teams.find { it.subjectType == SubjectType.STUDY } shouldNotBe null
-            teams.find { it.subjectType == SubjectType.PROJECT } shouldNotBe null
+            val findStudyTeam = teams.find { it.subjectType == SubjectType.STUDY }
+            val findProjectTeam = teams.find { it.subjectType == SubjectType.PROJECT }
+            findStudyTeam?.id shouldBe studyTeam.id
+            findProjectTeam?.id shouldBe projectTeam.id
         }
-        "subjectType이 STUDY이면 STUDY인 팀만 조회한다." - {
+        "subjectType이 STUDY이면 STUDY인 팀만 조회한다." {
             // given
             val subjectType: SubjectType = SubjectType.STUDY
             val leader: Account = accountApiRepository.createAccount()
-            teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.PROJECT)
-            teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.STUDY)
+            val projectTeam = teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.PROJECT)
+            val studyTeam = teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.STUDY)
 
             // when
             val teams: List<Team> = teamApiService.findAllBySubjectType(subjectType = subjectType)
 
             // then
-            teams.find { it.subjectType == SubjectType.STUDY } shouldNotBe null
-            teams.find { it.subjectType == SubjectType.PROJECT } shouldBe null
+            val findStudyTeam = teams.find { it.subjectType == SubjectType.STUDY }
+            val findProjectTeam = teams.find { it.subjectType == SubjectType.PROJECT }
+            findStudyTeam?.id shouldBe studyTeam.id
+            findProjectTeam?.id shouldNotBe projectTeam.id
         }
-        "subjectType이 PROJECT이면 PROJECT인 팀만 조회한다." - {
+        "subjectType이 PROJECT이면 PROJECT인 팀만 조회한다." {
             // given
             val subjectType: SubjectType = SubjectType.PROJECT
             val leader: Account = accountApiRepository.createAccount()
-            teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.PROJECT)
-            teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.STUDY)
+            val projectTeam = teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.PROJECT)
+            val studyTeam = teamApiRepository.createTeam(leader = leader, subjectType = SubjectType.STUDY)
 
             // when
             val teams: List<Team> = teamApiService.findAllBySubjectType(subjectType = subjectType)
 
             // then
-            teams.find { it.subjectType == SubjectType.STUDY } shouldBe null
-            teams.find { it.subjectType == SubjectType.PROJECT } shouldNotBe null
+            val findStudyTeam = teams.find { it.subjectType == SubjectType.STUDY }
+            val findProjectTeam = teams.find { it.subjectType == SubjectType.PROJECT }
+            findStudyTeam?.id shouldNotBe studyTeam.id
+            findProjectTeam?.id shouldBe projectTeam.id
         }
     }
-}) {
-    override suspend fun beforeAny(testCase: TestCase) {
-        withContext(Dispatchers.IO) {
-            teamApiRepository.deleteAll()
-            accountApiRepository.deleteAll()
-        }
-    }
-}
+})
