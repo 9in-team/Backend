@@ -15,7 +15,7 @@ data class TeamDetail(
     val tagTypes: List<AttributeDetail>,
 ) {
     companion object {
-        fun toDetail(teams: List<Team>): List<TeamDetail> {
+        fun toDetailList(teams: List<Team>): List<TeamDetail> {
             return teams.map {
                 TeamDetail(
                     it.leader.nickname,

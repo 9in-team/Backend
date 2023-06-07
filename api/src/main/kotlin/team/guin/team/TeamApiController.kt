@@ -39,6 +39,6 @@ class TeamApiController(
     @GetMapping
     fun teamList(@RequestParam subjectType: SubjectType?): CommonResponse<List<TeamDetail>> {
         val teams = teamApiService.findAllBySubjectType(subjectType)
-        return CommonResponse.okWithDetail(TeamDetail.toDetail(teams))
+        return CommonResponse.okWithDetail(TeamDetail.toDetailList(teams))
     }
 }
