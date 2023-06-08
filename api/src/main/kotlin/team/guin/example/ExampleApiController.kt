@@ -7,12 +7,24 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import team.guin.config.annotation.AccountSession
 import team.guin.domain.example.Example
 import team.guin.example.dto.ExampleCreateRequest
+import team.guin.security.kakao.AccountProfile
 
 @RequestMapping("/example")
 @RestController
 class ExampleApiController(val exampleService: ExampleService) {
+    @GetMapping("/required-login")
+    fun requiredLogin(@AccountSession accountProfile: AccountProfile): AccountProfile {
+        return accountProfile
+    }
+
+    @GetMapping("/optional-login")
+    fun optionalLogin(@AccountSession(loginRequired = false) accountProfile: AccountProfile?): AccountProfile? {
+        return accountProfile
+    }
+
     @PostMapping
     fun createExample(@RequestBody request: ExampleCreateRequest): Example =
         exampleService.createExample(request.name, request.age)

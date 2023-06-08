@@ -11,6 +11,6 @@ fun AccountApiRepository.createAccount(
     Account.create(
         email = email,
         nickname = nickname,
-        imageId = imageId,
+        imageUrl = imageId,
     ),
 )

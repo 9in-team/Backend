@@ -16,22 +16,22 @@ class Account(
     @Column(nullable = false, length = 15, unique = true)
     var nickname: String,
     @Column(length = 1000)
-    var imageId: String,
+    var imageUrl: String,
     @Column(nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     var accountRole: AccountRole,
 ) : BaseEntity() {
     fun updateInfo(nickname: String, imageId: String) {
         this.nickname = nickname
-        this.imageId = imageId
+        this.imageUrl = imageId
     }
 
     companion object {
-        fun create(email: String, nickname: String, imageId: String): Account {
+        fun create(email: String, nickname: String, imageUrl: String): Account {
             return Account(
                 email = email,
                 nickname = nickname,
-                imageId = imageId,
+                imageUrl = imageUrl,
                 accountRole = AccountRole.USER,
             )
         }
