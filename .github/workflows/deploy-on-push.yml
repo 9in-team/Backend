@@ -1,9 +1,9 @@
-name: Deploy on Push
+name: Deploy on Push (테스트환경)
 
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [ main, feature/86 ]
 
 jobs:
   deploy:
