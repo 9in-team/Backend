@@ -19,6 +19,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           envs: GITHUB_SHA
           script: |
+            ps -ef | grep java | grep -v grep | awk '{print $2}' | xargs kill -9
             cd Backend/
             sudo docker-compose down
             cd ..
