@@ -28,5 +28,5 @@ jobs:
             cd Backend/
             sudo docker-compose up -d
             ./gradlew build
-            nohup ./gradlew bootRun &
+            nohup ./gradlew bootRun > nohup.out 2> nohup.err < /dev/null &
             
