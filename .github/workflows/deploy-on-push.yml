@@ -1,0 +1,32 @@
+name: Deploy on Push (테스트환경)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_URL }}
+          port: ${{ secrets.SERVER_PORT }}
+          username: ${{ secrets.SERVER_ID }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: GITHUB_SHA
+          script: |
+            ps -ef | grep java | grep -v grep | awk '{print $2}' | xargs kill -9
+            cd Backend/
+            sudo docker-compose down
+            cd ..
+            rm -rf Backend/
+            git clone https://github.com/9in-team/Backend.git
+            cd Backend/
+            sudo docker-compose up -d
+            ./gradlew build
+            nohup ./gradlew bootRun > nohup.out 2> nohup.err < /dev/null &
+            
