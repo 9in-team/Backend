@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import team.guin.webcommon.exception.response.ErrorResponse
+import java.time.LocalDateTime.now
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
@@ -27,6 +28,7 @@ class GlobalExceptionHandler {
             else -> "JSON 파일 중 알 수 없는 오류가 발생하였습니다."
         }
         val errorResponse = ErrorResponse.create(
+            now(),
             error,
         )
         return ResponseEntity.badRequest().body(errorResponse)
@@ -42,6 +44,7 @@ class GlobalExceptionHandler {
         }.toMap()
 
         val errorResponse = ErrorResponse.createWithMessage(
+            now(),
             "Validation Failed",
             errors,
         )
@@ -51,6 +54,7 @@ class GlobalExceptionHandler {
     @ExceptionHandler(CommonException::class)
     fun handleCommonException(e: CommonException): ResponseEntity<ErrorResponse> {
         val errorResponse = ErrorResponse.create(
+            now(),
             e.exceptionCode.message,
         )
         return ResponseEntity(errorResponse, e.exceptionCode.status)

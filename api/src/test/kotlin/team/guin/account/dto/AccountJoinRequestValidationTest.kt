@@ -22,7 +22,7 @@ class AccountJoinRequestValidationTest : FreeSpec({
             val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accounJoinRequest)
             // then
             violations.size shouldBe 1
-            violations.first().message shouldBe "공백일 수 없습니다"
+            violations.first().messageTemplate shouldBe "{javax.validation.constraints.NotBlank.message}"
         }
     }
 })
