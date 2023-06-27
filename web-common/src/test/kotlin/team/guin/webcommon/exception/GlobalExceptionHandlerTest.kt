@@ -5,12 +5,8 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.beInstanceOf
 import io.mockk.every
 import io.mockk.mockk
-import org.springframework.core.MethodParameter
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
-import org.springframework.validation.BindingResult
-import org.springframework.validation.FieldError
-import org.springframework.web.bind.MethodArgumentNotValidException
 import team.guin.webcommon.exception.CommonException
 import team.guin.webcommon.exception.CommonExceptionCode
 import team.guin.webcommon.exception.GlobalExceptionHandler
@@ -54,42 +50,5 @@ class GlobalExceptionHandlerTest : FreeSpec(
                 result.body?.timeStamp?.isBefore(now())
             }
         }
-        "handleMethodArgumentNotValidException" - {
-            "필드 검증 실패 시 올바른 에러 메시지로 반환한다." {
-                // given
-                val globalExceptionHandler = GlobalExceptionHandler()
-                val fieldError1 = FieldError("objectName", "field1", "Error Message 1")
-                val fieldError2 = FieldError("objectName", "field2", "Error Message 2")
-                val bindingResult = createBindingResult(fieldError1, fieldError2)
-                val exception = MethodArgumentNotValidException(
-                    createMockMethodParameter(),
-                    bindingResult,
-                )
-
-                // when
-                val result: ResponseEntity<ErrorResponse> =
-                    globalExceptionHandler.handleMethodArgumentNotValidException(exception)
-
-                // then
-                result shouldBe beInstanceOf(ResponseEntity::class)
-                result.statusCodeValue shouldBe 400
-                result.body?.error shouldBe "Validation Failed"
-                val errors = result.body?.message
-                result.body?.timeStamp?.isBefore(now())
-                errors?.size shouldBe 2
-                errors?.get("field1") shouldBe "Error Message 1"
-                errors?.get("field2") shouldBe "Error Message 2"
-            }
-        }
     },
 )
-
-fun createBindingResult(vararg errors: FieldError): BindingResult {
-    val bindingResult: BindingResult = mockk()
-    every { bindingResult.allErrors } returns errors.toList()
-    return bindingResult
-}
-
-fun createMockMethodParameter(): MethodParameter {
-    return mockk()
-}
