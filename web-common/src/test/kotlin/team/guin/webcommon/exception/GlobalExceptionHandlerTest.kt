@@ -27,7 +27,7 @@ class GlobalExceptionHandlerTest : FreeSpec(
                 // then
                 result should beInstanceOf(ResponseEntity::class)
                 result.statusCode.is4xxClientError shouldBe true
-                result.body?.error shouldBe "중복된 이메일입니다. 다시 입력해주세요."
+                result.body?.error shouldBe "중복된 이메일입니다."
                 result.body?.timeStamp?.isBefore(now())
             }
         }
