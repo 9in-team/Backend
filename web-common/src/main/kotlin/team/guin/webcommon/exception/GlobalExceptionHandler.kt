@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
-import org.springframework.validation.FieldError
-import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import team.guin.webcommon.exception.response.ErrorResponse
@@ -30,23 +28,6 @@ class GlobalExceptionHandler {
         val errorResponse = ErrorResponse.create(
             now(),
             error,
-        )
-        return ResponseEntity.badRequest().body(errorResponse)
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handleMethodArgumentNotValidException(ex: MethodArgumentNotValidException): ResponseEntity<ErrorResponse> {
-        val errors = ex.bindingResult.allErrors.mapNotNull { error ->
-            when (error) {
-                is FieldError -> error.field to (error.defaultMessage ?: "유효하지 않은 필드입니다.")
-                else -> error.objectName to (error.defaultMessage ?: "알 수 없는 오류가 발생하였습니다.")
-            }
-        }.toMap()
-
-        val errorResponse = ErrorResponse.createWithMessage(
-            now(),
-            "Validation Failed",
-            errors,
         )
         return ResponseEntity.badRequest().body(errorResponse)
     }
