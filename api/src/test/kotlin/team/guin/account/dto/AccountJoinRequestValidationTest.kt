@@ -2,27 +2,36 @@ package team.guin.account.dto
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
 import javax.validation.ConstraintViolation
+import javax.validation.Validation
+import javax.validation.Validator
 
 class AccountJoinRequestValidationTest : FreeSpec({
 
-    lateinit var validator: LocalValidatorFactoryBean
-
-    beforeSpec {
-        validator = LocalValidatorFactoryBean()
-        validator.afterPropertiesSet()
-    }
+    val validator: Validator = Validation.buildDefaultValidatorFactory().validator
 
     "accessToken" - {
-        "accessToken이 공백이면  \"공백일수 없습니다.\" 을 반환한다" {
+        "accessToken이 공백이면 '@NotBlank' 제약 조건을 위배한다" {
             // given
-            val accounJoinRequest = AccountJoinRequest("")
+            val accountJoinRequest = AccountJoinRequest("")
+
             // when
-            val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accounJoinRequest)
+            val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accountJoinRequest)
+
             // then
             violations.isNotEmpty() shouldBe true
-            violations.any { it.message == "공백일 수 없습니다" } shouldBe true
+            violations.any { it.message == "accessToken은 필수값입니다." } shouldBe true
+        }
+
+        "accessToken이 비어있지 않으면 유효성 검사를 통과한다" {
+            // given
+            val accountJoinRequest = AccountJoinRequest("valid-access-token")
+
+            // when
+            val violations: Set<ConstraintViolation<AccountJoinRequest>> = validator.validate(accountJoinRequest)
+
+            // then
+            violations.isEmpty() shouldBe true
         }
     }
 })
