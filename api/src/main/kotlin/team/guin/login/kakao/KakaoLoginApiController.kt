@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import team.guin.login.kakao.dto.KakaoLoginRequest
 import team.guin.common.CommonResponse
-import team.guin.login.kakao.dto.AccountProfile
+import team.guin.login.dto.AccountProfile
 import javax.servlet.http.HttpSession
 
 @RestController

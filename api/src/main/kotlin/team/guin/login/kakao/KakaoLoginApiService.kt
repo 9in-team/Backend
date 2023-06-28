@@ -2,7 +2,7 @@ package team.guin.login.kakao
 
 import org.springframework.stereotype.Service
 import team.guin.account.AccountApiRepository
-import team.guin.login.kakao.dto.AccountProfile
+import team.guin.login.dto.AccountProfile
 
 @Service
 class KakaoLoginApiService(

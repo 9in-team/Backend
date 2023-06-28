@@ -1,4 +1,4 @@
-package team.guin.login.kakao.dto
+package team.guin.login.dto
 
 import team.guin.domain.account.Account
 
