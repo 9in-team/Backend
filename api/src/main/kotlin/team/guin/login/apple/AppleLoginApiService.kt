@@ -10,10 +10,11 @@ import java.util.*
 
 @Service
 class AppleLoginApiService(
-    private val accountApiRepository: AccountApiRepository
+    private val accountApiRepository: AccountApiRepository,
+    private val appleLoginUtil: AppleLoginUtil
 ) {
     fun joinOrLogin(idToken: String): AccountProfile {
-        val email = AppleLoginUtil.getPayload(idToken).email
+        val email = appleLoginUtil.getPayload(idToken).email
         if (email.isEmpty()) throw BadCredentialsException("애플 로그인 실패 (이메일이 비어있음)")
 
         val account = accountApiRepository.findByEmail(email)
