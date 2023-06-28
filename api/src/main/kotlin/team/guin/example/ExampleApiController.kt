@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 import team.guin.config.annotation.AccountSession
 import team.guin.domain.example.Example
 import team.guin.example.dto.ExampleCreateRequest
-import team.guin.security.kakao.AccountProfile
+import team.guin.login.kakao.dto.AccountProfile
 
 @RequestMapping("/example")
 @RestController

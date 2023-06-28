@@ -1,7 +1,8 @@
-package team.guin.security.kakao
+package team.guin.login.kakao
 
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
+import team.guin.login.kakao.dto.KakaoDetailProfile
 
 @Service
 class KakaoApiService {
