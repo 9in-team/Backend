@@ -27,6 +27,7 @@ jobs:
             git clone https://github.com/9in-team/Backend.git
             cd Backend/
             sudo docker-compose up -d
+            sudo sh ../ssl_setting.sh
             ./gradlew build
             nohup ./gradlew bootRun > nohup.out 2> nohup.err < /dev/null &
-            
+
