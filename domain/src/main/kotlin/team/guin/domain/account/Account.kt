@@ -27,7 +27,7 @@ class Account(
     }
 
     companion object {
-        const private val DEFAULT_IMAGE_URL = "https://i.imgur.com/WxNkK7J.png"
+        private const val DEFAULT_IMAGE_URL = "https://i.imgur.com/WxNkK7J.png"
 
         fun create(email: String, nickname: String, imageUrl: String): Account {
             return Account(
