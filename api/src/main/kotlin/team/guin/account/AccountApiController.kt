@@ -1,11 +1,6 @@
 package team.guin.account
 
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import team.guin.account.dto.AccountDetail
 import team.guin.account.dto.AccountUpdateRequest
 import team.guin.common.CommonResponse

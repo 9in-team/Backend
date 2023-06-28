@@ -1,14 +1,14 @@
 package team.guin.login.apple.util
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.nimbusds.jwt.SignedJWT
 import com.nimbusds.jwt.ReadOnlyJWTClaimsSet
+import com.nimbusds.jwt.SignedJWT
 import org.springframework.stereotype.Component
 import team.guin.login.apple.dto.Payload
 
 @Component
 class AppleLoginUtil(
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
 ) {
     fun getPayload(idToken: String): Payload {
         val signedJWT: SignedJWT = SignedJWT.parse(idToken)

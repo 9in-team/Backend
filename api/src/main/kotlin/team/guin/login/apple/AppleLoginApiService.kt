@@ -11,7 +11,7 @@ import java.util.*
 @Service
 class AppleLoginApiService(
     private val accountApiRepository: AccountApiRepository,
-    private val appleLoginUtil: AppleLoginUtil
+    private val appleLoginUtil: AppleLoginUtil,
 ) {
     fun joinOrLogin(idToken: String): AccountProfile {
         val email = appleLoginUtil.getPayload(idToken).email
@@ -31,7 +31,7 @@ class AppleLoginApiService(
         }
 
         return accountApiRepository.save(
-            Account.create(email, nickname)
+            Account.create(email, nickname),
         )
     }
 

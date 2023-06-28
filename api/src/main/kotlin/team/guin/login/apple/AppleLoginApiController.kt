@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession
 
 @RestController
 class AppleLoginApiController(
-    private val appleLoginApiService: AppleLoginApiService
+    private val appleLoginApiService: AppleLoginApiService,
 ) {
     @PostMapping(value = ["/loginWithApple"])
     fun joinOrLogin(
@@ -22,5 +22,4 @@ class AppleLoginApiController(
 
         return CommonResponse.okWithDetail(accountProfile)
     }
-
 }

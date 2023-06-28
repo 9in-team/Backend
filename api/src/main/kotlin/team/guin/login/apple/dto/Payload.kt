@@ -1,6 +1,5 @@
 package team.guin.login.apple.dto
 
-
 data class Payload(
     val iss: String?,
     val aud: String?,
