@@ -14,5 +14,5 @@ data class Payload(
     val email_verified: String?,
     val is_private_email: String?,
     val auth_time: Long?,
-    val isNonce_supported: Boolean?,
+    val nonce_supported: Boolean?,
 )
