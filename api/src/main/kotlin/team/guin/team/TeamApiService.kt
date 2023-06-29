@@ -29,11 +29,11 @@ class TeamApiService(
     }
 
     fun detail(teamId: Long): Team {
-        return findByIdOrNull(teamId) ?: throw IllegalArgumentException("team 없음")
+        return findByIdOrNull(teamId)
     }
 
-    fun findByIdOrNull(id: Long): Team? {
-        return teamApiRepository.findByIdOrNull(id)
+    fun findByIdOrNull(id: Long): Team {
+        return teamApiRepository.findByIdOrNull(id) ?: throw IllegalArgumentException("team 없음")
     }
     fun findAllBySubjectType(subjectType: SubjectType?): List<Team> {
         return teamApiQueryDslRepository.findAllBySubjectType(subjectType)
