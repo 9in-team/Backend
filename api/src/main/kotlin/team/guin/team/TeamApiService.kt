@@ -4,11 +4,13 @@ import org.springframework.stereotype.Service
 import team.guin.account.AccountApiService
 import team.guin.domain.team.Team
 import team.guin.domain.team.dto.TeamCreate
+import team.guin.domain.team.enumeration.SubjectType
 
 @Service
 class TeamApiService(
     private val teamApiRepository: TeamApiRepository,
     private val accountApiService: AccountApiService,
+    private val teamApiQueryDslRepository: TeamApiQueryDslRepository,
 ) {
     fun createTeam(accountId: Long, teamCreate: TeamCreate): Team {
         val leader = accountApiService.findById(accountId)
@@ -23,6 +25,10 @@ class TeamApiService(
             hashTags = teamCreate.hashTags.toMutableList(),
         )
         return teamApiRepository.save(team)
+    }
+
+    fun findAllBySubjectType(subjectType: SubjectType?): List<Team> {
+        return teamApiQueryDslRepository.findAllBySubjectType(subjectType)
     }
 
     fun findById(id: Long): Team {

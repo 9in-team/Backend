@@ -1,12 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    kotlin("kapt") version "1.4.10"
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
     kotlin("plugin.jpa") version "1.6.21"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("org.springframework.boot") version "2.7.8" apply false
     id("io.spring.dependency-management") version "1.1.0" apply false
+    idea
 }
 java.sourceCompatibility = JavaVersion.VERSION_11
 
@@ -26,6 +28,7 @@ subprojects {
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "kotlin-spring") // all-open
     apply(plugin = "kotlin-jpa")
+    apply(plugin = "kotlin-kapt")
 
     dependencies {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -33,6 +36,9 @@ subprojects {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         testImplementation("com.h2database:h2:2.1.214")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+        implementation("com.querydsl:querydsl-jpa:5.0.0")
+        kapt("com.querydsl:querydsl-apt:5.0.0:jpa")
+        kapt("org.springframework.boot:spring-boot-configuration-processor")
     }
 
     tasks.getByName("bootJar") {
@@ -100,6 +106,9 @@ project(":domain") {
         testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
         testImplementation("io.kotest:kotest-assertions-core:5.5.4")
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
+    }
+    sourceSets["main"].withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
+        kotlin.srcDir("$buildDir/generated/source/kapt/main")
     }
 }
 
