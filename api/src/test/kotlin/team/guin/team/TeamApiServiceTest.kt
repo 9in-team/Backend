@@ -184,12 +184,12 @@ class TeamApiServiceTest(
             val teamId: Long = -1L
 
             // when
-            val result = shouldThrow<IllegalArgumentException> {
+            val result = shouldThrow<IllegalStateException> {
                 teamApiService.detail(teamId)
             }
 
             // then
-            result.message shouldBe "team 없음"
+            result.message shouldBe "팀이 존재하지 않습니다."
         }
     }
 })

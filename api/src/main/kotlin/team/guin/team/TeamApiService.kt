@@ -44,6 +44,6 @@ class TeamApiService(
     }
 
     fun getTeam(id: Long): Team {
-        return teamApiRepository.findByIdOrNull(id) ?: throw IllegalStateException("팀이 존재하지 않습니다")
+        return teamApiRepository.findByIdOrNull(id) ?: throw IllegalStateException("팀이 존재하지 않습니다.")
     }
 }
