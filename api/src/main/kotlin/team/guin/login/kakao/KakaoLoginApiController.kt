@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession
 class KakaoLoginApiController(
     private val kakaoLoginApiService: KakaoLoginApiService,
 ) {
-    @PostMapping("/loginWithKakao")
+    @PostMapping("/login-with-kakao")
     fun loginWithKakao(
         @RequestBody kakaoLoginRequest: KakaoLoginRequest,
         httpSession: HttpSession,

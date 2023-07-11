@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession
 class AppleLoginApiController(
     private val appleLoginApiService: AppleLoginApiService,
 ) {
-    @PostMapping(value = ["/loginWithApple"])
+    @PostMapping("/login-with-apple")
     fun joinOrLogin(
         @RequestBody appleLoginRequest: AppleLoginRequest,
         httpSession: HttpSession,
