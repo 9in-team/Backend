@@ -1,5 +1,6 @@
 package team.guin.team
 
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import team.guin.account.AccountApiService
 import team.guin.domain.team.Team
@@ -27,6 +28,13 @@ class TeamApiService(
         return teamApiRepository.save(team)
     }
 
+    fun detail(teamId: Long): Team {
+        return findByIdOrNull(teamId) ?: throw IllegalArgumentException("team 없음")
+    }
+
+    fun findByIdOrNull(id: Long): Team? {
+        return teamApiRepository.findByIdOrNull(id)
+    }
     fun findAllBySubjectType(subjectType: SubjectType?): List<Team> {
         return teamApiQueryDslRepository.findAllBySubjectType(subjectType)
     }
