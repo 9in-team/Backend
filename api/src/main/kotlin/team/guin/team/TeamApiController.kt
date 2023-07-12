@@ -2,7 +2,6 @@ package team.guin.team
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -37,12 +36,6 @@ class TeamApiController(
                 study = TagType.studyTag(),
             ),
         )
-    }
-
-    @GetMapping("{teamId}")
-    fun detail(@PathVariable teamId: Long): CommonResponse<TeamDetail> {
-        val team = teamApiService.detail(teamId)
-        return CommonResponse.okWithDetail(TeamDetail.detail(team))
     }
 
     @GetMapping
