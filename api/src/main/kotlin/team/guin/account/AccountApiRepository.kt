@@ -7,4 +7,6 @@ import team.guin.domain.account.Account
 @Repository
 interface AccountApiRepository : JpaRepository<Account, Long> {
     fun findByEmail(email: String): Account?
+
+    fun findByNickname(nickname: String): Account?
 }

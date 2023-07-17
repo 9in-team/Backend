@@ -9,7 +9,7 @@ import org.springframework.web.context.request.RequestAttributes
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 import team.guin.config.annotation.AccountSession
-import team.guin.security.kakao.AccountProfile
+import team.guin.login.dto.AccountProfile
 
 @Component
 class AccountSessionArgumentResolver : HandlerMethodArgumentResolver {
