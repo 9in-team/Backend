@@ -1,5 +1,6 @@
 package team.guin.team
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -160,6 +161,35 @@ class TeamApiServiceTest(
             val findProjectTeam = teams.find { it.subjectType == SubjectType.PROJECT }
             findStudyTeam?.id shouldNotBe studyTeam.id
             findProjectTeam?.id shouldBe projectTeam.id
+        }
+    }
+    "detail" - {
+        "팀 Id를 통해 모집글 내용을 상세히 조회할 수 있다." {
+            // given
+            val teamLeader = accountApiRepository.createAccount()
+            val createTeam = teamApiRepository.createTeam(leader = teamLeader, subjectType = SubjectType.PROJECT)
+
+            // when
+            val teamDetail = teamApiService.detail(createTeam.id)
+
+            // then
+            teamDetail.content shouldBe createTeam.content
+            teamDetail.leader.id shouldBe createTeam.leader.id
+            teamDetail.subject shouldBe createTeam.subject
+            teamDetail.subjectType shouldBe createTeam.subjectType
+            teamDetail.openChatUrl shouldBe createTeam.openChatUrl
+        }
+        "팀 Id가 존재하지 않으면 예외가 발생한다." {
+            // given
+            val teamId: Long = -1L
+
+            // when
+            val result = shouldThrow<IllegalArgumentException> {
+                teamApiService.detail(teamId)
+            }
+
+            // then
+            result.message shouldBe "team 없음"
         }
     }
 })
