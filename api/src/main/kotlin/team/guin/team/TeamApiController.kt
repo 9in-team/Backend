@@ -47,7 +47,7 @@ class TeamApiController(
 
     @GetMapping("{teamId}")
     fun detail(@PathVariable teamId: Long): CommonResponse<TeamDetail> {
-        val team = teamApiService.detail(teamId)
+        val team = teamApiService.getTeam(teamId)
         return CommonResponse.okWithDetail(TeamDetail.detail(team))
     }
 }

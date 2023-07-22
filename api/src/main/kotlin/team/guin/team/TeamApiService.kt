@@ -27,21 +27,10 @@ class TeamApiService(
         )
         return teamApiRepository.save(team)
     }
-
-    fun detail(teamId: Long): Team {
-        return findByIdOrNull(teamId)
-    }
-
-    fun findByIdOrNull(id: Long): Team {
-        return teamApiRepository.findByIdOrNull(id) ?: throw IllegalArgumentException("team 없음")
-    }
     fun findAllBySubjectType(subjectType: SubjectType?): List<Team> {
         return teamApiQueryDslRepository.findAllBySubjectType(subjectType)
     }
 
-    fun detail(teamId: Long): Team {
-        return getTeam(teamId)
-    }
 
     fun getTeam(id: Long): Team {
         return teamApiRepository.findByIdOrNull(id) ?: throw IllegalStateException("팀이 존재하지 않습니다.")

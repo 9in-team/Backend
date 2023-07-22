@@ -170,7 +170,7 @@ class TeamApiServiceTest(
             val createTeam = teamApiRepository.createTeam(leader = teamLeader, subjectType = SubjectType.PROJECT)
 
             // when
-            val teamDetail = teamApiService.detail(createTeam.id)
+            val teamDetail = teamApiService.getTeam(createTeam.id)
 
             // then
             teamDetail.content shouldBe createTeam.content
@@ -185,7 +185,7 @@ class TeamApiServiceTest(
 
             // when
             val result = shouldThrow<IllegalStateException> {
-                teamApiService.detail(teamId)
+                teamApiService.getTeam(teamId)
             }
 
             // then
