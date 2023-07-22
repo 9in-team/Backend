@@ -1,5 +1,6 @@
 package team.guin.team
 
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -8,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import team.guin.common.CommonResponse
+import team.guin.config.annotation.AccountSession
 import team.guin.domain.team.enumeration.SubjectType
 import team.guin.domain.team.enumeration.TagType
+import team.guin.login.dto.AccountProfile
 import team.guin.team.dto.HashTagDetail
 import team.guin.team.dto.TeamCreateDetail
 import team.guin.team.dto.TeamCreateRequest
@@ -20,9 +23,9 @@ import team.guin.team.dto.TeamDetail
 class TeamApiController(
     private val teamApiService: TeamApiService,
 ) {
-    @PostMapping("/{accountId}")
-    fun create(@PathVariable("accountId") accountId: Long, @RequestBody teamCreateRequest: TeamCreateRequest): CommonResponse<TeamCreateDetail> {
-        val team = teamApiService.createTeam(accountId, teamCreateRequest.toDomain())
+    @PostMapping
+    fun create(@AccountSession accountProfile: AccountProfile, @RequestBody teamCreateRequest: TeamCreateRequest): CommonResponse<TeamCreateDetail> {
+        val team = teamApiService.createTeam(accountProfile.id, teamCreateRequest.toDomain())
         return CommonResponse.okWithDetail(TeamCreateDetail.create(team))
     }
 
