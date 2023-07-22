@@ -39,7 +39,11 @@ class TeamApiService(
         return teamApiQueryDslRepository.findAllBySubjectType(subjectType)
     }
 
-    fun findById(id: Long): Team {
-        return teamApiRepository.findById(id).get()
+    fun detail(teamId: Long): Team {
+        return getTeam(teamId)
+    }
+
+    fun getTeam(id: Long): Team {
+        return teamApiRepository.findByIdOrNull(id) ?: throw IllegalStateException("팀이 존재하지 않습니다")
     }
 }
