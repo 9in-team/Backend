@@ -16,7 +16,7 @@ import team.guin.team.dto.HashTagDetail
 import team.guin.team.dto.TeamCreateDetail
 import team.guin.team.dto.TeamCreateRequest
 import team.guin.team.dto.TeamDetail
-import team.guin.team.dto.*
+import team.guin.team.dto.TeamListDetail
 
 @RestController
 @RequestMapping("/team")
