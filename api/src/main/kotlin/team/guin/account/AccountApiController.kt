@@ -1,7 +1,6 @@
 package team.guin.account
 
 import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -40,9 +39,9 @@ class AccountApiController(
         return CommonResponse.okWithDetail(AccountDetail(account.email, account.nickname, account.imageUrl))
     }
 
-    @DeleteMapping("{id}")
-    fun delete(@PathVariable id: Long): CommonResponse<Unit> {
-        accountApiService.delete(id)
+    @DeleteMapping
+    fun delete(@AccountSession accountProfile: AccountProfile): CommonResponse<Unit> {
+        accountApiService.delete(accountProfile.id)
         return CommonResponse.ok()
     }
 }
