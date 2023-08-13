@@ -1,4 +1,4 @@
-package team.guin.wish
+package team.guin.domain.wish
 
 import org.springframework.util.Assert
 import team.guin.domain.account.Account

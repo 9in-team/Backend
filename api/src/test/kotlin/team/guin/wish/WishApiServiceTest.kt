@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import team.guin.account.AccountApiRepository
 import team.guin.domain.team.enumeration.SubjectType
+import team.guin.domain.wish.Wish
 import team.guin.team.TeamApiRepository
 import team.guin.util.createAccount
 import team.guin.util.createTeam

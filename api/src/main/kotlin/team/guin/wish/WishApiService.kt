@@ -1,6 +1,7 @@
 package team.guin.wish
 
 import org.springframework.stereotype.Service
+import team.guin.domain.wish.Wish
 
 @Service
 class WishApiService(
