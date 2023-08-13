@@ -80,6 +80,7 @@ project(":api") {
         testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
         testImplementation("io.kotest:kotest-assertions-core:5.5.4")
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
+        testImplementation("io.mockk:mockk:1.12.5")
         implementation("org.springframework.boot:spring-boot-starter-security")
         implementation("org.springframework.boot:spring-boot-starter-webflux")
         implementation("com.nimbusds:nimbus-jose-jwt:3.10")
