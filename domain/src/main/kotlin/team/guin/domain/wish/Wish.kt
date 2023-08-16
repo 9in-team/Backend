@@ -11,16 +11,17 @@ import javax.persistence.ManyToOne
 @Entity
 class Wish(
     @ManyToOne(fetch = FetchType.LAZY)
-    val team: Team,
-    @ManyToOne(fetch = FetchType.LAZY)
     val account: Account,
+    @ManyToOne(fetch = FetchType.LAZY)
+    val team: Team,
+
 ) : BaseEntity() {
 
     companion object {
-        fun create(team: Team, user: Account?): Wish {
+        fun create(user: Account?, team: Team): Wish {
             Assert.notNull(team.id, "팀이 존재하지 않습니다.")
             Assert.notNull(user!!.id, "유저가 존재하지 않습니다.")
-            return Wish(team, user!!)
+            return Wish(user, team)
         }
     }
 }
