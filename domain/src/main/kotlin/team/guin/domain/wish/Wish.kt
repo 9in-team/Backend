@@ -14,7 +14,6 @@ class Wish(
     val account: Account,
     @ManyToOne(fetch = FetchType.LAZY)
     val team: Team,
-
 ) : BaseEntity() {
 
     companion object {
