@@ -4,8 +4,10 @@ import org.hibernate.annotations.Comment
 import team.guin.domain.baseentity.BaseEntity
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.Table
 
 @Entity
+@Table(name = "team_role")
 class TeamRole(
     @Comment("역할 이름")
     @Column(nullable = false, length = 30)

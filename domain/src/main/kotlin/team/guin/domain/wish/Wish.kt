@@ -7,8 +7,10 @@ import team.guin.domain.team.Team
 import javax.persistence.Entity
 import javax.persistence.FetchType
 import javax.persistence.ManyToOne
+import javax.persistence.Table
 
 @Entity
+@Table(name = "wish")
 class Wish(
     @ManyToOne(fetch = FetchType.LAZY)
     val account: Account,
