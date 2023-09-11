@@ -15,7 +15,9 @@ spring:
     store-type: redis
   redis:
     host: localhost
-    port: 6380
-    password:
-  profiles:
-    active: local
+    port: 6379
+    password: test
+
+logging:
+  level:
+    org.springframework.transaction.interceptor: TRACE

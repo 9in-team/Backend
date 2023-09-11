@@ -2,15 +2,14 @@ package team.guin.wish
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.extensions.spring.SpringTestExtension
+import io.kotest.extensions.spring.SpringTestLifecycleMode
 import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.instanceOf
-import io.mockk.mockk
-import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit.jupiter.SpringExtension
 import team.guin.account.AccountApiRepository
-import team.guin.domain.account.Account
+import team.guin.common.DatabaseCleaner
 import team.guin.domain.team.enumeration.SubjectType
 import team.guin.domain.wish.Wish
 import team.guin.team.TeamApiRepository
@@ -18,18 +17,20 @@ import team.guin.util.createAccount
 import team.guin.util.createTeam
 import javax.transaction.Transactional
 
-@ExtendWith(SpringExtension::class)
 @Transactional
 @SpringBootTest
 class WishApiServiceTest(
     val wishApiService: WishApiService,
     val teamApiRepository: TeamApiRepository,
     val accountApiRepository: AccountApiRepository,
-//    val databaseCleaner: DatabaseCleaner,
+    val databaseCleaner: DatabaseCleaner,
 ) : FreeSpec({
-    beforeEach() {
-//        databaseCleaner.cleanUp()
+    beforeEach {
+        databaseCleaner.cleanUp()
     }
+    extensions(
+        SpringTestExtension(SpringTestLifecycleMode.Test),
+    )
     "WishApiService" - {
         "Add" - {
             "찜하기를 생성한다." {
@@ -64,8 +65,6 @@ class WishApiServiceTest(
                 val teamId = 2L
                 val wishCreateRequest = WishCreateRequest(teamId)
 
-                val mockAccount = mockk<Account>()
-
                 // when
                 val exception = shouldThrow<IllegalArgumentException> {
                     wishApiService.create(leader.id, wishCreateRequest)
@@ -76,7 +75,3 @@ class WishApiServiceTest(
         }
     }
 })
-
-data class WishCreateRequest(
-    val teamId: Long,
-)

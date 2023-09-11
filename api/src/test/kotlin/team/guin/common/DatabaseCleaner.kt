@@ -1,9 +1,9 @@
-/*
 package team.guin.common
 
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import javax.persistence.Entity
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 import javax.persistence.Table
@@ -18,7 +18,7 @@ class DatabaseCleaner : InitializingBean {
 
     override fun afterPropertiesSet() {
         tableNames = entityManager.metamodel.entities
-            .filter { it.javaType.isAnnotationPresent(Table::class.java) }
+            .filter { it.javaType.isAnnotationPresent(Entity::class.java) }
             .map { it.javaType.getAnnotation(Table::class.java).name }
             .toMutableSet()
     }
@@ -38,4 +38,3 @@ class DatabaseCleaner : InitializingBean {
         entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate()
     }
 }
-*/
