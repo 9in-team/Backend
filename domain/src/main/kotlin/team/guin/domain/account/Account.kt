@@ -29,20 +29,11 @@ class Account(
     companion object {
         private const val DEFAULT_IMAGE_URL = "https://i.imgur.com/WxNkK7J.png"
 
-        fun create(email: String, nickname: String, imageUrl: String): Account {
+        fun create(email: String, nickname: String, imageUrl: String = DEFAULT_IMAGE_URL): Account {
             return Account(
                 email = email,
                 nickname = nickname,
                 imageUrl = imageUrl,
-                accountRole = AccountRole.USER,
-            )
-        }
-
-        fun create(email: String, nickname: String): Account {
-            return Account(
-                email = email,
-                nickname = nickname,
-                imageUrl = DEFAULT_IMAGE_URL,
                 accountRole = AccountRole.USER,
             )
         }
