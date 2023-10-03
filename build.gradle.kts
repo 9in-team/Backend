@@ -82,6 +82,7 @@ project(":api") {
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
         implementation("org.springframework.boot:spring-boot-starter-security")
         implementation("org.springframework.boot:spring-boot-starter-webflux")
+        implementation("org.springframework.boot:spring-boot-starter-websocket")
         implementation("com.nimbusds:nimbus-jose-jwt:3.10")
     }
 }
