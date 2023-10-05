@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service
 import team.guin.account.AccountApiRepository
 import team.guin.domain.wish.Wish
 import team.guin.team.TeamApiRepository
-import javax.transaction.Transactional
 
 @Service
 class WishApiService(
@@ -12,7 +11,6 @@ class WishApiService(
     private val accountApiRepository: AccountApiRepository,
     private val teamApiRepository: TeamApiRepository,
 ) {
-    @Transactional
     fun create(accountId: Long, wishCreateRequest: WishCreateRequest): Wish {
         val account = accountApiRepository.findById(accountId)
             .orElseThrow { IllegalArgumentException("Account not found for ID: $accountId") }
