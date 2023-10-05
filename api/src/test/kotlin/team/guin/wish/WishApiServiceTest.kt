@@ -58,6 +58,7 @@ class WishApiServiceTest(
             val exception = shouldThrow<IllegalArgumentException> {
                 wishApiService.create(accountId, wishCreateRequest)
             }
+
             // then
             exception.message shouldBe "Account not found for ID: $accountId"
         }
@@ -66,10 +67,12 @@ class WishApiServiceTest(
             val leader = accountApiRepository.createAccount()
             val teamId = 2L
             val wishCreateRequest = WishCreateRequest(teamId)
+
             // when
             val exception = shouldThrow<IllegalArgumentException> {
                 wishApiService.create(leader.id, wishCreateRequest)
             }
+
             // then
             exception.message shouldBe "Team not found for ID: $teamId"
         }
