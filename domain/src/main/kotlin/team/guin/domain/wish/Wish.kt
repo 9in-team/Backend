@@ -19,9 +19,9 @@ class Wish(
 ) : BaseEntity() {
 
     companion object {
-        fun create(user: Account?, team: Team): Wish {
+        fun create(user: Account, team: Team): Wish {
             Assert.notNull(team.id, "팀이 존재하지 않습니다.")
-            Assert.notNull(user!!.id, "유저가 존재하지 않습니다.")
+            Assert.notNull(user.id, "유저가 존재하지 않습니다.")
             return Wish(user, team)
         }
     }
