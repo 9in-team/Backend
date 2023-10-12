@@ -18,6 +18,14 @@ class Wish(
     val team: Team,
 ) : BaseEntity() {
 
+    fun getAccountNickname(): String {
+        return account.nickname
+    }
+
+    fun getTeamId(): Long {
+        return team.id
+    }
+
     companion object {
         fun create(user: Account, team: Team): Wish {
             Assert.notNull(team.id, "팀이 존재하지 않습니다.")
