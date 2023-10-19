@@ -1,0 +1,19 @@
+### Create Team Request
+POST http://localhost:8080/team
+Content-Type: application/json
+
+{
+    "content" : "열심히 할 사람 구함",
+    "subject" : "스프링 프젝 구함",
+    "openChatUrl" : "http://9in-proejct.chat",
+    "teamTemplates" : [
+        {"type" : "TEXT","question" : "의지를 말해보아라"},
+        {"type" : "CHECKBOX", "question" : "열심히 할거니", "options" : "네, 아니"}
+    ],
+    "types" : ["KOTLIN","JAVA", "MYSQL"],
+    "subjectType" : "PROJECT",
+    "roles" : [
+        {"name" : "프론트엔드", "requiredCount" : 2},
+        {"name" : "백엔드", "requiredCount" : 3}
+    ]
+}
