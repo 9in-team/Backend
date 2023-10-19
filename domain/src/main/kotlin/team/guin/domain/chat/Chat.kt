@@ -14,11 +14,14 @@ class Chat(
     @Comment("채팅 보낸 사용자")
     @ManyToOne(fetch = FetchType.LAZY)
     val sender: Account,
+    @Comment("채팅 받는 사용자")
+    @ManyToOne(fetch = FetchType.LAZY)
+    val receiver: Account,
     @Comment("메시지")
     @Column(columnDefinition = "TEXT", nullable = false)
     val message: String,
     @Comment("채팅 읽었는지에 대한 여부")
     @ColumnDefault("false")
-    val isRead: Boolean
+    val isRead: Boolean = false
 ) : BaseEntity()
 

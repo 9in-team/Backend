@@ -6,24 +6,18 @@ import org.springframework.web.socket.CloseStatus
 import org.springframework.web.socket.TextMessage
 import org.springframework.web.socket.WebSocketSession
 import org.springframework.web.socket.handler.TextWebSocketHandler
+import team.guin.account.AccountApiRepository
+import team.guin.chat.ChatApiRepository
+import team.guin.chat.ChatWriteService
+import team.guin.chat.dto.SendMessage
 
-/**
- * packageName    : team.guin.config
- * fileName       : SocketHanlder
- * author         : jhw1015
- * date           : 2023/10/02
- * description    :
- * ===========================================================
- * DATE              AUTHOR             NOTE
- * -----------------------------------------------------------
- * 2023/10/02           jhw1015           최초 생성
- */
 @Component
 class SocketHandler(
     private val mapper: ObjectMapper,
-    private val socketSessions: HashSet<WebSocketSession> = HashSet()
+    private val socketSessions: HashSet<WebSocketSession> = HashSet(),
+    private val chatWriteService: ChatWriteService
 ) : TextWebSocketHandler() {
-    private var chatRoomSessionMap: HashMap<Long,Set<WebSocketSession>> = HashMap()
+    private val chatRoomSessionMap: HashMap<Long, Set<WebSocketSession>> = HashMap()
     override fun afterConnectionEstablished(session: WebSocketSession) {
         println("연결")
         socketSessions.add(session)
@@ -37,6 +31,8 @@ class SocketHandler(
     }
 
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
+        val sendMessage = mapper.readValue(message.payload,SendMessage::class.java)
+        chatWriteService.create(sendMessage.create())
 
     }
 
