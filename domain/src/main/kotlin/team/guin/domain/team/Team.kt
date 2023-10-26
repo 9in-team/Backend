@@ -13,8 +13,10 @@ import javax.persistence.FetchType
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
+import javax.persistence.Table
 
 @Entity
+@Table(name = "team")
 class Team(
     @Comment("팀장")
     @ManyToOne(fetch = FetchType.LAZY)
