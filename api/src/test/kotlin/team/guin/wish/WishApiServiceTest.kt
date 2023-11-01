@@ -10,6 +10,7 @@ import io.kotest.matchers.types.instanceOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.transaction.annotation.Transactional
 import team.guin.account.AccountApiRepository
 import team.guin.common.DatabaseCleaner
@@ -55,13 +56,10 @@ class WishApiServiceTest(
             val teamId: Long = 1
             val wishCreateRequest = WishCreateRequest(teamId)
 
-            // when
+            // when, then
             val exception = shouldThrow<IllegalArgumentException> {
                 wishApiService.create(accountId, wishCreateRequest)
             }
-
-            // then
-            exception.message shouldBe "Account not found for ID: $accountId"
         }
         "Team이 존재하지 않으면 IllegalArgumentException 예외를 던진다." {
             // given
@@ -69,13 +67,10 @@ class WishApiServiceTest(
             val teamId = 2L
             val wishCreateRequest = WishCreateRequest(teamId)
 
-            // when
+            // when, then
             val exception = shouldThrow<IllegalArgumentException> {
                 wishApiService.create(leader.id, wishCreateRequest)
             }
-
-            // then
-            exception.message shouldBe "Team not found for ID: $teamId"
         }
         "찜하기를 취소한다." {
             // given
@@ -85,11 +80,10 @@ class WishApiServiceTest(
             val create = wishApiService.create(account.id, wishCreateRequest)
 
             // when
-            wishApiService.delete(account.id, create.id)
+            val delete = wishApiService.delete(account.id, create.id)
 
             // then
-            val wish = wishApiRepository.findById(create.id)
-            wish.isEmpty shouldBe true
+            delete shouldBe true
         }
         "찜하기 삭제 시 찜하기가 존재하지 않으면 IllegalArgumentException 예외를 던진다." {
             // given

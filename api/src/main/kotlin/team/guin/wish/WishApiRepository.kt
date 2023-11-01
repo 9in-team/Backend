@@ -6,5 +6,5 @@ import team.guin.domain.wish.Wish
 
 @Repository
 interface WishApiRepository : JpaRepository<Wish, Long> {
-    fun deleteByIdAndAccountId(wishId: Long, accountId: Long)
+    fun deleteByIdAndAccountId(wishId: Long, accountId: Long): Int
 }
