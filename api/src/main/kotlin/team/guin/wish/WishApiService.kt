@@ -20,4 +20,14 @@ class WishApiService(
         val wish = Wish.create(account, team)
         return wishApiRepository.save(wish)
     }
+
+    fun delete(accountId: Long, wishId: Long) {
+        val wish = wishApiRepository.findById(wishId)
+            .orElseThrow { IllegalArgumentException("Wish not found for ID: $wishId") }
+
+        if (wish.id != accountId) {
+            throw AccessDeniedException("본인이 아닌 Wish를 삭제할 수 없습니다.")
+        }
+        return wishApiRepository.deleteByIdAndAccountId(wishId, accountId)
+    }
 }

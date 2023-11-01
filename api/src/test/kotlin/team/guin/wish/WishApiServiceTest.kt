@@ -23,6 +23,7 @@ import team.guin.util.createTeam
 @SpringBootTest
 class WishApiServiceTest(
     val wishApiService: WishApiService,
+    val wishApiRepository: WishApiRepository,
     val teamApiRepository: TeamApiRepository,
     val accountApiRepository: AccountApiRepository,
     val databaseCleaner: DatabaseCleaner,
@@ -75,6 +76,42 @@ class WishApiServiceTest(
 
             // then
             exception.message shouldBe "Team not found for ID: $teamId"
+        }
+        "찜하기를 취소한다." {
+            // given
+            val account = accountApiRepository.createAccount()
+            val createTeam = teamApiRepository.createTeam(leader = account, subjectType = SubjectType.PROJECT)
+            val wishCreateRequest = WishCreateRequest(createTeam.id)
+            val create = wishApiService.create(account.id, wishCreateRequest)
+
+            // when
+            wishApiService.delete(account.id, create.id)
+
+            // then
+            val wish = wishApiRepository.findById(create.id)
+            wish.isEmpty shouldBe true
+        }
+        "찜하기 삭제 시 찜하기가 존재하지 않으면 IllegalArgumentException 예외를 던진다." {
+            // given
+            val accountId: Long = 1
+            val wishId: Long = 1
+
+            // when, then
+            val exception = shouldThrow<IllegalArgumentException> {
+                wishApiService.delete(accountId, wishId)
+            }
+        }
+        "찜하기 삭제 시, 본인것이 아니면 AccessDeniedException 예외가 발생한다." {
+            // given
+            val account = accountApiRepository.createAccount()
+            val createTeam = teamApiRepository.createTeam(leader = account, subjectType = SubjectType.PROJECT)
+            val wishCreateRequest = WishCreateRequest(createTeam.id)
+            val create = wishApiService.create(account.id, wishCreateRequest)
+
+            // when, then
+            val exception = shouldThrow<AccessDeniedException> {
+                wishApiService.delete(2, create.id)
+            }
         }
     }
 })

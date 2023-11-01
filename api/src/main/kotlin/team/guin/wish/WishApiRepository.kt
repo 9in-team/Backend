@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository
 import team.guin.domain.wish.Wish
 
 @Repository
-interface WishApiRepository : JpaRepository<Wish, Long>
+interface WishApiRepository : JpaRepository<Wish, Long> {
+    fun deleteByIdAndAccountId(wishId: Long, accountId: Long)
+}
