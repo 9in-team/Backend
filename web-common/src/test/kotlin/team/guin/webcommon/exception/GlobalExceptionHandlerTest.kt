@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import team.guin.webcommon.exception.CommonException
 import team.guin.webcommon.exception.CommonExceptionCode
+import team.guin.webcommon.exception.ErrorMessage
 import team.guin.webcommon.exception.GlobalExceptionHandler
 import team.guin.webcommon.exception.response.ErrorResponse
 import java.time.LocalDateTime.now
@@ -16,7 +17,7 @@ import java.time.LocalDateTime.now
 class GlobalExceptionHandlerTest : FreeSpec(
     {
         "handleCommonException" - {
-            "중복된 이메일 CommonException 발생하면 GlobalException 포맷으로 변경한다. " {
+            "중복된 이메일 데이터가 들어오면 에러를 반환한다. " {
                 // given
                 val globalExceptionHandler = GlobalExceptionHandler()
                 val commonException = CommonException(CommonExceptionCode.DUPLICATE_ACCOUNT_EMAIL)
@@ -33,11 +34,11 @@ class GlobalExceptionHandlerTest : FreeSpec(
         }
 
         "handleHttpMessageNotReadableException" - {
-            "Validation 실패해 handleHttpMessageNotReadableException가 발생하면 CommonResponse로 반환된다." {
+            "유효성 검증에 실패하며 \"올바른 Json형식이 아닙니다\" 를 반환한다." {
                 // given
                 val globalExceptionHandler = GlobalExceptionHandler()
                 val exception = mockk<HttpMessageNotReadableException>()
-                every { exception.cause } returns JsonParseException(null, "올바른 JSON 형식이 아닙니다.")
+                every { exception.cause } returns JsonParseException(null, ErrorMessage.INVALID_JSON_FORMAT.message)
 
                 // when
                 val result: ResponseEntity<ErrorResponse> =
@@ -46,7 +47,7 @@ class GlobalExceptionHandlerTest : FreeSpec(
                 // then
                 result shouldBe beInstanceOf(ResponseEntity::class)
                 result.statusCodeValue shouldBe 400
-                result.body?.error shouldBe "올바른 JSON 형식이 아닙니다."
+                result.body?.error shouldBe ErrorMessage.INVALID_JSON_FORMAT.message
                 result.body?.timeStamp?.isBefore(now())
             }
         }

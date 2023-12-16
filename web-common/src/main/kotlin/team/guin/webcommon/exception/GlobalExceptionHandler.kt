@@ -15,15 +15,15 @@ class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun handleHttpMessageNotReadableException(ex: HttpMessageNotReadableException): ResponseEntity<ErrorResponse> {
         val error: String = when (val cause = ex.cause) {
-            is JsonParseException -> "올바른 JSON 형식이 아닙니다."
+            is JsonParseException -> ErrorMessage.INVALID_JSON_FORMAT.message
             is JsonMappingException -> {
                 when (cause) {
-                    is InvalidFormatException -> "[${cause.path.joinToString(", ") { it.fieldName }}] 타입이 올바르지 않습니다."
-                    else -> "[${cause.path.joinToString(",") { it.fieldName }}] 값은 필수입니다."
+                    is InvalidFormatException -> ErrorMessage.INVALID_FIELD_TYPE.message.format(cause.path.joinToString(", ") { it.fieldName })
+                    else -> ErrorMessage.MISSING_REQUIRED_FIELD.message.format(cause.path.joinToString(", ") { it.fieldName })
                 }
             }
 
-            else -> "JSON 파일 중 알 수 없는 오류가 발생하였습니다."
+            else -> ErrorMessage.UNKNOWN_ERROR.message
         }
         val errorResponse = ErrorResponse.create(
             now(),
