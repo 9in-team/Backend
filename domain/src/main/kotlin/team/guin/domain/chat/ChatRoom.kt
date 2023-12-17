@@ -4,7 +4,6 @@ import org.hibernate.annotations.Comment
 import team.guin.domain.account.Account
 import team.guin.domain.baseentity.BaseEntity
 import team.guin.domain.team.Team
-import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType
 import javax.persistence.JoinColumn

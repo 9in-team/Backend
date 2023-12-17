@@ -6,8 +6,6 @@ import org.springframework.web.socket.CloseStatus
 import org.springframework.web.socket.TextMessage
 import org.springframework.web.socket.WebSocketSession
 import org.springframework.web.socket.handler.TextWebSocketHandler
-import team.guin.account.AccountApiRepository
-import team.guin.chat.ChatApiRepository
 import team.guin.chat.ChatWriteService
 import team.guin.chat.dto.SendMessage
 
@@ -31,9 +29,7 @@ class SocketHandler(
     }
 
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
-        val sendMessage = mapper.readValue(message.payload,SendMessage::class.java)
+        val sendMessage = mapper.readValue(message.payload, SendMessage::class.java)
         chatWriteService.create(sendMessage.create())
-
     }
-
 }

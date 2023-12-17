@@ -13,15 +13,14 @@ import team.guin.domain.chat.dto.ChatMessageSend
  * -----------------------------------------------------------
  * 2023/10/03           jhw1015           최초 생성
  */
-data class SendMessage(val content: String, val senderId: Long,val receiverId: Long ,val roomId: Long?, val teamId: Long) {
+data class SendMessage(val content: String, val senderId: Long, val receiverId: Long, val roomId: Long?, val teamId: Long) {
     fun create(): ChatMessageSend {
         return ChatMessageSend(
             content = content,
             receiverId = receiverId,
-            senderId =  senderId,
+            senderId = senderId,
             roomId = roomId,
             teamId = teamId
         )
-
     }
 }

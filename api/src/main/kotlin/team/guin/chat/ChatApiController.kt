@@ -20,8 +20,7 @@ class ChatApiController(
     @GetMapping("/list")
     fun findAllChatRoom(@AccountSession account: AccountProfile): CommonResponse<List<ChatRoomDetail>>? {
         val loginAccount = accountApiService.findById(account.id)
-        val chatRooms: List<ChatRoom> = chatReadApiService.findAllChatRoom(loginAccount.id);
-        return CommonResponse.okWithDetail(ChatRoomDetail.toChatRoomListDetail(chatRooms,loginAccount))
-
+        val chatRooms: List<ChatRoom> = chatReadApiService.findAllChatRoom(loginAccount.id)
+        return CommonResponse.okWithDetail(ChatRoomDetail.toChatRoomListDetail(chatRooms, loginAccount))
     }
 }

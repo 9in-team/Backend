@@ -7,4 +7,3 @@ data class ChatMessageSend(
     val content: String,
     val teamId: Long
 )
-

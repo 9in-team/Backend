@@ -2,7 +2,6 @@ package team.guin.chat.dto
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import team.guin.domain.account.Account
-import team.guin.domain.chat.Chat
 import team.guin.domain.chat.ChatRoom
 import java.time.LocalDateTime
 

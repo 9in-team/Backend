@@ -15,10 +15,9 @@ class ChatWriteService(
     private val roomRepository: ChatRoomApiRepository
 ) {
     fun create(chatMessageSend: ChatMessageSend): Chat {
-        val receiver = accountRepository.findByIdOrNull(chatMessageSend.receiverId)?: throw IllegalArgumentException()
+        val receiver = accountRepository.findByIdOrNull(chatMessageSend.receiverId) ?: throw IllegalArgumentException()
         val sender = accountRepository.findByIdOrNull(chatMessageSend.senderId) ?: throw IllegalArgumentException()
         val room = roomRepository.findByIdOrNull(chatMessageSend.roomId) ?: throw IllegalArgumentException()
-        return chatApiRepository.save( Chat(sender = sender, receiver = receiver, message = chatMessageSend.content))
+        return chatApiRepository.save(Chat(sender = sender, receiver = receiver, message = chatMessageSend.content))
     }
-
 }

@@ -24,4 +24,3 @@ class Chat(
     @ColumnDefault("false")
     val isRead: Boolean = false
 ) : BaseEntity()
-
