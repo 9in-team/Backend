@@ -13,6 +13,8 @@ plugins {
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 allprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+
     group = "team.guin"
     version = "0.0.1-SNAPSHOT"
 
@@ -83,6 +85,7 @@ project(":api") {
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
         implementation("org.springframework.boot:spring-boot-starter-security")
         implementation("org.springframework.boot:spring-boot-starter-webflux")
+        implementation("org.springframework.boot:spring-boot-starter-websocket")
         implementation("com.nimbusds:nimbus-jose-jwt:3.10")
     }
 }
