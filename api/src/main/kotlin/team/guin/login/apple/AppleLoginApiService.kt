@@ -6,7 +6,7 @@ import team.guin.account.AccountApiRepository
 import team.guin.domain.account.Account
 import team.guin.login.apple.util.AppleLoginUtil
 import team.guin.login.dto.AccountProfile
-import java.util.*
+import java.util.UUID
 
 @Service
 class AppleLoginApiService(
