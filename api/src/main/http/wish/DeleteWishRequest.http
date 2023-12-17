@@ -1,0 +1,5 @@
+### DELETE - 찜하기 취소
+DELETE http://localhost:8080/wish/1
+Content-Type: application/json
+
+

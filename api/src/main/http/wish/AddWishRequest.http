@@ -1,0 +1,7 @@
+### POST - 찜하기 추가
+POST http://localhost:8080/wish
+Content-Type: application/json
+
+{
+    "teamId" : "1"
+}

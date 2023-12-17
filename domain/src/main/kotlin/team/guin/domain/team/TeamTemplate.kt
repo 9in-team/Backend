@@ -7,8 +7,10 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.Table
 
 @Entity
+@Table(name = "team_template")
 class TeamTemplate(
     @Comment("템플릿 타입")
     @Enumerated(EnumType.STRING)

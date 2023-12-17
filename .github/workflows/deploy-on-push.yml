@@ -20,12 +20,10 @@ jobs:
           envs: GITHUB_SHA
           script: |
             sudo ps -ef | grep java | grep -v grep | awk '{print $2}' | xargs kill -9
-            cd Backend/
-            sudo docker-compose down
-            cd ..
-            rm -rf Backend/
+            sudo rm -rf Backend/
             git clone https://github.com/9in-team/Backend.git
             cd Backend/
+            sudo docker-compose down
             sudo docker-compose up -d
             cd ..
             sudo sh ssl_setting.sh

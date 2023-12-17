@@ -111,8 +111,8 @@ project(":domain") {
         testImplementation("io.kotest:kotest-assertions-core:5.5.4")
         testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
     }
-    sourceSets["main"].withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
-        kotlin.srcDir("$buildDir/generated/source/kapt/main")
+    kotlin.sourceSets.main {
+        setBuildDir("$buildDir/generated/source/kapt/main")
     }
 }
 

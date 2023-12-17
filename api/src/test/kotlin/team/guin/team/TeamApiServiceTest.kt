@@ -170,7 +170,7 @@ class TeamApiServiceTest(
             val createTeam = teamApiRepository.createTeam(leader = teamLeader, subjectType = SubjectType.PROJECT)
 
             // when
-            val teamDetail = teamApiService.detail(createTeam.id)
+            val teamDetail = teamApiService.getTeam(createTeam.id)
 
             // then
             teamDetail.content shouldBe createTeam.content
@@ -184,12 +184,12 @@ class TeamApiServiceTest(
             val teamId: Long = -1L
 
             // when
-            val result = shouldThrow<IllegalArgumentException> {
-                teamApiService.detail(teamId)
+            val result = shouldThrow<IllegalStateException> {
+                teamApiService.getTeam(teamId)
             }
 
             // then
-            result.message shouldBe "team 없음"
+            result.message shouldBe "팀이 존재하지 않습니다."
         }
     }
 })

@@ -1,0 +1,7 @@
+### POST - 로그인 요청
+POST http://localhost:8080/login-with-kakao
+Content-Type: application/json
+
+{
+"accessToken" : "lkoxy3Ke-IhZvzjHnQeHYGjAIBakX1SC9H0KKiVSAAABi4q5trVDz1szkZmFRA"
+}

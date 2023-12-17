@@ -7,8 +7,10 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.Table
 
 @Entity
+@Table(name = "account")
 @Where(clause = "deleted_at IS NULL")
 class Account(
     @Column(nullable = false, length = 30, unique = true)
