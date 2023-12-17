@@ -1,0 +1,7 @@
+### POST - Wish 생성요청
+POST http://localhost:8080/wish
+Content-Type: application/json
+
+{
+    "teamId" : 1
+}

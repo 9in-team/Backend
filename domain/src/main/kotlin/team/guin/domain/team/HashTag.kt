@@ -7,8 +7,10 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.Table
 
 @Entity
+@Table(name = "hash_tag")
 class HashTag(
     @Comment("팀 해시태그")
     @Column(nullable = false, length = 10)
