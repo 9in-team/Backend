@@ -13,6 +13,8 @@ plugins {
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 allprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+
     group = "team.guin"
     version = "0.0.1-SNAPSHOT"
 
